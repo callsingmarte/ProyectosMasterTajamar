@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Course";
+}
+
+<h1>Course</h1>
+
+<p>
+    <a asp-controller="Student" asp-action="AddCourse">
+        Add a new Course
+    </a>
+</p>
+<h3>Availible List Courses</h3>
+@{
+    List<string> Courses = ViewData["Courses"] as List<string>;
+    if(Courses.Count == 0)
+    {
+        <p>You have not registered any courses yet</p>
+    }
+    else
+    {
+        <table border="1">
+            <tr>
+                <td><strong>Course Number</strong></td>
+                <td><strong>Course Title</strong></td>
+            </tr>
+            @foreach(string course in Courses)
+            {
+                string[] courseComplete = course.Split("/");
+                <tr>
+                    @{
+                        foreach(string substring in courseComplete)
+                        {
+                            <td>@substring</td>
+                        }
+                }
+                </tr>
+            }
+        </table>
+    }
+}

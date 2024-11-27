@@ -1,0 +1,87 @@
+﻿@using EjerciciosCore.Models
+@model List<Empleado>;
+
+@{
+    ViewData["Title"] = "AllEmployee";
+}
+
+<h1>AllEmployee</h1>
+<p>
+    <a asp-controller="Employee" asp-action="Add" class="btn btn-dark">
+        Añadir un empleado
+    </a>
+</p>
+@{
+    if (Model.Count == 0)
+    {
+                <p>No hay empleados.</p>
+    }
+    else
+    {
+            if(ViewBag.mediaEmpleados != null){
+            <p id="media">La media de los empleados es: @ViewBag.mediaEmpleados </p>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th>Empleado ID</th>
+                    <th>Nombre Empleado</th>
+                    <th>Precio Hora</th>
+                    <th>Departamento</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    string fila = "";
+                }
+                        @foreach (Empleado empleado in Model)
+                    {
+                        fila = "fila" + @empleado.ID.ToString():
+                            <tr id="@fila">
+                                <td>@empleado.ID</td>
+                                <td>@empleado.Nombre</td>
+                                <td>@empleado.PrecioHora</td>
+                                <td>@empleado.Departamento.Nombre</td>
+                                <td><input type="checkbox" value="@empleado.ID" /></td>
+                            </tr>
+                    }
+                    </tbody>
+                </table>
+                <br />
+                <button class="btn btn-danger" onclick="DeleteAllEmployees()">Eliminar Empleados Seleccionados</button>
+    }
+}
+
+<script>
+    function DeleteAllEmployees(){
+        let idListEmployeesToDelete = [];
+        $("input[type=checkbox]:checked").each(function () {
+            idListEmployeesToDelete.push($(this).val());
+            eliminarFila($(this).val())
+            $("#media").hide();
+        });
+
+        location.href = "/Employee/DeleteEmployee?valoresABorrar=" + idListEmployeesToDelete.ToString();
+
+        /*
+        $.ajax({
+            type: "DELETE",
+            url: "/Employee/DeleteListEmpleados/",
+            data: JSON.stringify(idListEmployeesToDelete),
+            success: function(){
+                console.log("Empleados Eliminados");
+            },
+            error: function () {
+                console.log("Error al eliminar empleados");
+            }
+        })
+        console.log(idListEmployeesToDelete);
+        */
+    }
+
+    function eliminarFila(index) {
+        $("#fila" + index).remove();
+    }
+
+</script>

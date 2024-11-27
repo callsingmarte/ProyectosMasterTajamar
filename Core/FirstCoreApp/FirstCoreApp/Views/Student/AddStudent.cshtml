@@ -1,0 +1,30 @@
+﻿@using FirstCoreApp.ViewModels
+@model StudentAllMajorViewModel
+@{
+    ViewData["Title"] = "AddStudent";
+}
+
+<h1>AddStudent</h1>
+<div class="container">
+    <form asp-controller="Student" asp-action="AddStudent" method="post">
+        <div class="col-md-8 offset-3">
+            <label asp-for="Student.ID" >ID</label>
+            <input asp-for="Student.ID" />
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <label asp-for="Student.Name">NAME</label>
+            <input asp-for="Student.Name" />
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <label asp-for="Student.GPA">GPA</label>
+            <input asp-for="Student.GPA"/>
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <label asp-for="Major.MajorName"></label>
+            <select asp-for="Major.MajorId" asp-items="@Model.MajorList"> </select>
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <button type="submit" class="btn btn-dark">Add Student</button>
+        </div>        
+    </form>
+</div>

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "Book";
+}
+
+<h1>Book</h1>
+<p>
+    <a asp-controller="MyLibrary" asp-action="AddBook">
+        Add a new Book
+    </a>
+</p>
+<h3>Availible List Books</h3>
+<ol>
+    @foreach (string book in ViewData["Books"] as List<string>)
+    {
+        <li>@book</li>
+    }
+</ol>
+

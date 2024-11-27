@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "AddCourse";
+}
+
+<h1>Add Course</h1>
+
+<form asp-controller="Student" asp-action="AddCourse" method="post">
+    Enter course title:
+    <input type="text" name="courseTitle" />
+    Enter course number:
+    <input type="number" name="courseNumber" />
+    <button type="submit">Submit</button>
+</form>

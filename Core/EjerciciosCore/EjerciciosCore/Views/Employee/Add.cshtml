@@ -1,0 +1,32 @@
+﻿@using EjerciciosCore.ViewModels
+@model EmpleadoDepartamentosViewModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+<div class="container">
+    <form asp-controller="Employee" asp-action="Add" method="post">
+        <div class="col-md-8 offset-3">
+            <label asp-for="Empleado.ID">ID</label>
+            <input asp-for="Empleado.ID" />
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <label asp-for="Empleado.Nombre">Nombre</label>
+            <input asp-for="Empleado.Nombre" />
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <label asp-for="Empleado.PrecioHora">Precio Hora</label>
+            <input asp-for="Empleado.PrecioHora" />
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <label asp-for="Departamento.Nombre"></label>
+            <select asp-for="Departamento.ID" asp-items="@Model.DepartamentoList"> </select>
+        </div><br />
+        <div class="col-md-8 offset-3">
+            <button type="submit" class="btn btn-dark">Añadir Empleado</button>
+        </div>
+    </form>
+</div>
+

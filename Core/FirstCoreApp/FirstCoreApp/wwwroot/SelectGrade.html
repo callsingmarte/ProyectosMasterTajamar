@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function enviar(letraElegida) {
+            miform.grado.value = letraElegida;
+            miform.submit();
+        }
+    </script>
+</head>
+<body>
+    <h2>Click on a grade you want</h2>
+    <form id="miform" name="miform" action="Student/PayRate" method="post">
+        <input type="hidden" name="grado" />
+    </form>
+    <a href="javascript:enviar('A')">A</a>
+    <a href="javascript:enviar('B')">B</a>
+    <a href="javascript:enviar('C')">C</a>
+    <a href="javascript:enviar('D')">D</a>
+    <a href="javascript:enviar('E')">E</a>
+</body>
+</html>

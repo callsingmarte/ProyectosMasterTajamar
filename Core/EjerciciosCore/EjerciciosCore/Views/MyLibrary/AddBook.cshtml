@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "AddBook";
+}
+
+<h1>AddBook</h1>
+
+<form asp-controller="MyLibrary" asp-action="AddBook" method="post">
+    Enter book title:
+    <input type="text" name="bookTitle" />
+    <button type="submit">Submit</button>
+</form>
