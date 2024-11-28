@@ -1,0 +1,23 @@
+﻿@using MultiplesTablesCoreApp.Models
+@model Instructor
+
+<table class="table table-dark">
+    <tr>
+        <td><strong>Name</strong></td>
+        <td>@Model.InstructorName</td>
+    </tr>
+    <tr>
+        <td><strong>Email</strong></td>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <td><strong>Phone</strong></td>
+        <td>@Model.Phone</td>
+    </tr>
+    <tr>
+        <td><strong>Office</strong></td>
+        <td>@Model.Office</td>
+    </tr>
+</table>
+<p><a asp-action="AllCourse" asp-controller="Course" class="btn btn-primary">Back</a></p>
+

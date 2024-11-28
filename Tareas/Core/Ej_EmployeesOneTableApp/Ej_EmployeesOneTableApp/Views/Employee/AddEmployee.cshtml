@@ -1,0 +1,20 @@
+﻿@using Ej_EmployeesOneTableApp.Models
+@model Employee
+
+@{
+    ViewData["Title"] = "AddEmployee";
+}
+
+<h1>Add Employee</h1>
+
+<form asp-controller="Employee" asp-action="AddEmployee" method="post">
+    <div>
+        <label asp-for="Name">Employee Name:</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="HourlyWage">Hourly Wage:</label>
+        <input asp-for="HourlyWage" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-dark">Add a Employee</button>
+</form>

@@ -1,0 +1,19 @@
+﻿@using OneTableCoreApp.Models
+@model Student
+
+<h3>Delete Student</h3>
+<p>Are you sure?</p>
+<form asp-action="DeleteStudent" method="post">
+    <input type="hidden" asp-for="StudentId" />
+    <div>
+        <label asp-for="StudentName">Student Name:</label>
+        <input asp-for="StudentName" class="form-control" readonly/>
+    </div>
+    <div>
+        <label asp-for="GPA">GPA:</label>
+        <input asp-for="GPA" class="form-control" readonly/>
+    </div>
+    <button type="submit" class="btn btn-danger">Yes Delete</button>
+</form>
+<br />
+<p class="text-center"><a asp-action="AllStudent" class="btn btn-success"> No, Back to the List</a></p>

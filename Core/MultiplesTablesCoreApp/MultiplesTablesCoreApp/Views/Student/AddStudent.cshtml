@@ -1,0 +1,8 @@
+﻿@using MultiplesTablesCoreApp.Models
+@model Student
+
+<form asp-action="AddStudent" method="post">
+    <label asp-for="StudentName"></label>
+    <input asp-for="StudentName" class="form-control" />
+    <button type="submit" class="btn btn-success">Add Student</button>
+</form>

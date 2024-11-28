@@ -1,0 +1,23 @@
+﻿@using Ej_EmployeesOneTableApp.Models
+@model Employee
+
+@{
+    ViewData["Title"] = "DeleteEmployee";
+}
+
+<h3>Delete Employee</h3>
+<p>Are you sure?</p>
+<form asp-action="DeleteEmployee" method="post">
+    <input type="hidden" asp-for="ID" />
+    <div>
+        <label asp-for="Name">Student Name:</label>
+        <input asp-for="Name" class="form-control" readonly />
+    </div>
+    <div>
+        <label asp-for="HourlyWage">Hourly Wage:</label>
+        <input asp-for="HourlyWage" class="form-control" readonly />
+    </div>
+    <button type="submit" class="btn btn-danger">Yes Delete</button>
+</form>
+<br />
+<p class="text-center"><a asp-action="AllEmployees" class="btn btn-success"> No, Back to the List</a></p>

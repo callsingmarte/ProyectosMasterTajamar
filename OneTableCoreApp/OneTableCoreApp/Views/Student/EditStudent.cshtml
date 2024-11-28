@@ -1,0 +1,15 @@
+﻿@using OneTableCoreApp.Models
+@model Student
+
+<form asp-action="EditStudent" method="post">
+    <input type="hidden" asp-for="StudentId" />
+    <div>
+        <label asp-for="StudentName">Student Name:</label>
+        <input asp-for="StudentName" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="GPA">GPA:</label>
+        <input asp-for="GPA" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-dark">Update Student</button>
+</form>

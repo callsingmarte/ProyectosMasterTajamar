@@ -1,0 +1,46 @@
+﻿@using OneTableCoreApp.Models
+@model IEnumerable<Student>
+
+@{
+    ViewData["Title"] = "AllStudent";
+}
+
+<p>
+    <a asp-controller="Student" asp-action="AddStudent">
+        Add a student
+    </a>
+</p>
+<h1>All Student</h1>
+@{
+    if(Model.Count() < 1)
+    {
+        <p>No student in database yet</p>
+    }
+    else
+    {
+        <h4>All Student</h4>
+        <table class="table table-striped">
+            <tr>
+                <th>StudentID</th>
+                <th>Name</th>
+                <th>GPA</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.StudentId</td>
+                    <td>@student.StudentName</td>
+                    <td>@student.GPA</td>
+                    <td>
+                        <a  class="btn btn-success" asp-action="EditStudent" asp-route-id="@student.StudentId">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="DeleteStudent" asp-route-id="@student.StudentId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+}

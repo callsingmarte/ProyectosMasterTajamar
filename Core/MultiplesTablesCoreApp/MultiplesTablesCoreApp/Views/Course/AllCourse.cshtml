@@ -1,0 +1,40 @@
+﻿@using MultiplesTablesCoreApp.Models
+@model IEnumerable<Course>
+
+<h1>AllCourse</h1>
+<p><a asp-action="AddCourse" class="btn btn-primary">Add a course</a></p>
+
+@{
+    if (Model.Count() < 1)
+    {
+        <p>No Courses in database yet</p>
+    }
+    else
+    {
+        <h4>All Courses</h4>
+        <table class="table table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Seat Capacity</th>
+                <th>Instructor Name</th>
+            </tr>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.CourseId</td>
+                    <td>@course.CourseTitle</td>
+                    <td>@course.SeatCapacity</td>
+                    <td>
+                        <a asp-controller="Instructor" 
+                        asp-action="InstructorDetails" 
+                        asp-route-id="@course.Instructor.InstructorId">
+                        @course.Instructor!.InstructorName
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+}
+

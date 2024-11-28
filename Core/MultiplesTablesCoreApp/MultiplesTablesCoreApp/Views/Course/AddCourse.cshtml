@@ -1,0 +1,20 @@
+﻿@using MultiplesTablesCoreApp.ViewModels
+@model CourseAddCourseViewModel
+
+<form asp-action="AddCourse" method="post">
+    <div>
+        <label asp-for="Course!.CourseTitle"></label>
+        <input asp-for="Course!.CourseTitle" />
+    </div>
+    <div>
+        <label asp-for="Course!.SeatCapacity"></label>
+        <input asp-for="Course!.SeatCapacity" />
+    </div>
+    <div>
+        <label asp-for="Instructor!.InstructorName"></label>
+        <select asp-for="Instructor!.InstructorId" asp-items="@Model.InstructorList">
+            <option value="0">-Choose-</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Add Course</button>
+</form>

@@ -1,0 +1,28 @@
+﻿@using MultiplesTablesCoreApp.Models
+@model IEnumerable<Instructor>
+
+<p><a asp-action="AddInstructor" class="btn btn-primary">Add an instructor</a></p>
+
+@{
+    if(Model.Count() < 1)
+    {
+        <p>No Instructors in database yet</p>
+    }
+    else
+    {
+        <h4>All Instructors</h4>
+        <table class="table table-striped">
+            <tr>
+                <th>ID</th>            
+                <th>Name</th>            
+            </tr>
+            @foreach(var instructor in Model)
+            {
+                <tr>
+                    <td>@instructor.InstructorId</td>
+                    <td>@instructor.InstructorName</td>
+                </tr>
+            }
+        </table>
+    }
+}
