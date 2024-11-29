@@ -23,8 +23,20 @@
             {
                 <tr>
                     <td>@course.CourseId</td>
-                    <td>@course.CourseTitle</td>
-                    <td>@course.SeatCapacity</td>
+                    <td>
+                        <a asp-controller="Enrollment"
+                           asp-action="EnrollmentAdd"
+                           asp-route-id="@course.CourseId">
+                            @course.CourseTitle
+                        </a>                    
+                    </td>
+                    <td>
+                        <a asp-controller="Enrollment"
+                           asp-action="EnrolledStudents"
+                           asp-route-id="@course.CourseId">
+                            @course.SeatCapacity
+                        </a>
+                    </td>
                     <td>
                         <a asp-controller="Instructor" 
                         asp-action="InstructorDetails" 
