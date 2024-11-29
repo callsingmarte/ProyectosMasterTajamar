@@ -1,0 +1,31 @@
+﻿@using IdentityUniversityCoreApp.ViewModels
+@model StudentAddEnrollmentViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 offset-3">
+            <form asp-controller="Student" asp-action="EnrollCourse">
+                <input type="hidden" asp-for="Student!.StudentId"/>
+                <input type="hidden" asp-for="Student!.StudentUser" />
+                <div class="form-group">
+                    <label asp-for="Student!.StudentName"></label>
+                    <input asp-for="Student!.StudentName" readonly="readonly" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Course!.CourseTitle"></label>
+                    <select asp-for="Course!.CourseId" asp-items="@Model.CourseList" 
+                    id="cmbCursos" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Course!.SeatCapacity"></label>
+                    <input asp-for="Course!.SeatCapacity" id="txtCapacity" readonly="readonly" class="form-control" />
+                </div>
+                <div class="text-center">
+                    <button type="submit">Save and back to Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿<div class="container">
+    <div class="grid-container">
+        <h2>Instructor Home</h2>
+        @{
+            if((ViewData["Registrado"] as bool?) ?? false)
+            {
+                <a asp-action="EditProfile" 
+                asp-route-id="@ViewBag.InstructorId" 
+                class="btn btn-light">Edit Profile</a>
+            }
+            else
+            {
+                <a asp-action="AddProfile"
+                   class="btn btn-light">Add Profile</a>
+            }
+        }
+        <a asp-action="AllProfiles" class="btn btn-dark">Instructors List</a>
+        <a asp-action="AddCourse" class="btn btn-dark">Add a Course</a>
+        <a asp-action="GradeCourse" class="btn btn-dark">Post grade for a course</a>
+        <a asp-area="Identity" asp-page="/Account/logout" class="btn btn-dark">Logout</a>
+    </div>
+</div>

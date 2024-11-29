@@ -1,0 +1,44 @@
+﻿@using IdentityUniversityCoreApp.Models
+@model IEnumerable<Instructor>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 offset-3">
+            <p><a asp-action="AddProfile" class="btn btn-dark">Add an profile</a></p>
+            @{
+                if (Model.Count() < 1)
+                {
+                    <p>No profiles in database yet</p>
+                }
+                else
+                {
+                    <h3>All Profiles</h3>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>ID</th>
+                            <th>Profile Name</th>
+                            <th>Office Location</th>
+                            <th>User Name</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    @foreach (var instructor in Model)
+                    {
+                        <tr>
+                            <td>@instructor.InstructorId</td>
+                            <td>@instructor.InstructorName</td>
+                            <td>@instructor.OfficeLocation</td>
+                            <td>@instructor.InstructorUser</td>
+                            <td>
+                                <a asp-controller="Instructor" asp-action="EditProfile" 
+                                   asp-route-id="@instructor.InstructorId">Edit</a>
+                            </td>                            
+                        </tr>
+                    }
+                </table>
+            }
+        }
+        <p><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Return</a></p>
+        </div>
+    </div>
+</div>

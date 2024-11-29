@@ -1,0 +1,21 @@
+﻿
+<div class ="container">
+    <div class ="grid-container">
+        <h2>StudentHome</h2>
+        @{
+            if ((ViewData["Registrado"] as bool?) ?? false)
+            {
+                <a asp-action="EditProfile" class="btn btn-light">Editprofile</a>
+            }
+            else
+            {
+                <a asp-action="AddProfile" class="btn btn-light">Addprofile</a>
+            }
+        }
+        <a asp-action="EnrollCourse" class="btnbtn-light">Enrollin a course</a>
+        <a asp-action="CheckGrade" class="btnbtn-light">Checkgrade</a>
+        <a asp-area="Identity" asp-page="/Account/Logout"
+           asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"
+           class="btnbtn-light">Logout</a>
+    </div>
+</div>

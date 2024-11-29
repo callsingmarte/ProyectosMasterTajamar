@@ -1,0 +1,22 @@
+﻿@using IdentityUniversityCoreApp.ViewModels
+@model InstructorGradeCourseViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 offset-3">
+            <h2>Instructor: @Model.Instructor!.InstructorName</h2>
+            <div class="form-group">
+                <label asp-for="Course!.CourseTitle"></label>
+                <select asp-for="Course!.CourseId" id="cmbCursoInstructor"
+                        asp-items="@Model.CourseList" class="form-control">
+                    <option></option>
+                </select>
+            </div>           
+            <div class="form-group">
+                <table id="tableStudent" class="table table-striped">
+                </table>
+            </div>
+            <p><a asp-action="Index">Back to instructor home</a></p>
+        </div>
+    </div>
+</div>

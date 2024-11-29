@@ -1,0 +1,45 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Container styling for grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+    gap: 20px; /* Spacing between grid items */
+    align-items: center; /* Alignitems vertically */
+    justify-items: center; /* Alignitems horizontally */
+    padding: 20px; /* Optional padding for the grid */
+}
+
+    /* Title spans two columns */
+    .grid-container h2 {
+        grid-column: span 2; /* Titlespans across two columns */
+        text-align: center;
+    }
+
+    /* Buttons styling (optional) */
+    .grid-container .btn {
+        width: 100%; /* Makebuttons full widthwithin their grid cells */
+        max-width: 200px; /* Limitthe width of buttons */
+        text-align: center;
+    }
