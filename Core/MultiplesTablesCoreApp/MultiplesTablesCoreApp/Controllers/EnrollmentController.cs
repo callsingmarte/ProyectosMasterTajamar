@@ -57,17 +57,24 @@ namespace MultiplesTablesCoreApp.Controllers
 
                 if (course != null)
                 {
-                    Enrollment enrollment = new Enrollment
+                    if(course.SeatCapacity > 0)
                     {
-                        CourseId = vm.Course!.CourseId,
-                        StudentId = vm.Student!.StudentId
-                    };
-                    _db.Enrollments.Add(enrollment);
-                    await _db.SaveChangesAsync();
+                        Enrollment enrollment = new Enrollment
+                        {
+                            CourseId = vm.Course!.CourseId,
+                            StudentId = vm.Student!.StudentId
+                        };
+                        _db.Enrollments.Add(enrollment);
+                        await _db.SaveChangesAsync();
 
-                    course.SeatCapacity -= 1;
-                    _db.Update(course);
-                    await _db.SaveChangesAsync();
+                        course.SeatCapacity -= 1;
+                        _db.Update(course);
+                        await _db.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        return View("CourseFilled", course);
+                    }
                 }
 
                 return RedirectToAction("AllCourse", "Course");
