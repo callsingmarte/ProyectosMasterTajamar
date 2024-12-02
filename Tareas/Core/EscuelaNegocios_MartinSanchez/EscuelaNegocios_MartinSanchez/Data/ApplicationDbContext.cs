@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace EscuelaNegocios_MartinSanchez.Data
 {
@@ -118,6 +119,7 @@ namespace EscuelaNegocios_MartinSanchez.Data
                 new IdentityRole { Id = "2", Name = "ClubAdmin" },
                 new IdentityRole { Id = "3", Name = "Student" }
             );
+
         }
     }
 }

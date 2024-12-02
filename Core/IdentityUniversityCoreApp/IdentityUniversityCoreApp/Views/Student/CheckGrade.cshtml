@@ -1,0 +1,37 @@
+﻿@using IdentityUniversityCoreApp.Models
+@model List<Enrollment>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 offset-3">
+            <h3>STUDENT: @ViewBag.Student.StudentName</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Letter</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var enrollment in Model)
+                    {
+                        <tr>
+                            <td>@enrollment.Course!.CourseTitle</td>
+                            @{
+                                if (enrollment.LetterGrade == null)
+                                {
+                                    <td>No grade</td>
+                                }
+                                else 
+                                {
+                                    <td>@enrollment.LetterGrade.Value</td>                                    
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <p><a asp-controller="Student" asp-action="Index" class="btn btn-secondary">Return</a></p>
+        </div>
+    </div>
+</div>

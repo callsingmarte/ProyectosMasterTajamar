@@ -1,12 +1,14 @@
 ﻿using EscuelaNegocios_MartinSanchez.Data;
 using EscuelaNegocios_MartinSanchez.Models;
 using EscuelaNegocios_MartinSanchez.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace EscuelaNegocios_MartinSanchez.Controllers
 {
+    [Authorize(Roles = "Admin, Student")]
     public class ClubController : Controller
     {
         private readonly ApplicationDbContext? _db;
@@ -22,6 +24,7 @@ namespace EscuelaNegocios_MartinSanchez.Controllers
             return View(clubs);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddClub() 
         {
             var departmentList = await _db!.Departments.Select(d => new
@@ -36,6 +39,7 @@ namespace EscuelaNegocios_MartinSanchez.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddClub(Club club)
         {

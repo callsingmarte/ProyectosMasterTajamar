@@ -1,5 +1,6 @@
 ﻿using EscuelaNegocios_MartinSanchez.Data;
 using EscuelaNegocios_MartinSanchez.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,12 +21,13 @@ namespace EscuelaNegocios_MartinSanchez.Controllers
 
             return View(students);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult AddStudent()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddStudent(Student student)
         {

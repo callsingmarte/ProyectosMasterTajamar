@@ -1,10 +1,12 @@
 ﻿using EscuelaNegocios_MartinSanchez.Data;
 using EscuelaNegocios_MartinSanchez.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EscuelaNegocios_MartinSanchez.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DepartmentController : Controller
     {
         private readonly ApplicationDbContext? _db;

@@ -1,5 +1,7 @@
 ﻿@using IdentityUniversityCoreApp.Models
-@model IEnumerable<Instructor>
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<Instructor>
 
 <div class="container">
     <div class="row">
@@ -36,6 +38,30 @@
                         </tr>
                     }
                 </table>
+                <div class="d-flex justify-content-center">
+                        @Html.PagedListPager(Model,
+                        page => Url.Action("AllProfiles", new {page}),
+                        new PagedListRenderOptions
+                        {
+                            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+
+                            MaximumPageNumbersToDisplay = 5,
+                            DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+                            EllipsesFormat = "…",
+                            LinkToFirstPageFormat = "Primera",
+                            LinkToLastPageFormat = "Última",
+                            LinkToPreviousPageFormat = "Anterior",
+                            LinkToNextPageFormat = "Siguiente",
+
+                            ContainerDivClasses = new[] { "pagination-container" },
+                            UlElementClasses = new[] { "pagination" },
+                            LiElementClasses = new[] { "page-item" },
+                            PageClasses = new[] { "page-link" }
+                        })
+                </div>
             }
         }
         <p><a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Return</a></p>

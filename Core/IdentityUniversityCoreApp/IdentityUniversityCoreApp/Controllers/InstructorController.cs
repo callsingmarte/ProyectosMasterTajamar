@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
+using X.PagedList;
+using X.PagedList.Extensions;
 namespace IdentityUniversityCoreApp.Controllers
 {
     [Authorize(Roles = "Instructor, Admin")]
@@ -36,9 +37,12 @@ namespace IdentityUniversityCoreApp.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AllProfiles()
+        public IActionResult AllProfiles(int? page)
         {
-            var instructors = await _db!.Instructors.ToListAsync();
+            int pageNumber = page ?? 1;
+            int pageSize = 5;
+
+            var instructors = _db!.Instructors.OrderBy(i => i.InstructorName).ToPagedList(pageNumber, pageSize);
             return View(instructors);
         }
 
@@ -139,7 +143,7 @@ namespace IdentityUniversityCoreApp.Controllers
             return Matriculados;
         }
 
-        public async Task<IActionResult> Califica(int dato, char nota)
+        public async Task<IActionResult> Califica(int dato, LetterGrade nota)
         {
             Enrollment? enrollment = await _db!.Enrollments.Where(e => e.Student!.StudentId == dato).FirstOrDefaultAsync();
             if (enrollment != null)
@@ -149,7 +153,6 @@ namespace IdentityUniversityCoreApp.Controllers
                 _db.SaveChanges();
             }
             return RedirectToAction("Index", "Instructor");
-
         }
     }
 }

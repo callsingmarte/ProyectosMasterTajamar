@@ -138,5 +138,24 @@ namespace IdentityUniversityCoreApp.Controllers
                 return null;
             }
         }
+
+        public async Task<IActionResult> CheckGrade()
+        {
+            var currentUserId = User.Identity!.Name;
+            Student? studentToShow = await _db.Students.Where(s => s.StudentUser == currentUserId).FirstOrDefaultAsync();
+
+            List<Enrollment> enrollments = await _db.Enrollments.Include(c => c.Course)
+                .Where(e => e.Student == studentToShow).ToListAsync();
+
+            if (enrollments.Count > 0) 
+            {
+                ViewBag.Student = studentToShow;
+                return View(enrollments);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
