@@ -1,0 +1,33 @@
+﻿@using EscuelaNegocios_MartinSanchez.Models
+@model List<Department>
+
+<h1>All Departments</h1>
+
+<a asp-action="AddDepartment" class="btn btn-primary">Add Department</a>
+@if(Model.Count() == 0){
+    <p>No departments in  yet</p>
+}else{
+    <table class="table table-bordered mt-5">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Office Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var department in Model)
+            {
+                <tr>
+                    <td>@department.Id</td>
+                    <td>@department.Name</td>
+                    <td>@department.Phone</td>
+                    <td>@department.Email</td>
+                    <td>@department.OfficeLocation</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

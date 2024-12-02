@@ -1,0 +1,32 @@
+﻿@using EscuelaNegocios_MartinSanchez.Models
+@model List<Student>
+
+<h1>All Students</h1>
+
+<a asp-action="AddStudent" class="btn btn-primary">Add Student</a>
+@if (Model.Count() == 0)
+{
+    <p>No students in database yet</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Student User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.Id</td>
+                    <td>@student.Name</td>
+                    <td>@student.StudentUser</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

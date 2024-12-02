@@ -1,0 +1,10 @@
+﻿@using EscuelaNegocios_MartinSanchez.ViewModels
+@model StudentClubAddStudentClubViewModel
+
+<div class="text-center">
+    <h1>Student Already In Club</h1>
+    <div class="card p-4 shadow">
+        <p>⚠️ The student @Model.StudentClub!.Student!.Name is already in the club @Model.StudentClub.Club!.Name</p>
+    </div>
+</div>
+<a asp-action="Index" asp-controller="Club" class="btn btn-outline-dark">Back</a>

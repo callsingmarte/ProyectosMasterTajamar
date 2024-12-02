@@ -1,0 +1,54 @@
+﻿@using EscuelaNegocios_MartinSanchez.Models
+@model List<Club>
+
+<h1>Index</h1>
+
+<a asp-action="AddClub" class="btn btn-primary">Add Club</a>
+@if(Model.Count() == 0){
+    <p>No Clubs in database yet</p>
+}else{
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Number students</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var club in Model)
+            {
+                <tr>
+                    <td>@club.Id</td>
+                    <td>
+                        <a 
+                            asp-action="AddStudentClub"
+                            asp-controller="StudentClub"
+                            asp-route-clubId="@club.Id">
+                            @club.Name
+                        </a>
+                    </td>
+                    <td>
+                        <a 
+                            asp-action="ClubStudents"
+                            asp-controller="StudentClub" 
+                            asp-route-id="@club.Id"
+                        >
+                        @club.Students
+                        </a>
+                    </td>
+                    <td>
+                        <a 
+                        asp-action="DepartmentDetails" 
+                        asp-controller="Department" 
+                        asp-route-id="@club.DepartmentId"
+                        >
+                        @club!.Department!.Name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,26 @@
+﻿@using EscuelaNegocios_MartinSanchez.ViewModels
+@model ClubAddClubViewModel
+
+<h1>Add Club</h1>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-7 offset-3">
+            <form asp-action="AddClub">
+                <div class="form-group">
+                    <label asp-for="Club!.Name"></label>
+                    <input asp-for="Club!.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Club!.Department!.Name"></label>
+                    <select asp-for="Club!.DepartmentId" asp-items="@Model.DepartmentList" class="form-select" >
+                        <option>-Choose a Department</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Save and Back to Clubs Index</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-dark">Back</a>
+</div>
