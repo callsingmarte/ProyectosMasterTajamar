@@ -1,0 +1,13 @@
+﻿@page "/index"
+@rendermode InteractiveServer
+
+<p><FirstComponent TestChanged="@((args) => settest(args))"></FirstComponent></p>
+<p>@test</p>
+
+@code {
+    string test;
+    void settest(ChangeEventArgs args)
+    {
+        test = (string)args.Value;
+    }
+}

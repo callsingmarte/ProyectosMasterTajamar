@@ -1,0 +1,19 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject Data.TestService tstservice
+
+<p><input @bind="a" /></p>
+<p><input @bind="b" /></p>
+<p><button onclick="@(new Action(() => tstservice.TestCalculationAsync(a,b)))">test1</button></p>
+<p><button onclick="@(new Action(() => testcalculation()))">test2</button></p>
+<p>@todisplay</p>
+@code{
+    double a;
+    double b;
+    double todisplay;
+
+    async Task testcalculation()
+    {
+        todisplay = await tstservice.TestCalculationAsync(a, b);
+    }
+}

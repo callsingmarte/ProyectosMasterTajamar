@@ -1,0 +1,30 @@
+﻿@page "/previewpage/{firstname}/{surname}/{bio}/{hobbies}"
+@using Newtonsoft.Json
+
+<p>First Name: @firstname</p>
+<p>First Name: @surname</p>
+<p>Bio: @bio</p>
+<p>Hobbies</p>
+@if(hobbiesList != null)
+{
+    @foreach(var item in hobbiesList)
+    {
+        <p>Id: @item.id</p>
+        <p>Title: @item.title</p>
+        <p>Description: @item.description</p>
+    }
+}
+
+@code {
+    [Parameter] public string? firstname { get; set; }
+    [Parameter] public string? surname { get; set; }
+    [Parameter] public string? bio { get; set; }
+    [Parameter] public string? hobbies { get; set; }
+
+    List<HobbyItem>? hobbiesList;
+
+    protected override void OnParametersSet()
+    {
+       hobbiesList = ((Newtonsoft.Json.Linq.JArray)JsonConvert.DeserializeObject(hobbies)).ToObject<List<HobbyItem>>();
+    }
+}

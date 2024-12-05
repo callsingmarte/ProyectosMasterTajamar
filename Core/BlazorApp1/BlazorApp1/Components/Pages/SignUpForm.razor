@@ -1,0 +1,54 @@
+﻿@page "/signuppage"
+@inject NavigationManager navmanager
+@using BlazorApp1.Models
+@using Newtonsoft.Json
+@rendermode InteractiveServer
+
+<p>First Name: </p>
+<p><input @bind=@firstname /></p>
+<p>Second Name: </p>
+<p><input @bind=@surname /></p>
+<p>Bio: </p>
+<p><input @bind=@bio /></p>
+<p>Hobbies: </p>
+<p>Title</p>
+<p><input @bind=@newhobby.title /></p>
+<p>Description</p>
+<p><textarea @bind="@newhobby.description"></textarea></p>
+<p><button @onclick="@AddHobby">Add Hobby</button></p>
+<p>My Hobbies</p>
+@foreach (var item in hobbies)
+{
+    <HobbyItem @Key="@item.id" id="@item.id" title="@item.title" 
+    OnDelete="DeleteHobby" description="@item.description">
+
+    </HobbyItem>
+}
+<p><button @onclick="@Submit">Submit</button></p>
+@code {
+    string? firstname { get; set; }
+    string? surname { get; set; }
+    string? bio { get; set; }
+    HobbyModels newhobby = new HobbyModels(){
+    id = Guid.NewGuid().ToString()
+    };
+
+    List<HobbyModels> hobbies { get; set; } = new List<HobbyModels>();
+
+    void AddHobby()
+    {
+        hobbies.Add(newhobby);
+        newhobby = new HobbyModels() { id = Guid.NewGuid().ToString() };
+    }
+
+    void DeleteHobby(string id)
+    {
+        hobbies.Remove(hobbies.Where(x => x.id == id).ToArray()[0]);
+    }
+
+    void Submit()
+    {
+        var json = JsonConvert.SerializeObject(hobbies);
+        navmanager.NavigateTo("/previewpage/" + firstname + "/" + surname + "/" + bio + "/" + json);
+    }
+}

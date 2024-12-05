@@ -1,0 +1,9 @@
+﻿@page "/firstcomponent"
+
+<h3>FirstComponent</h3>
+<input @onchange="@TestChanged" />
+
+@code {
+    [Parameter]
+    public Action<ChangeEventArgs> TestChanged { get; set; }
+}

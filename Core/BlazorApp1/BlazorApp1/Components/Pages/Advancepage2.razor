@@ -1,0 +1,10 @@
+﻿@page "/advancepage2/{param1}"
+@page "/advancepage2"
+<h3>advancepage2</h3>
+@if(param1 != null){
+    <p>parameter: @param1</p>
+}
+
+@code {
+    [Parameter] public string param1 { get; set; }
+}

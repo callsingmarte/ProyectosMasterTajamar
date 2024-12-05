@@ -1,0 +1,86 @@
+﻿@page "/articles"
+@using PedidosBlazor.Models
+@using PedidosBlazor.Services
+@inject IArticleService ArticleService
+@rendermode InteractiveServer
+
+<a class="btn btn-success mb-3" href="">Create New Article</a>
+
+@if(articles == null)
+{
+    <p><em>Loading...</em></p>
+}else if(articles.Count == 0)
+{
+    <p>No articles in database yet</p>
+}
+else
+{
+    <div class="article-grid">
+        <div class="form-inline article-card">
+            <label class="form-label" for="nombre-filtro">Busqueda:</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" 
+            @bind="nombreArticleFiltro" placeholder="Search by name" />
+            <button type="button" class="btn btn-primary mr-sm-2 mb-2" @onclick="Buscar">Search</button>
+            <button type="button" class="btn btn-warning mb-2" @onclick="Limpiar">Clean</button>
+        </div>
+        <table class="table-hover article-card">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var article in articles)
+                {
+                    <tr>
+                        <td>@article.Name</td>
+                        <td>@article.Category</td>
+                        <td>@article.Price</td>
+                        <td>
+                            <a class="btn btn-warning" href="">Orders</a>
+                            <a class="btn btn-success" href="">Edit</a>
+                            <button class="btn btn-danger" @onclick="(() => DeleteArticle(article.ID))">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>    
+}
+
+@code {
+    private List<Article>? articles;
+
+    private string nombreArticleFiltro = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articles = await ArticleService.GetArticlesAsync();
+    }
+
+    async Task DeleteArticle(int idArticle)
+    {
+
+    }
+
+    async Task Buscar()
+    {
+        if (string.IsNullOrWhiteSpace(nombreArticleFiltro))
+        {
+            articles = await ArticleService.GetArticlesAsync();
+        }
+        else
+        {
+            articles = await ArticleService.GetArticlesAsync();
+            articles = articles.Where(a => a.Name!.Contains(nombreArticleFiltro, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+    }
+
+    async Task Limpiar()
+    {
+        
+    }
+}

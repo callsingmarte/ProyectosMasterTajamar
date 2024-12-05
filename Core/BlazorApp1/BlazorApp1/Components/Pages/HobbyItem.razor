@@ -1,0 +1,23 @@
+﻿<h3>HobbyItem</h3>
+<div>
+    <div style="width:50px;">
+        @title
+    </div>
+    <div style="width:50px;">
+        @description
+    </div>
+    <div style="width:250px;">
+        <button @onclick="@delete"></button>
+    </div>
+</div>
+@code {
+    [Parameter] public string? id { get; set; }
+    [Parameter] public string? title { get; set; }
+    [Parameter] public string? description { get; set; }
+    [Parameter] public EventCallback<string> OnDelete { get; set; }
+
+    async void delete()
+    {
+        await OnDelete.InvokeAsync(id);
+    }
+}
