@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BookSwap.Data;
 using BookSwap.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace BookSwap.Pages.Books
 {
@@ -20,15 +22,19 @@ namespace BookSwap.Pages.Books
             _context = context;
         }
 
-        public IList<Book> Book { get;set; } = default!;
+        public IPagedList<Book>? Book { get;set; }
         public SelectList? Genres { get; set; }
+
+        public int PageNumber { get; set; } = 1;
 
         [BindProperty(SupportsGet = true)]
         public string? BookGenre { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? pageNumber = 1)
         {
             IQueryable<string> genreQuery = _context.Book.Select(b => b.Genre);
+
+            ChangeBookStatusOnReturnDate();
 
             var books = _context.Book.Select(b => b);
 
@@ -39,7 +45,20 @@ namespace BookSwap.Pages.Books
 
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
 
-            Book = await books.ToListAsync();
+            Book = books.ToPagedList(Convert.ToInt32(pageNumber), 5);
+        }
+
+        public void ChangeBookStatusOnReturnDate()
+        {
+            var books = _context.Book.Where(b => b.ReturnDate <= DateTime.Now).ToList();
+
+            foreach (var book in books) {
+                book.IsAvailable = true;
+                book.ReturnDate = null;
+                book.LoanDate = null;
+                _context.Book.Update(book);
+                _context.SaveChangesAsync();
+            }            
         }
     }
 }

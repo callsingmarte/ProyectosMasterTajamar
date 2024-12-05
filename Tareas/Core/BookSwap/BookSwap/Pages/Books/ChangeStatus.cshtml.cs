@@ -36,10 +36,6 @@ namespace BookSwap.Pages.Books
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
             var book = await _context.Book.SingleOrDefaultAsync(b => b.Id == Book.Id);
 

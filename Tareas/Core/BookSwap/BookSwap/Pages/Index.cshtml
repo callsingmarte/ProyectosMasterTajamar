@@ -3,8 +3,32 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>@ViewData["Title"]</h1>
+
+    <!-- Space for the logo -->
+    <div class="mb-4">
+        <img src="~/images/bookswaplogo.png" alt="Virtual Bibliothèque Logo" class="img-fluid img-thumbnail" style="max-width: 350px;">
+    </div>
+
+    <!-- Welcome Message -->
+    <h1 class="display-4">Welcome to Book Swap</h1>
+    <p class="lead">Immerse yourself in a universe of knowledge, books, and resources at your fingertips.</p>
+
+    <!-- Introduction Section -->
+    <section class="introduction mt-4">
+        <p>Our Virtual Bibliothèque is designed to provide easy access to an extensive collection of digital resources, ranging from classic literature and academic publications to multimedia content and personalized reading recommendations.</p>
+        <p>With powerful search tools, curated lists, and a user-friendly interface, we aim to make knowledge accessible to everyone. Whether you're researching for a project, expanding your expertise, or enjoying a good book, our library is here for you.</p>
+    </section>
+
+    <!-- Highlighted Features -->
+    <section class="features mt-5">
+        <h2 class="h4">Explore Our Features:</h2>
+        <ul class="list-unstyled">
+            <li>📚 A vast catalog of eBooks, research papers, and multimedia.</li>
+            <li>🔍 Advanced search and filtering options for precise results.</li>
+            <li>❤️ Save and organize your favorite resources effortlessly.</li>
+            <li>📖 Personalized recommendations tailored to your interests.</li>
+        </ul>
+    </section>
 </div>

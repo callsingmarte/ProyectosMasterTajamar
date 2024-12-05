@@ -35,6 +35,12 @@ namespace BookSwap.Pages.Books
                 return Page();
             }
 
+            if (!Book.IsAvailable)
+            {
+                Book.LoanDate = DateTime.Now;
+                Book.ReturnDate = DateTime.Now.AddDays(7);
+            }
+
             _context.Book.Add(Book);
             await _context.SaveChangesAsync();
 

@@ -35,12 +35,20 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Book.IsAvailable)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.LoanDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.LoanDate)
-        </dd>
+        @if(!Model.Book.IsAvailable){
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Book.LoanDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Book.LoanDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Book.ReturnDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Book.ReturnDate)
+            </dd>
+        }
     </dl>
 </div>
 <div>

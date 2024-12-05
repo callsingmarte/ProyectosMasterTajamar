@@ -14,6 +14,11 @@ namespace BookSwap.Models
                     throw new ArgumentNullException("Null BookSwapContext");
                 }
 
+                if (context.Book.Any())
+                {
+                    return;
+                }
+
                 context.Book.AddRange(
                      new Book
                      {

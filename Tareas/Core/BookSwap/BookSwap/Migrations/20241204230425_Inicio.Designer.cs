@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSwap.Migrations
 {
     [DbContext(typeof(BookSwapContext))]
-    [Migration("20241204193312_Inicio")]
+    [Migration("20241204230425_Inicio")]
     partial class Inicio
     {
         /// <inheritdoc />

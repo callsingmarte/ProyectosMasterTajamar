@@ -48,6 +48,12 @@ namespace BookSwap.Pages.Books
                 return Page();
             }
 
+            if (Book.IsAvailable)
+            {
+                Book.LoanDate = null;
+                Book.ReturnDate = null;
+            }
+
             _context.Attach(Book).State = EntityState.Modified;
 
             try
