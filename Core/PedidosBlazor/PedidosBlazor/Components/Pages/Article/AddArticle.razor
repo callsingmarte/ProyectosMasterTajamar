@@ -1,0 +1,49 @@
+﻿@page "/add-article"
+@using PedidosBlazor.Models;
+@using PedidosBlazor.Services;
+@rendermode InteractiveServer
+
+<h3>Create new Article</h3>
+@inject IArticleService ArticleServices
+@inject NavigationManager Navigation
+<EditForm Model="newArticle" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="name"> Name </label>
+        <InputText id="name" class="form-control" @bind-Value="newArticle.Name"/>
+    </div>
+   <div class="form-group">
+        <label for="category"> Category</label>
+        <InputText id="category" class="form-control" @bind-Value="newArticle.Category"/>
+    </div>
+   <div class="form-group">
+        <label for="price"> Price</label>
+        <InputNumber id="price" class="form-control" @bind-Value="newArticle.Price"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Article</button>
+    <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+</EditForm>
+
+@code {
+    private Article newArticle = new Article();
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            await ArticleServices.AddArticleAsync(newArticle);
+            Navigation.NavigateTo("/articles");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating article: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/articles");   
+    }
+
+}

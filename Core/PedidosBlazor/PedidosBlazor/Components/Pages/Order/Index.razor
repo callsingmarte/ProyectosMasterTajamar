@@ -1,0 +1,84 @@
+﻿@page "/Order/index-order/{ArticleId:int}/{ArticleName}"
+@using PedidosBlazor.Models
+@using PedidosBlazor.Services
+@using PedidosBlazor.Components.Pages.Shared
+@inject IOrderService OrderService
+@inject IJSRuntime js
+@rendermode InteractiveServer
+
+<a class="btn btn-success mb-3" href="/add-order/">Create New Order</a>
+
+@if(orders == null)
+{
+    <p><em>Loading...</em></p>
+}else if(orders.Count() == 0)
+{
+    <p>No orders in database yet</p>
+}
+else
+{
+    <div class="article-grid">
+        <div class="form-inline article-card">
+            <label class="form-label" for="nombre-filtro">Busqueda:</label>
+            <input type="text" class="form-control mb-2 mr-sm-2"
+                   @bind="categoryFiltro" placeholder="Search by name" />
+            <button type="button" class="btn btn-primary mr-sm-2 mb-2" @onclick="Buscar">Search</button>
+            <button type="button" class="btn btn-warning mb-2" @onclick="Limpiar">Clean</button>
+        </div>
+        <table class="table-hover article-card">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Quantity</th>
+                    <th>Order Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in orders)
+                {
+                    <tr>
+                        <td>@order.CompanyName</td>
+                        <td>@order.Quantity</td>
+                        <td>@Convert.ToDateTime(order.OrderDate).ToShortDateString()</td>
+                        <td>
+                            <a class="btn btn-success" href="/edit-order/@order.OrderID">Edit</a>
+                            <button class="btn btn-danger" @onclick="(() => DeleteOrder(order.OrderID))">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private IEnumerable<Order>? orders;
+    [Parameter] public int ArticleID { get; set; }
+    [Parameter] public string? ArticleName { get; set; }
+
+    Order order = new Order();
+
+    private string categoryFiltro = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        orders = await OrderService.GetAllOrdersAsync(ArticleID);
+    }
+
+    async Task Buscar()
+    {
+
+    }
+
+    async Task Limpiar()
+    {
+
+    }
+
+    async void DeleteOrder(int id)
+    {
+        
+    }
+
+}

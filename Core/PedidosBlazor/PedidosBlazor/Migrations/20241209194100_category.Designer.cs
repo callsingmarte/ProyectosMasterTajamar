@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PedidosBlazor.Data;
 
@@ -11,9 +12,11 @@ using PedidosBlazor.Data;
 namespace PedidosBlazor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209194100_category")]
+    partial class category
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,7 +96,7 @@ namespace PedidosBlazor.Migrations
                     b.Property<int>("ArticleID")
                         .HasColumnType("int");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -114,7 +117,7 @@ namespace PedidosBlazor.Migrations
                         {
                             OrderID = 1,
                             ArticleID = 1,
-                            CompanyName = "Sports World",
+                            Category = "Sports World",
                             OrderDate = new DateTime(2023, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Quantity = 15
                         },
@@ -122,7 +125,7 @@ namespace PedidosBlazor.Migrations
                         {
                             OrderID = 2,
                             ArticleID = 2,
-                            CompanyName = "Footwear Co.",
+                            Category = "Footwear Co.",
                             OrderDate = new DateTime(2023, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Quantity = 20
                         },
@@ -130,7 +133,7 @@ namespace PedidosBlazor.Migrations
                         {
                             OrderID = 3,
                             ArticleID = 3,
-                            CompanyName = "Fitness Depot",
+                            Category = "Fitness Depot",
                             OrderDate = new DateTime(2023, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Quantity = 10
                         },
@@ -138,7 +141,7 @@ namespace PedidosBlazor.Migrations
                         {
                             OrderID = 4,
                             ArticleID = 4,
-                            CompanyName = "Pro Hoops",
+                            Category = "Pro Hoops",
                             OrderDate = new DateTime(2023, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Quantity = 12
                         },
@@ -146,7 +149,7 @@ namespace PedidosBlazor.Migrations
                         {
                             OrderID = 5,
                             ArticleID = 5,
-                            CompanyName = "Tennis Experts",
+                            Category = "Tennis Experts",
                             OrderDate = new DateTime(2023, 7, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Quantity = 5
                         });

@@ -43,6 +43,14 @@ namespace PedidosBlazor.Services
             return await _context.Articles.Include(a => a.Orders).ToListAsync();
         }
 
+        //Obtener la lista de articulos para el paginador
+        public async Task<List<Article>> GetArticlesAsync(int page, int quantityPerPage)
+        {
+            var query = _context.Articles.Include(a => a.Orders).AsQueryable();
+
+            return await query.Skip((page-1) * quantityPerPage).Take(quantityPerPage).ToListAsync();
+        }
+
         //Actualizar un articulo
         public async Task UpdateArticleAsync(Article article)
         {

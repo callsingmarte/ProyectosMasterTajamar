@@ -1,10 +1,12 @@
 ﻿@page "/articles"
 @using PedidosBlazor.Models
 @using PedidosBlazor.Services
+@using PedidosBlazor.Components.Pages.Shared
 @inject IArticleService ArticleService
+@inject IJSRuntime js
 @rendermode InteractiveServer
 
-<a class="btn btn-success mb-3" href="">Create New Article</a>
+<a class="btn btn-success mb-3" href="/add-article">Create New Article</a>
 
 @if(articles == null)
 {
@@ -40,14 +42,20 @@ else
                         <td>@article.Category</td>
                         <td>@article.Price</td>
                         <td>
-                            <a class="btn btn-warning" href="">Orders</a>
-                            <a class="btn btn-success" href="">Edit</a>
+                            <a class="btn btn-warning" href="/Order/index-order/@article.ID/@article.Name">Orders</a>
+                            <a class="btn btn-success" href="/edit-article/@article.ID">Edit</a>
                             <button class="btn btn-danger" @onclick="(() => DeleteArticle(article.ID))">Delete</button>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+        <Paginador 
+            TotalPagesQuantity="TotalPageQuantity" 
+            CurrentPage="currentPage"
+            Radius="2"
+            SelectedPage="selectedPage"
+        ></Paginador>
     </div>    
 }
 
@@ -55,15 +63,36 @@ else
     private List<Article>? articles;
 
     private string nombreArticleFiltro = string.Empty;
+    private int TotalPageQuantity;
+    private int currentPage = 1;
 
     protected override async Task OnInitializedAsync()
     {
         articles = await ArticleService.GetArticlesAsync();
     }
 
+    async Task CargarArticles(int page = 1, int quantityPerPage = 4)
+    {
+        articles = await ArticleService.GetArticlesAsync(page, quantityPerPage);
+
+    }
+
     async Task DeleteArticle(int idArticle)
     {
+        var articleSeleccionado = articles!.First(x => x.ID == idArticle);
+        string mensajeConfirmacion = $"¿Do you really want to delete article {articleSeleccionado.Name}";
+        bool result = await js.InvokeAsync<bool>("window.confirm", mensajeConfirmacion);
+        if (result)
+        {
+            await ArticleService.DeleteArticleAsync(idArticle);
+            articles = await ArticleService.GetArticlesAsync();
+        }
+    }
 
+    private async Task selectedPage(int page)
+    {
+        currentPage = page;
+        await CargarArticles(page);
     }
 
     async Task Buscar()
@@ -81,6 +110,9 @@ else
 
     async Task Limpiar()
     {
-        
+        //Limpiar el texto del filtro
+        nombreArticleFiltro = String.Empty;
+        //Recargar todos los articulos
+        articles = await ArticleService.GetArticlesAsync();        
     }
 }
