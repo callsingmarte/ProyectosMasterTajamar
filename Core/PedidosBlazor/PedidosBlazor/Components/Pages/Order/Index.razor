@@ -6,7 +6,7 @@
 @inject IJSRuntime js
 @rendermode InteractiveServer
 
-<a class="btn btn-success mb-3" href="/add-order/">Create New Order</a>
+<a class="btn btn-success mb-3" href="/add-order/@ArticleID/@ArticleName">Create New Order</a>
 
 @if(orders == null)
 {
@@ -21,7 +21,7 @@ else
         <div class="form-inline article-card">
             <label class="form-label" for="nombre-filtro">Busqueda:</label>
             <input type="text" class="form-control mb-2 mr-sm-2"
-                   @bind="categoryFiltro" placeholder="Search by name" />
+            @bind="companyNameFiltro" placeholder="Search by name" />
             <button type="button" class="btn btn-primary mr-sm-2 mb-2" @onclick="Buscar">Search</button>
             <button type="button" class="btn btn-warning mb-2" @onclick="Limpiar">Clean</button>
         </div>
@@ -37,18 +37,12 @@ else
             <tbody>
                 @foreach (var order in orders)
                 {
-                    <tr>
-                        <td>@order.CompanyName</td>
-                        <td>@order.Quantity</td>
-                        <td>@Convert.ToDateTime(order.OrderDate).ToShortDateString()</td>
-                        <td>
-                            <a class="btn btn-success" href="/edit-order/@order.OrderID">Edit</a>
-                            <button class="btn btn-danger" @onclick="(() => DeleteOrder(order.OrderID))">Delete</button>
-                        </td>
-                    </tr>
+                    <TableRow Item="order" RowContent="@RowContentForOrder" Actions="@ActionsForOrder" />
                 }
             </tbody>
         </table>
+        <Paginador TotalItems="@totalItems" ItemsPerPage="@recordsPerPage" 
+            CurrentPage="@currentPage" Radius="3" SelectedPage="OnSelectedPage" />
     </div>
 }
 
@@ -59,26 +53,99 @@ else
 
     Order order = new Order();
 
-    private string categoryFiltro = string.Empty;
+    private string companyNameFiltro = string.Empty;
+    private int totalItems; //Total de orders
+    private int currentPage = 1;
+    private string? nombreArticulo;
+    private int recordsPerPage = 4; //Registros por pagina
 
     protected override async Task OnInitializedAsync()
     {
-        orders = await OrderService.GetAllOrdersAsync(ArticleID);
+        totalItems = await OrderService.GetTotalOrdersCountAsync(ArticleID);
+        await LoadOrders(currentPage, recordsPerPage);
+    }
+
+    private async Task LoadOrders(int page, int quantityPerPage)
+    {
+        orders = await OrderService.GetAllOrdersAsync(ArticleID, page, quantityPerPage);
     }
 
     async Task Buscar()
     {
+        if(string.IsNullOrWhiteSpace(companyNameFiltro)){
+            await LoadOrders(currentPage, recordsPerPage);
+        }else{
+            //Buscariamos orders por nombreCompañia
+            orders = await OrderService.GetAllOrdersAsync(ArticleID);
+            orders = orders.Where(o => o.CompanyName!.Contains(companyNameFiltro, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+    }
 
+    private async Task OnSelectedPage(int page)
+    {
+        currentPage = page;
+        await LoadOrders(page, recordsPerPage);
     }
 
     async Task Limpiar()
     {
-
+        companyNameFiltro = string.Empty;
+        //Recargar todos los pedidos sin filtro
+        await LoadOrders(currentPage, recordsPerPage);
     }
 
-    async void DeleteOrder(int id)
+    async void DeleteOrder(int idOrder)
     {
-        
-    }
+        var orderSeleccionado = orders!.First(x => x.OrderID == idOrder);
+        string mensajeConfirmacion = $"Do you really delete order of '{orderSeleccionado.CompanyName}'?";
 
+        bool result = await js.InvokeAsync<bool>("window.confirm", mensajeConfirmacion);
+
+        if(result){
+            await OrderService.DeleteOrderAsync(idOrder);
+            totalItems = await OrderService.GetTotalOrdersCountAsync(ArticleID);
+            await LoadOrders(currentPage, recordsPerPage);
+        }
+    }
+    private RenderFragment<object> RowContentForOrder => item => __builder =>
+    {
+        var order = item as Order;
+        if (order != null)
+        {
+            __builder.OpenElement(0, "td");
+            __builder.AddAttribute(1, "class", "text-center");
+            __builder.AddContent(2, order.CompanyName);
+            __builder.CloseElement();
+
+            __builder.OpenElement(3, "td");
+            __builder.AddAttribute(4, "class", "text-center");
+            __builder.AddContent(5, order.Quantity);
+            __builder.CloseElement();
+
+            __builder.OpenElement(6, "td");
+            __builder.AddAttribute(7, "class", "text-center");
+            __builder.AddContent(8, order.OrderDate?.ToShortDateString());
+            __builder.CloseElement();
+        }
+    };
+    private RenderFragment<object> ActionsForOrder => item => __builder =>
+    {
+        var order = item as Order;
+        if (order != null)
+        {
+            __builder.OpenElement(0, "a");
+            __builder.AddAttribute(1, "class", "btn btn-success");
+            __builder.AddAttribute(2, "href", $"edit-order/{order.OrderID}/{order.ArticleID}/{order.Article?.Name}");
+            __builder.AddContent(3, "Edit");
+            __builder.CloseElement();
+
+            __builder.AddMarkupContent(4, " ");
+
+            __builder.OpenElement(5, "button");
+            __builder.AddAttribute(6, "class", "btn btn-danger");
+            __builder.AddAttribute(7, "onclick", EventCallback.Factory.Create(this, () => DeleteOrder(order.OrderID)));
+            __builder.AddContent(8, "Delete");
+            __builder.CloseElement();
+        }
+    };
 }

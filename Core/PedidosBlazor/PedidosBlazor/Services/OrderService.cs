@@ -1,37 +1,60 @@
-﻿using PedidosBlazor.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PedidosBlazor.Data;
+using PedidosBlazor.Models;
 
 namespace PedidosBlazor.Services
 {
     public class OrderService : IOrderService
     {
-        public Task AddOrderAsync(Order article)
+        private readonly AppDbContext _context;
+
+        public OrderService(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteOrderAsync(int id)
+        public async Task CreateOrderAsync(Order order)
         {
-            throw new NotImplementedException();
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Order>> GetAllOrdersAsync(int id)
+        public async Task DeleteOrderAsync(int id)
         {
-            throw new NotImplementedException();
+            var order = await _context.Orders.FindAsync(id);
+            if (order != null)
+            {
+                _context.Orders.Remove(order);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task<IEnumerable<Order>> GetAllOrdersAsync(int id, int page, int quantityPerPage)
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Orders.Where(o => o.ArticleID == id).ToListAsync();
+        }
+        
+        public async Task<int> GetTotalOrdersCountAsync(int? id)
+        {
+            return await _context.Orders.Where(o => o.ArticleID == id).CountAsync();
         }
 
-        public Task<Order> GetOrderByIdAsync(int id)
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync(int id, int page, int quantityPerPage)
         {
-            throw new NotImplementedException();
+            var query = _context.Orders.Where(o => o.ArticleID == id).AsQueryable();
+
+            return await query.Skip((page - 1) * quantityPerPage).Take(quantityPerPage).ToListAsync();
         }
 
-        public Task UpdateOrderAsync(Order article)
+        public async Task<Order> GetOrderByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Orders.FirstOrDefaultAsync(o => o.OrderID == id);
+        }
+
+        public async Task UpdateOrderAsync(Order order)
+        {
+            _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
         }
     }
 }

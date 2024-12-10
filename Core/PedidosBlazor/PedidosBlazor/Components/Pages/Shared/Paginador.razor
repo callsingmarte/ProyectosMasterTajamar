@@ -2,26 +2,68 @@
     <ul class="pagination justify-content-center">
         @foreach (var link in links)
         {
-            <li onclick="@(() => SelectedPageInternal(link))"
+            <li @onclick="@(()=> SelectedPageInternal(link))"
                 style="cursor:pointer"
-                class="page-item @(link.Enabled ? null : "disabled") 
-                @(link.Active ? "active" : null)">
+                class="page-item @(link.Enabled ? null : "disabled") @(link.Active ? "active":null)">
                 <span class="page-link" href="#">@link.Text</span>
-            </li>            
+            </li>
         }
     </ul>
 </nav>
+
 @code {
     [Parameter] public int CurrentPage { get; set; } = 1;
-    [Parameter] public int TotalPagesQuantity { get; set; }
-    [Parameter] public int Radius { get; set; } = 3;
+    [Parameter] public int TotalItems { get; set; } // Total de elementos.
+    [Parameter] public int ItemsPerPage { get; set; } = 5; // Elementos por página (predeterminado a 5).
+    [Parameter] public int Radius { get; set; } = 3;//se utiliza para controlar
+                                                    //el número de páginas visibles a la izquierda
+                                                    //y a la derecha de la página actual en el control de paginación.
     [Parameter] public EventCallback<int> SelectedPage { get; set; }
-
     List<LinkModel>? links;
+
+    private int TotalPagesQuantity => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);//Calcula dinamicamente las paginas
+    private bool IsLastPage => CurrentPage == TotalPagesQuantity; // Verifica si estás en la última página.
+
+    protected override void OnParametersSet()
+    {
+        LoadPages();
+    }
+    private async Task SelectedPageInternal(LinkModel link)
+    {
+        if (link.Page == CurrentPage || !link.Enabled)
+        {
+            return;
+        }
+        CurrentPage = link.Page;
+        await SelectedPage.InvokeAsync(link.Page);
+
+    }
+    private void LoadPages()
+    {
+        links = new List<LinkModel>();
+
+        // Agregar el botón "Previous".
+        var isPreviousLinkEnabled = CurrentPage > 1;
+        links.Add(new LinkModel(CurrentPage - 1, isPreviousLinkEnabled, "Previous"));
+
+        // Generar los enlaces de las páginas.
+        for (int i = 1; i <= TotalPagesQuantity; i++)
+        {
+            if (i >= CurrentPage - Radius && i <= CurrentPage + Radius)
+            {
+                links.Add(new LinkModel(i)
+                    { Active = i == CurrentPage }
+                );
+            }
+        }
+
+        var isNextPageLinkEnabled = CurrentPage < TotalPagesQuantity;
+        links.Add(new LinkModel(CurrentPage + 1, isNextPageLinkEnabled, "Next"));
+    }
 
     class LinkModel
     {
-        public LinkModel(int page) : this(page, true){}
+        public LinkModel(int page) : this(page, true) { }
         public LinkModel(int page, bool enabled) : this(page, enabled, page.ToString()) { }
         public LinkModel(int page, bool enabled, string text)
         {
@@ -29,50 +71,9 @@
             Enabled = enabled;
             Text = text;
         }
-
         public string Text { get; set; }
         public int Page { get; set; }
         public bool Enabled { get; set; } = true;
         public bool Active { get; set; } = false;
-    }
-
-    protected override void OnParametersSet()
-    {
-        LoadPages();
-    }
-
-    private async Task SelectedPageInternal(LinkModel link)
-    {
-        if(link.Page == CurrentPage)
-        {
-            return;
-        }
-        if (!link.Enabled)
-        {
-            return;
-        }
-
-        CurrentPage = link.Page;
-        await SelectedPage.InvokeAsync(link.Page);
-    }
-
-    private void LoadPages()
-    {
-        links = new List<LinkModel>();
-        var isPreviousLinkEnabled = CurrentPage != 1;
-        var previousPage = (CurrentPage == 1) ? 1 : CurrentPage - 1;
-        links.Add(new LinkModel(previousPage, isPreviousLinkEnabled, "Previous"));
-
-        for (int i = 1; i <= TotalPagesQuantity; i++)
-        {
-            if (i >= CurrentPage - Radius && i <= CurrentPage + Radius)
-            {
-                links.Add(new LinkModel(i) { Active = CurrentPage == 1 });
-            }
-        }
-
-        var isNextPageLinkEnabled = CurrentPage != TotalPagesQuantity;
-        var nextPage = CurrentPage + 1;
-        links.Add(new LinkModel(nextPage, isNextPageLinkEnabled, "Next"));
     }
 }

@@ -1,0 +1,16 @@
+﻿<tr>
+    @if(RowContent != null){
+        @RowContent(Item)
+    }
+    <td>
+        @if(Actions != null){
+            @Actions(Item)
+        }
+    </td>
+</tr>
+
+@code {
+    [Parameter] public object? Item{ get; set; }
+    [Parameter] public RenderFragment<object>? RowContent { get; set; }
+    [Parameter] public RenderFragment<object>? Actions { get; set; }
+}

@@ -37,82 +37,128 @@ else
             <tbody>
                 @foreach (var article in articles)
                 {
-                    <tr>
-                        <td>@article.Name</td>
-                        <td>@article.Category</td>
-                        <td>@article.Price</td>
-                        <td>
-                            <a class="btn btn-warning" href="/Order/index-order/@article.ID/@article.Name">Orders</a>
-                            <a class="btn btn-success" href="/edit-article/@article.ID">Edit</a>
-                            <button class="btn btn-danger" @onclick="(() => DeleteArticle(article.ID))">Delete</button>
-                        </td>
-                    </tr>
+                    <TableRow Item="article" RowContent="@RowContentForArticle" Actions="@ActionsForArticle" />
                 }
             </tbody>
         </table>
-        <Paginador 
-            TotalPagesQuantity="TotalPageQuantity" 
-            CurrentPage="currentPage"
-            Radius="2"
-            SelectedPage="selectedPage"
-        ></Paginador>
-    </div>    
+        <Paginador TotalItems="@totalItems" ItemsPerPage="@recordsPerPage"
+                   CurrentPage="@currentPage" Radius="3"
+                   SelectedPage="OnSelectedPage" />
+    </div>
 }
 
 @code {
     private List<Article>? articles;
-
     private string nombreArticleFiltro = string.Empty;
-    private int TotalPageQuantity;
-    private int currentPage = 1;
+    private int currentPage = 1; // Página actual
+    private int totalItems; // Total de artículos
+    private int recordsPerPage = 4; // Registros por página
 
     protected override async Task OnInitializedAsync()
     {
-        articles = await ArticleService.GetArticlesAsync();
+        // Cargar total de artículos y la primera página
+        totalItems = await ArticleService.GetTotalArticlesCountAsync();
+        await LoadArticles(currentPage, recordsPerPage);
     }
 
-    async Task CargarArticles(int page = 1, int quantityPerPage = 4)
+    private async Task LoadArticles(int page, int quantityPerPage)
     {
+        // Cargar artículos para la página actual
         articles = await ArticleService.GetArticlesAsync(page, quantityPerPage);
-
     }
 
-    async Task DeleteArticle(int idArticle)
+    private async Task OnSelectedPage(int page)
     {
-        var articleSeleccionado = articles!.First(x => x.ID == idArticle);
-        string mensajeConfirmacion = $"¿Do you really want to delete article {articleSeleccionado.Name}";
-        bool result = await js.InvokeAsync<bool>("window.confirm", mensajeConfirmacion);
+        // Actualizar la página actual y recargar los artículos
+        currentPage = page;
+        await LoadArticles(page, recordsPerPage);
+    }
+
+    private async Task DeleteArticle(int idArticle)
+    {
+        var articleSelected = articles!.First(x => x.ID == idArticle);
+        string confirmMessage = $"Do you really want to delete the article {articleSelected.Name}?";
+
+        bool result = await js.InvokeAsync<bool>("window.confirm", confirmMessage);
+
         if (result)
         {
             await ArticleService.DeleteArticleAsync(idArticle);
-            articles = await ArticleService.GetArticlesAsync();
+            // Actualizar total de artículos y recargar la página actual
+            totalItems = await ArticleService.GetTotalArticlesCountAsync();
+            await LoadArticles(currentPage, recordsPerPage);
         }
     }
 
-    private async Task selectedPage(int page)
-    {
-        currentPage = page;
-        await CargarArticles(page);
-    }
-
-    async Task Buscar()
+    private async Task Buscar()
     {
         if (string.IsNullOrWhiteSpace(nombreArticleFiltro))
         {
-            articles = await ArticleService.GetArticlesAsync();
+            // Recargar artículos sin filtro
+            await LoadArticles(currentPage, recordsPerPage);
         }
         else
         {
+            // Filtrar artículos localmente
             articles = await ArticleService.GetArticlesAsync();
             articles = articles.Where(a => a.Name!.Contains(nombreArticleFiltro, StringComparison.OrdinalIgnoreCase)).ToList();
         }
     }
 
-    async Task Limpiar()
+    private async Task Limpiar()
     {
-        //Limpiar el texto del filtro
-        nombreArticleFiltro = String.Empty;
-        //Recargar todos los articulos
-        articles = await ArticleService.GetArticlesAsync();        
+        // Limpiar el filtro y recargar los artículos
+        nombreArticleFiltro = string.Empty;
+        await LoadArticles(currentPage, recordsPerPage);
     }
+
+    private RenderFragment<object> RowContentForArticle => item => __builder =>
+    {
+    var article = item as Article;
+    if (article != null)
+    {
+        __builder.OpenElement(0, "td");
+        __builder.AddAttribute(1, "class", "text-center");
+        __builder.AddContent(2, article.Name);
+        __builder.CloseElement();
+
+        __builder.OpenElement(3, "td");
+        __builder.AddAttribute(4, "class", "text-center");
+        __builder.AddContent(5, article.Category);
+        __builder.CloseElement();
+
+        __builder.OpenElement(6, "td");
+        __builder.AddAttribute(7, "class", "text-center");
+        __builder.AddContent(8, article.Price);
+        __builder.CloseElement();
+    }
+    };
+    private RenderFragment<object> ActionsForArticle => item => __builder =>
+    {
+        var article = item as Article;
+        if (article != null)
+        {
+            __builder.OpenElement(0, "a");
+            __builder.AddAttribute(1, "class", "btn btn-warning");
+            __builder.AddAttribute(2, "href", $"Order/index-order/{article.ID}/{article.Name}");
+            __builder.AddContent(3, "Orders");
+            __builder.CloseElement();
+
+            __builder.AddMarkupContent(4, " ");
+
+            __builder.OpenElement(5, "a");
+            __builder.AddAttribute(6, "class", "btn btn-success");
+            __builder.AddAttribute(7, "href", $"edit-article/{article.ID}");
+            __builder.AddContent(8, "Edit");
+            __builder.CloseElement();
+
+            __builder.AddMarkupContent(9, " ");
+
+            __builder.OpenElement(10, "button");
+            __builder.AddAttribute(11, "class", "btn btn-danger");
+            __builder.AddAttribute(12, "onclick", EventCallback.Factory.Create(this, () => DeleteArticle(article.ID)));
+            __builder.AddContent(13, "Delete");
+            __builder.CloseElement();
+        }
+    };
 }

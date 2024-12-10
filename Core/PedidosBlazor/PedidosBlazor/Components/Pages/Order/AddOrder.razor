@@ -1,5 +1,54 @@
-﻿<h3>AddOrder</h3>
+﻿@page "/add-order/{ArticleID:int}/{ArticleName}"
+@using PedidosBlazor.Models;
+@using PedidosBlazor.Services;
+@inject IOrderService OrderService;
+@inject NavigationManager Navigation;
+@rendermode InteractiveServer
+
+<h3>Create New Order Article: @ArticleName</h3>
+
+<EditForm Model="newOrder" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <input type="hidden" @bind-value="newOrder.ArticleID" />
+    <div class="form-group">
+        <label for="companyName">Company Name</label>
+        <InputText id="companyName" class="form-control" @bind-Value="newOrder.CompanyName" />
+    </div>
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <InputNumber id="quantity" class="form-control" @bind-Value="newOrder.Quantity" />
+    </div>
+    <div class="form-group">
+        <label for="orderDate">Order Date</label>
+        <InputDate id="orderDate" class="form-control" @bind-Value="newOrder.OrderDate" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create Order</button>
+    <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+</EditForm>
 
 @code {
 
+    [Parameter] public int ArticleID { get; set; }
+    [Parameter] public string? ArticleName { get; set; }
+
+    private Order newOrder = new Order();
+
+    protected override void OnInitialized()
+    {
+        newOrder.ArticleID = ArticleID;
+    }
+
+    private void Cancel(){
+
+    }
+
+    private async Task HandleValidSubmit(){
+        try{
+            await OrderService.CreateOrderAsync(newOrder);
+            Navigation.NavigateTo("/Order/index-order/" + ArticleID + "/" + ArticleName);
+        }catch(Exception ex){
+            Console.WriteLine($"Error creating order: {ex.Message}");
+        }
+    }
 }

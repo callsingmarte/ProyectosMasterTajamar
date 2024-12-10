@@ -1,5 +1,57 @@
-﻿<h3>EditOrder</h3>
+﻿@page "/edit-order/{id:int}/{articleId:int}/{articleName}"
+
+@using PedidosBlazor.Models
+@using PedidosBlazor.Services
+@inject IOrderService OrderService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<h3>Edit Order</h3>
+
+@if(order == null){
+    <p>Loading...</p>
+}else{
+    <EditForm Model="@order" OnValidSubmit="HandleValidSubmit" class="article-card">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <input type="hidden" @bind-value="order.ArticleID" />
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <InputText id="companyName" class="form-control" @bind-Value="order.CompanyName" />
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" class="form-control" @bind-Value="order.Quantity" />
+        </div>
+        <div class="form-group">
+            <label for="orderDate">Order Date</label>
+            <InputDate id="orderDate" class="form-control" @bind-Value="order.OrderDate" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+    <br/>
+    <button type="button" class="btn btn-secondary mt-4" @onclick="CancelEdit">Cancel</button>
+}
 
 @code {
+    [Parameter] public int Id { get; set; } //Id de Order
+    [Parameter] public int articleId { get; set; }
+    [Parameter] public string? articleName { get; set; }
 
+    private Order? order;
+
+    protected override async Task OnInitializedAsync()
+    {
+        order = await OrderService.GetOrderByIdAsync(Id);
+    }
+
+    private async Task HandleValidSubmit(){
+        await OrderService.UpdateOrderAsync(order);
+        Navigation.NavigateTo("/Order/index-order/" + articleId + "/" + articleName);
+    }
+
+    private void CancelEdit()
+    {
+        Navigation.NavigateTo("/Order/index-order/" + articleId + "/" + articleName);
+    }
 }

@@ -43,6 +43,12 @@ namespace PedidosBlazor.Services
             return await _context.Articles.Include(a => a.Orders).ToListAsync();
         }
 
+        //Obtener el total de articulos
+        public async Task<int> GetTotalArticlesCountAsync()
+        {
+            return await _context.Articles.CountAsync();
+        }
+
         //Obtener la lista de articulos para el paginador
         public async Task<List<Article>> GetArticlesAsync(int page, int quantityPerPage)
         {

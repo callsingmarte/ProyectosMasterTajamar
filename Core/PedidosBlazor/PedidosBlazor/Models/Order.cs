@@ -13,5 +13,6 @@ namespace PedidosBlazor.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? OrderDate { get; set; }
         public int ArticleID { get; set; }
+        public Article Article { get; set; }
     }
 }
