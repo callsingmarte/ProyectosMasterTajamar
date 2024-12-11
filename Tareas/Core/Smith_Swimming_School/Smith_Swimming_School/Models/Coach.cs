@@ -8,5 +8,6 @@ namespace Smith_Swimming_School.Models
         public int Id_Coach { get; set; }
         public string? Name { get; set; }
         public string? Phone_Number { get; set; }
+        public string? CoachUser { get; set; }
     }
 }

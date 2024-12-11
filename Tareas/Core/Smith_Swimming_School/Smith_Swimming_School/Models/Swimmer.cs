@@ -4,10 +4,12 @@ namespace Smith_Swimming_School.Models
 {
     public class Swimmer
     {
+        [Key]
         public int Id_Swimmer { get; set; }
         [Required]
         public string? Name { get; set; }
         public string? Phone_Number { get; set; }
+        public string? SwimmerUser { get; set; }
         public Genre Genre { get; set; }
         [Required]
         [DataType(DataType.Date)]

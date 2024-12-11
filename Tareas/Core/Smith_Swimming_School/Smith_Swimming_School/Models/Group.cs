@@ -20,11 +20,18 @@ namespace Smith_Swimming_School.Models
 
     public enum Level
     {
-        SwimmerLvl1 = 1, 
-        SwimmerLvl2, 
-        SwimmerLvl3, 
-        SwimmerLvl4, 
-        SwimmerLvl5, 
-        SwimmerLvl6
+        YoungSwimmerLvl1 = 1,
+        YoungSwimmerLvl2,
+        YoungSwimmerLvl3,
+        YoungSwimmerLvl4,
+        YoungSwimmerLvl5,
+        YoungSwimmerLvl6,
+        AdultLearning,
+        AdultBegginner,
+        AdultLowIntermediate,
+        AdultHighIntermediate,
+        AdultAdvance,
+        AdultTriathlón,
+        AdultMaster
     }
 }
