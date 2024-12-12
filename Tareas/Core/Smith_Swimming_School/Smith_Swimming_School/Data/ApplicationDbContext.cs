@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Smith_Swimming_School.Models;
+using System.Text.RegularExpressions;
+using Group = Smith_Swimming_School.Models.Group;
 
 namespace Smith_Swimming_School.Data
 {
@@ -85,34 +87,34 @@ namespace Smith_Swimming_School.Data
             builder.Entity<IdentityUser>().HasData(users);
 
             builder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string>{ 
-                    UserId = users[0].Id, 
-                    RoleId = roles.Single(r => r.Name == "Administrator").Id 
+                new IdentityUserRole<string> {
+                    UserId = users[0].Id,
+                    RoleId = roles.Single(r => r.Name == "Administrator").Id
                 },
-                new IdentityUserRole<string>{ 
-                    UserId = users[1].Id, 
-                    RoleId = roles.Single(r => r.Name == "Visitor").Id 
+                new IdentityUserRole<string> {
+                    UserId = users[1].Id,
+                    RoleId = roles.Single(r => r.Name == "Visitor").Id
                 },
-                new IdentityUserRole<string>{ 
-                    UserId = users[2].Id, 
-                    RoleId = roles.Single(r => r.Name == "Coach").Id 
+                new IdentityUserRole<string> {
+                    UserId = users[2].Id,
+                    RoleId = roles.Single(r => r.Name == "Coach").Id
                 },
-                new IdentityUserRole<string>{ 
-                    UserId = users[3].Id, 
-                    RoleId = roles.Single(r => r.Name == "Coach").Id 
+                new IdentityUserRole<string> {
+                    UserId = users[3].Id,
+                    RoleId = roles.Single(r => r.Name == "Coach").Id
                 }
             );
 
             builder.Entity<Coach>().HasData(
-                new Coach { 
-                    Name = "Paco Montoro", 
-                    Phone_Number= "632514785", 
-                    CoachUser = "paco.montoro@3s.com" 
+                new Coach {
+                    Name = "Paco Montoro",
+                    Phone_Number = "632514785",
+                    CoachUser = "paco.montoro@3s.com"
                 },
-                new Coach { 
-                    Name = "Marta Alonso", 
-                    Phone_Number= "632541278", 
-                    CoachUser = "marta.alonso@3s.com" 
+                new Coach {
+                    Name = "Marta Alonso",
+                    Phone_Number = "632541278",
+                    CoachUser = "marta.alonso@3s.com"
                 }
             );
             builder.Entity<Swimmer>().HasData(
@@ -142,17 +144,49 @@ namespace Smith_Swimming_School.Data
                 }
             );
             builder.Entity<Course>().HasData(
-                new Course { Id_Coach = 2, Title = "Swim Training for Endurance" },
-                new Course { Id_Coach = 1, Title = "Breaststroke Fundamentals" }
+                new Course { Id_Coach = 2, Title = "Swim Training for Endurance", TotalPlaces = 25 },
+                new Course { Id_Coach = 1, Title = "Breaststroke Fundamentals", TotalPlaces = 30}
             );
             builder.Entity<Group>().HasData(
-
-            );
+                new Group
+                {
+                    Level = Level.YoungSwimmerLvl1,
+                    Start_Date = new DateTime(2025, 01, 01, 08, 00, 00),
+                    End_Date = new DateTime(2025, 01, 31, 17, 00, 00),
+                    Places = 20
+                },
+                new Group
+                {
+                    Level = Level.AdultLearning,
+                    Start_Date = new DateTime(2024, 10, 01, 09, 00, 00),
+                    End_Date = new DateTime(2024, 01, 30, 18, 30, 00),
+                    Places = 15
+                },
+                new Group
+                {
+                    Level = Level.YoungSwimmerLvl3,
+                    Start_Date = new DateTime(2024, 10, 01, 10, 00, 00),
+                    End_Date = new DateTime(2024, 12, 31, 14, 00, 00),
+                    Places = 10
+                });
             builder.Entity<Enrollment>().HasData(
-
+               new Enrollment {
+                   Id_Course = 2,
+                   Id_Grouping = 1,
+                   Id_Swimmer = 1                   
+               },
+               new Enrollment {
+                   Id_Course = 1,
+                   Id_Grouping = 2,
+                   Id_Swimmer = 3
+               }
             );
             builder.Entity<Report>().HasData(
-
+                new Report
+                {
+                    ProgressReport = "El alumno progresa adecuadamente",
+                    Id_Enrollment = 2
+                }
             );
 
         }

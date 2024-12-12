@@ -6,6 +6,8 @@ namespace Smith_Swimming_School.Models
     {
         [Key]
         public int Id_Grouping { get; set; }
+        [Required]
+        public string? Name { get; set; }    
         public Level Level { get; set; }
         [Required]
         [DataType(DataType.Date)]
