@@ -1,20 +1,65 @@
 .group1 {
     background-color: #FF0000;
     color: #FFF;
+    border-radius: 0 0 5px 5px;
 }
 .group2 {
     background-color: #0026ff;
     color: #FFF;
+    border-radius: 0 0 5px 5px;
 }
 .group3 {
     background-color: #0c9115;
     color: #FFF;
+    border-radius: 0 0 5px 5px;
 }
 .group4 {
     background-color: #c50ddd;
     color: #FFF;
+    border-radius: 0 0 5px 5px;
 }
 .group5 {
     background-color: #333131;
     color: #FFF;
+    border-radius: 0 0 5px 5px;
 }
+#btnCompare:disabled {
+    cursor: not-allowed;
+    pointer-events: auto;
+    filter: brightness(0.7);
+}
+#btnCompare:hover:disabled {
+    cursor: not-allowed;
+    filter: brightness(0.5);
+}
+
+.coverOverlay {
+    z-index: 2;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.coverImg {
+    z-index: 1;
+    position: relative;
+    filter: grayscale(1);
+}
+
+@keyframes cardSelectionHover {
+    from { filter: grayscale(1); }
+    to { filter: grayscale(0); }
+
+}
+
+.coverImg:hover {
+    animation-name: cardSelectionHover;    
+    animation-duration: 2s;
+}
+
+.cardReveal {
+    filter: grayscale(0);
+    pointer-events: none;
+    opacity: 0;
+    transition: 2s ease;
+}
+
