@@ -6,7 +6,6 @@ using X.PagedList.Extensions;
 
 namespace Smith_Swimming_School.Controllers
 {
-    [Authorize(Roles = "Visitor")]
     public class VisitorController : Controller
     {
         private readonly ApplicationDbContext? _db;

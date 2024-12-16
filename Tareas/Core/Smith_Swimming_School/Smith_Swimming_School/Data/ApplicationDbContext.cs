@@ -107,6 +107,18 @@ namespace Smith_Swimming_School.Data
                 new IdentityUserRole<string> {
                     UserId = users[3].Id,
                     RoleId = roles.Single(r => r.Name == "Coach").Id
+                },
+                new IdentityUserRole<string> {
+                    UserId = users[4].Id,
+                    RoleId = roles.Single(r => r.Name == "Swimmer").Id
+                },
+                new IdentityUserRole<string> {
+                    UserId = users[5].Id,
+                    RoleId = roles.Single(r => r.Name == "Swimmer").Id
+                },
+                new IdentityUserRole<string> {
+                    UserId = users[6].Id,
+                    RoleId = roles.Single(r => r.Name == "Swimmer").Id
                 }
             );
 

@@ -286,10 +286,10 @@ namespace Smith_Swimming_School.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0fa26d6e-6119-4101-b9b7-39f20ad243c6", null, "Coach", "COACH" },
-                    { "649dc207-e72b-44a6-bfe6-421345229e7c", null, "Swimmer", "SWIMMER" },
-                    { "9903d0e0-a2d4-4166-b493-3cfed45f47e5", null, "Administrator", "ADMINISTRATOR" },
-                    { "d5eaa6bb-7b02-4bf5-8ce6-790a294c099b", null, "Visitor", "VISITOR" }
+                    { "822e8f95-1892-4f87-b0d4-c8d0fce8dbad", null, "Coach", "COACH" },
+                    { "97c10d82-6f23-45d8-b507-88b605697185", null, "Administrator", "ADMINISTRATOR" },
+                    { "bd8ec400-0f70-47e3-a519-c8b91fa544f5", null, "Visitor", "VISITOR" },
+                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", null, "Swimmer", "SWIMMER" }
                 });
 
             migrationBuilder.InsertData(
@@ -297,13 +297,13 @@ namespace Smith_Swimming_School.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3e68cf35-5091-4e4d-89b9-7f2276754220", 0, "1a9b364e-a4e1-46d1-bb2f-7b77711e1f79", "lucia.sanchiz@gmail.com", true, false, null, "LUCIA.SANCHIZ@GMAIL.COM", "LUCIA.SANCHIZ@GMAIL.COM", "AQAAAAIAAYagAAAAEMx9Refn5g60NoPQEKDfclCLO8Y41rjETwQYmKUrFYUEJBtPtKajRtMnYDA216H+0w==", "685214739", false, "efcc6459-4db4-4259-a3e7-2c3fd114a619", false, "lucia.sanchiz@gmail.com" },
-                    { "4860aea5-d244-4409-abd3-0446ddeed21f", 0, "c7f2fe5e-2801-48df-9979-0947a96ec887", "maria.guerrero@gmail.com", true, false, null, "MARIA.GUERRERO@GMAIL.COM", "MARIA.GUERRERO@GMAIL.COM", "AQAAAAIAAYagAAAAEJpMEW4j0HGEkqJkwtMU4jVIiXLPrd/mqNrZu94GPAUUIOIekOJv/5z9w+9925FYfA==", "685214378", false, "05296633-d5f0-43ec-9d4f-f52e44ec1b66", false, "maria.guerrero@gmail.com" },
-                    { "8be01698-fef8-4dc2-8c31-c2b6c4e012fd", 0, "0dbfdc20-73dd-487d-af7f-752337adf0c7", "paco.montoro@3s.com", true, false, null, "PACO.MONTORO@3S.COM", "PACO.MONTORO@3S.COM", "AQAAAAIAAYagAAAAEK8wQwdEFuDC0O+DZ8RSmGwwPPeDGZJXKBdHUTiuIhL31+DchN1Zi53tAxi+ZddRPw==", "632514785", false, "83d3d8db-8505-4ac4-89a4-3cc1bd189ee9", false, "paco.montoro@3s.com" },
-                    { "aa2d1b3a-818d-4da3-bfe4-de95452c2d98", 0, "c21739b0-248a-4e60-b824-9983f771cfb5", "martin.sanchez@gmail.com", true, false, null, "MARTIN.SANCHEZ@GMAIL.COM", "MARTIN.SANCHEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEMB6DpBhU14yMgMkCcF/jQkJ5BCJ4ei2+wQDhRqrST6F1JVj9MZrTQOfayp4ya0F9w==", "602145318", false, "7ea0200b-a909-4911-a104-ed48d5c60bf7", false, "martin.sanchez@gmail.com" },
-                    { "da60d194-a58d-457f-9275-5cc507cc7541", 0, "ba5f7af9-aa64-48dc-9685-c906b172dc85", "admin@3s.com", true, false, null, "ADMIN@3S.COM", "ADMIN@3S.COM", "AQAAAAIAAYagAAAAEGIfpPqHkwJ8p2E7PTyy3TXP/fywmchFi89Q4PQbSLJrCXC56MY9ihWB7CpmsXl8rw==", "653124875", false, "ed22ba1b-0662-4c3c-b2c5-af7d8f4b35d6", false, "admin@3s.com" },
-                    { "ecf096ec-367a-4fa3-bdf4-069677b074ba", 0, "4a94adbf-c667-4c74-8443-48c22df77fcc", "raul.hernandez@gmail.com", true, false, null, "RAUL.HERNANDEZ@GMAIL.COM", "RAUL.HERNANDEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEGAWL/uqopwpllc+GnKXuF40AIu57WdVGRWLcbR2ARoiMEsfNgsqGYdjgCVlh8GR8g==", "693251487", false, "80e2f5f0-1165-4ebf-96a1-86fec9642d9f", false, "raul.hernandez@gmail.com" },
-                    { "fe47a591-3b43-41ea-9bac-3042e217ed4c", 0, "7f240483-f6f8-425e-ab1b-918990b55960", "marta.alonso@3s.com", true, false, null, "MARTA.ALONSO@3S.COM", "MARTA.ALONSO@3S.COM", "AQAAAAIAAYagAAAAEAP1mczBzBVdda7naEIKPIN1//qKYuIF4FECoyaUdjdxJf9N7CpuxaEYqayxljLfgg==", "632541278", false, "fd4739df-05b3-4be5-9c51-5a8070066250", false, "marta.alonso@3s.com" }
+                    { "04b75633-aa57-4d5d-bc37-63eb5b8d6b38", 0, "dfc3908b-5a84-4ec0-9d7f-b38b139521de", "martin.sanchez@gmail.com", true, false, null, "MARTIN.SANCHEZ@GMAIL.COM", "MARTIN.SANCHEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEFLdxaZJScSZjwVYShkMHMmms9Zea1TcjPlZj55Lys+zz+awzSVjlnZUWrJXCc3yhw==", "602145318", false, "fbd3807e-c8f9-4fd6-a9c9-cd2d0591f7a7", false, "martin.sanchez@gmail.com" },
+                    { "357d0739-17eb-4db2-988d-ee1a6e50987d", 0, "8d3ef028-50ce-4515-8fc2-a0b251b002f6", "admin@3s.com", true, false, null, "ADMIN@3S.COM", "ADMIN@3S.COM", "AQAAAAIAAYagAAAAEK/shcbWUOaLfkv8xIhYXh2O0MNVVwAtgFAkmp50S4V9w7qCQixUY9LBml8Ty9jx6g==", "653124875", false, "d6c55217-b3f7-44c5-8ec3-238e515d3475", false, "admin@3s.com" },
+                    { "56b6dd7e-30be-4593-9437-ee27c0887d4a", 0, "2737113a-2ae6-4541-ad60-3c3cdaf670ab", "raul.hernandez@gmail.com", true, false, null, "RAUL.HERNANDEZ@GMAIL.COM", "RAUL.HERNANDEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEKKqAS/3tFGLb/H9ANiNm2jFBIcnLDdg1lEYMhpYN6rithqoxmqRgjPrmoU0emkROA==", "693251487", false, "6e1cd847-1b09-4397-a1f2-e43c3992a885", false, "raul.hernandez@gmail.com" },
+                    { "61433e78-2efb-42ed-a220-22ba8439df70", 0, "5741e054-f254-494b-b1dd-d7f167d4f534", "lucia.sanchiz@gmail.com", true, false, null, "LUCIA.SANCHIZ@GMAIL.COM", "LUCIA.SANCHIZ@GMAIL.COM", "AQAAAAIAAYagAAAAEE+oZqjGJsTjrMTome0w0AywhImMN5ZrU/cqbm5B9aoAZ2SDdSkk3u9ATyaAu098jw==", "685214739", false, "365ad339-4c5c-4016-add7-2124362da625", false, "lucia.sanchiz@gmail.com" },
+                    { "c5b85380-b13a-41bc-9d09-33e0257ed25e", 0, "0069eff1-d16e-4ce4-9425-60daa5313b6f", "paco.montoro@3s.com", true, false, null, "PACO.MONTORO@3S.COM", "PACO.MONTORO@3S.COM", "AQAAAAIAAYagAAAAEEnaK7egTQ2qESXvw0Q1420uNSSq8g6QouhccjyLiSLQtZe+W3GBfjSIkQTObtrkTw==", "632514785", false, "1e393a92-2507-4067-94aa-429723bac556", false, "paco.montoro@3s.com" },
+                    { "d32ffd42-0478-4e4e-abb8-136150cdb68c", 0, "63b9cc99-d9df-44af-9e0c-ad023f7fa326", "marta.alonso@3s.com", true, false, null, "MARTA.ALONSO@3S.COM", "MARTA.ALONSO@3S.COM", "AQAAAAIAAYagAAAAELey9qFJTh5YXml6d14wg2uhW24RSi+JOSiO2LPOAqjTfuk+zUDvcsCATKVcOYN/yw==", "632541278", false, "fc7caaff-f797-4d90-afce-2c7f85519fe1", false, "marta.alonso@3s.com" },
+                    { "ec100f8c-ca2c-4a56-9646-7d0dfc3dfc25", 0, "92fcc023-574f-4f30-bad3-1f7b9d2e380c", "maria.guerrero@gmail.com", true, false, null, "MARIA.GUERRERO@GMAIL.COM", "MARIA.GUERRERO@GMAIL.COM", "AQAAAAIAAYagAAAAEGKjgKOGmtA2pm3sUznUuZDjfVMxJPo0Um8xJs8ACZyvB9NxSw1pa9/RrH2AFgjlyA==", "685214378", false, "24b17937-8517-41f2-8d21-8affe8da3eef", false, "maria.guerrero@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -363,10 +363,13 @@ namespace Smith_Swimming_School.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "d5eaa6bb-7b02-4bf5-8ce6-790a294c099b", "3e68cf35-5091-4e4d-89b9-7f2276754220" },
-                    { "0fa26d6e-6119-4101-b9b7-39f20ad243c6", "8be01698-fef8-4dc2-8c31-c2b6c4e012fd" },
-                    { "9903d0e0-a2d4-4166-b493-3cfed45f47e5", "da60d194-a58d-457f-9275-5cc507cc7541" },
-                    { "0fa26d6e-6119-4101-b9b7-39f20ad243c6", "fe47a591-3b43-41ea-9bac-3042e217ed4c" }
+                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", "04b75633-aa57-4d5d-bc37-63eb5b8d6b38" },
+                    { "97c10d82-6f23-45d8-b507-88b605697185", "357d0739-17eb-4db2-988d-ee1a6e50987d" },
+                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", "56b6dd7e-30be-4593-9437-ee27c0887d4a" },
+                    { "bd8ec400-0f70-47e3-a519-c8b91fa544f5", "61433e78-2efb-42ed-a220-22ba8439df70" },
+                    { "822e8f95-1892-4f87-b0d4-c8d0fce8dbad", "c5b85380-b13a-41bc-9d09-33e0257ed25e" },
+                    { "822e8f95-1892-4f87-b0d4-c8d0fce8dbad", "d32ffd42-0478-4e4e-abb8-136150cdb68c" },
+                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", "ec100f8c-ca2c-4a56-9646-7d0dfc3dfc25" }
                 });
 
             migrationBuilder.CreateIndex(
