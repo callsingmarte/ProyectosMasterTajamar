@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Smith_Swimming_School.Data;
 using Smith_Swimming_School.Models;
 
 namespace Smith_Swimming_School.Controllers

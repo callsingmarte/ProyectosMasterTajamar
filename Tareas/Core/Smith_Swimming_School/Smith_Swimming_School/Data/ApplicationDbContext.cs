@@ -83,6 +83,11 @@ namespace Smith_Swimming_School.Data
             var passwordHasher = new PasswordHasher<IdentityUser>();
             users[0].PasswordHash = passwordHasher.HashPassword(users[0], "Admin1234$");
             users[1].PasswordHash = passwordHasher.HashPassword(users[1], "Lucia1234$");
+            users[2].PasswordHash = passwordHasher.HashPassword(users[2], "Paco1234$");
+            users[3].PasswordHash = passwordHasher.HashPassword(users[3], "Marta1234$");
+            users[4].PasswordHash = passwordHasher.HashPassword(users[4], "Maria1234$");
+            users[5].PasswordHash = passwordHasher.HashPassword(users[5], "Raul1234$");
+            users[6].PasswordHash = passwordHasher.HashPassword(users[6], "Martin1234$");
 
             builder.Entity<IdentityUser>().HasData(users);
 
@@ -107,11 +112,13 @@ namespace Smith_Swimming_School.Data
 
             builder.Entity<Coach>().HasData(
                 new Coach {
+                    Id_Coach = 1,
                     Name = "Paco Montoro",
                     Phone_Number = "632514785",
                     CoachUser = "paco.montoro@3s.com"
                 },
                 new Coach {
+                    Id_Coach = 2,
                     Name = "Marta Alonso",
                     Phone_Number = "632541278",
                     CoachUser = "marta.alonso@3s.com"
@@ -120,6 +127,7 @@ namespace Smith_Swimming_School.Data
             builder.Entity<Swimmer>().HasData(
                 new Swimmer
                 {
+                    Id_Swimmer = 1,
                     Name = "Maria Guerrero",
                     Genre = Genre.Woman,
                     Birth_Date = new DateTime(2019, 10, 20),
@@ -128,6 +136,7 @@ namespace Smith_Swimming_School.Data
                 },
                 new Swimmer
                 {
+                    Id_Swimmer = 2,
                     Name = "Raul Hernandez",
                     Genre = Genre.Man,
                     Birth_Date = new DateTime(2018, 06, 15),
@@ -136,6 +145,7 @@ namespace Smith_Swimming_School.Data
                 },
                 new Swimmer
                 {
+                    Id_Swimmer = 3,
                     Name = "Martin Sanchez",
                     Genre = Genre.Man,
                     Birth_Date = new DateTime(1995, 03, 10),
@@ -144,38 +154,46 @@ namespace Smith_Swimming_School.Data
                 }
             );
             builder.Entity<Course>().HasData(
-                new Course { Id_Coach = 2, Title = "Swim Training for Endurance", TotalPlaces = 25 },
-                new Course { Id_Coach = 1, Title = "Breaststroke Fundamentals", TotalPlaces = 30}
+                new Course { Id_Course = 1 , Id_Coach = 2, Title = "Swim Training for Endurance", TotalPlaces = 15 },
+                new Course { Id_Course = 2, Id_Coach = 1, Title = "Breaststroke Fundamentals", TotalPlaces = 10}
             );
             builder.Entity<Group>().HasData(
                 new Group
                 {
+                    Id_Grouping = 1,
                     Level = Level.YoungSwimmerLvl1,
+                    Name = "Young Swimmer fundamentals",
                     Start_Date = new DateTime(2025, 01, 01, 08, 00, 00),
                     End_Date = new DateTime(2025, 01, 31, 17, 00, 00),
-                    Places = 20
+                    Places = 5
                 },
                 new Group
                 {
+                    Id_Grouping = 2,
                     Level = Level.AdultLearning,
+                    Name = "Adult Learning for endurance",
                     Start_Date = new DateTime(2024, 10, 01, 09, 00, 00),
                     End_Date = new DateTime(2024, 01, 30, 18, 30, 00),
                     Places = 15
                 },
                 new Group
                 {
+                    Id_Grouping = 3,
                     Level = Level.YoungSwimmerLvl3,
+                    Name = "Young Swimmer lv3 fundamentals",
                     Start_Date = new DateTime(2024, 10, 01, 10, 00, 00),
                     End_Date = new DateTime(2024, 12, 31, 14, 00, 00),
-                    Places = 10
+                    Places = 5
                 });
             builder.Entity<Enrollment>().HasData(
                new Enrollment {
+                   Id_Enrollment = 1,
                    Id_Course = 2,
                    Id_Grouping = 1,
                    Id_Swimmer = 1                   
                },
                new Enrollment {
+                   Id_Enrollment = 2,
                    Id_Course = 1,
                    Id_Grouping = 2,
                    Id_Swimmer = 3
@@ -184,6 +202,7 @@ namespace Smith_Swimming_School.Data
             builder.Entity<Report>().HasData(
                 new Report
                 {
+                    Id_Report = 1,
                     ProgressReport = "El alumno progresa adecuadamente",
                     Id_Enrollment = 2
                 }
