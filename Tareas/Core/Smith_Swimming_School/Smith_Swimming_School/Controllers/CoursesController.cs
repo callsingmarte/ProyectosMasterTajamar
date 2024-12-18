@@ -11,7 +11,7 @@ using Smith_Swimming_School.Models;
 
 namespace Smith_Swimming_School.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Coach")]
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +19,11 @@ namespace Smith_Swimming_School.Controllers
         public CoursesController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public IActionResult CoachAdmin()
+        {
+            return View();
         }
 
         // GET: Courses
