@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Smith_Swimming_School.ViewModels;
 
 namespace Smith_Swimming_School.Controllers
 {
+    [Authorize(Roles ="Administrator, Coach, Swimmer")]
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -48,6 +50,23 @@ namespace Smith_Swimming_School.Controllers
 
         public async Task<IActionResult> CourseGroups(int id)
         {
+
+            if (User.IsInRole("Swimmer"))
+            {
+                var swimmer = await _context.Swimmers.SingleOrDefaultAsync(s => s.SwimmerUser == User.Identity!.Name);
+                if (swimmer == null) {
+                    return NotFound();
+                }
+
+            }
+            else if (User.IsInRole("Coach"))
+            {
+                var coach = await _context.Coaches.SingleOrDefaultAsync(c => c.CoachUser == User.Identity!.Name);
+                if (coach == null) {
+                    return NotFound();
+                }
+            }
+
             var groups = await _context.Enrollments.Where(e => e.Id_Course == id)
                 .Include(e => e.Grouping)
                 .Select(e => new CourseGroupEnrollmentViewModel

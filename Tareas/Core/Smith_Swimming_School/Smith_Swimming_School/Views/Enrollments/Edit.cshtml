@@ -1,0 +1,41 @@
+﻿@model Smith_Swimming_School.Models.Enrollment
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Enrollment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id_Enrollment" />
+            <div class="form-group">
+                <label asp-for="Id_Course" class="control-label"></label>
+                <select asp-for="Id_Course" class="form-control" asp-items="ViewBag.Id_Course"></select>
+                <span asp-validation-for="Id_Course" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Swimmer" class="control-label"></label>
+                <select asp-for="Id_Swimmer" class="form-control" asp-items="ViewBag.Id_Swimmer"></select>
+                <span asp-validation-for="Id_Swimmer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Grouping" class="control-label"></label>
+                <select asp-for="Id_Grouping" class="form-control" asp-items="ViewBag.Id_Grouping"></select>
+                <span asp-validation-for="Id_Grouping" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

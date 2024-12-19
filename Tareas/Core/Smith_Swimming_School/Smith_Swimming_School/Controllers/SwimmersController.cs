@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,23 +11,50 @@ using Smith_Swimming_School.ViewModels;
 
 namespace Smith_Swimming_School.Controllers
 {
-    [Authorize(Roles = "Administrator, Coach")]
-    public class GroupsController : Controller
+    public class SwimmersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public GroupsController(ApplicationDbContext context)
+        public SwimmersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Groups
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Home()
         {
-            return View(await _context.Groups.ToListAsync());
+            var swimmer = await _context.Swimmers.SingleOrDefaultAsync(s => s.SwimmerUser == User.Identity.Name);
+            if (swimmer == null) {
+                return NotFound();
+            }
+            else
+            {
+                //Muestra listado de cursos del nadador
+                var swimmerCourses = await _context.Enrollments
+                    .Where(e => e.Id_Swimmer == swimmer.Id_Swimmer)
+                    .Include(e => e.Course)
+                    .Select(e => new SwimmerCoursesViewModel
+                    {
+                        Course = e.Course,
+                    }).Distinct()
+                    .ToListAsync();
+
+                SwimmersHomeViewModel vm = new SwimmersHomeViewModel
+                {
+                    Courses = swimmerCourses,
+                    Swimmer = swimmer
+                };
+
+                return View(vm);
+            }
         }
 
-        // GET: Groups/Details/5
+        // GET: Swimmers
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Swimmers.ToListAsync());
+        }
+
+        // GET: Swimmers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,56 +62,39 @@ namespace Smith_Swimming_School.Controllers
                 return NotFound();
             }
 
-            var @group = await _context.Groups
-                .FirstOrDefaultAsync(m => m.Id_Grouping == id);
-            if (@group == null)
+            var swimmer = await _context.Swimmers
+                .FirstOrDefaultAsync(m => m.Id_Swimmer == id);
+            if (swimmer == null)
             {
                 return NotFound();
             }
 
-            return View(@group);
+            return View(swimmer);
         }
 
-        public async Task<IActionResult> GroupSwimmers(int idCourse, int idGroup)
-        {
-            var swimmers = await _context.Enrollments
-                .Where(e => e.Id_Course == idCourse && e.Id_Grouping == idGroup)
-                .Include(e => e.Swimmer)
-                .ToListAsync();
-
-            GroupSwimmersViewModel vm = new GroupSwimmersViewModel
-            {
-                Enrollments = swimmers,
-                Course = await _context.Courses.SingleAsync(c => c.Id_Course == idCourse),
-                Group = await _context.Groups.SingleAsync(g => g.Id_Grouping == idGroup)
-            };
-
-            return View(vm);
-        }
-
-        // GET: Groups/Create
+        // GET: Swimmers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Groups/Create
+        // POST: Swimmers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Grouping,Name,Level,Start_Date,End_Date,Places")] Group @group)
+        public async Task<IActionResult> Create([Bind("Id_Swimmer,Name,Phone_Number,SwimmerUser,Genre,Birth_Date")] Swimmer swimmer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@group);
+                _context.Add(swimmer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(@group);
+            return View(swimmer);
         }
 
-        // GET: Groups/Edit/5
+        // GET: Swimmers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,22 +102,22 @@ namespace Smith_Swimming_School.Controllers
                 return NotFound();
             }
 
-            var @group = await _context.Groups.FindAsync(id);
-            if (@group == null)
+            var swimmer = await _context.Swimmers.FindAsync(id);
+            if (swimmer == null)
             {
                 return NotFound();
             }
-            return View(@group);
+            return View(swimmer);
         }
 
-        // POST: Groups/Edit/5
+        // POST: Swimmers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Grouping,Name,Level,Start_Date,End_Date,Places")] Group @group)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Swimmer,Name,Phone_Number,SwimmerUser,Genre,Birth_Date")] Swimmer swimmer)
         {
-            if (id != @group.Id_Grouping)
+            if (id != swimmer.Id_Swimmer)
             {
                 return NotFound();
             }
@@ -117,12 +126,12 @@ namespace Smith_Swimming_School.Controllers
             {
                 try
                 {
-                    _context.Update(@group);
+                    _context.Update(swimmer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GroupExists(@group.Id_Grouping))
+                    if (!SwimmerExists(swimmer.Id_Swimmer))
                     {
                         return NotFound();
                     }
@@ -133,10 +142,10 @@ namespace Smith_Swimming_School.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@group);
+            return View(swimmer);
         }
 
-        // GET: Groups/Delete/5
+        // GET: Swimmers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,34 +153,34 @@ namespace Smith_Swimming_School.Controllers
                 return NotFound();
             }
 
-            var @group = await _context.Groups
-                .FirstOrDefaultAsync(m => m.Id_Grouping == id);
-            if (@group == null)
+            var swimmer = await _context.Swimmers
+                .FirstOrDefaultAsync(m => m.Id_Swimmer == id);
+            if (swimmer == null)
             {
                 return NotFound();
             }
 
-            return View(@group);
+            return View(swimmer);
         }
 
-        // POST: Groups/Delete/5
+        // POST: Swimmers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @group = await _context.Groups.FindAsync(id);
-            if (@group != null)
+            var swimmer = await _context.Swimmers.FindAsync(id);
+            if (swimmer != null)
             {
-                _context.Groups.Remove(@group);
+                _context.Swimmers.Remove(swimmer);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GroupExists(int id)
+        private bool SwimmerExists(int id)
         {
-            return _context.Groups.Any(e => e.Id_Grouping == id);
+            return _context.Swimmers.Any(e => e.Id_Swimmer == id);
         }
     }
 }

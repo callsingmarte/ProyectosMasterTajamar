@@ -6,42 +6,69 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Coach)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPlaces)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Coach.Id_Coach)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPlaces)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id_Course">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id_Course">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id_Course">Delete</a>
-            </td>
-        </tr>
+@if(User.IsInRole("Administrator")){
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Coach)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPlaces)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coach.Id_Coach)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPlaces)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id_Course">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id_Course">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id_Course">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    <a asp-action="Index" asp-controller="Administration" >Admin Panel</a>
+}else if(User.IsInRole("Swimmer")){
+    @if (Model.Count() == 0)
+    {
+        <p>Not enrolled on any course yet</p>
+    }
+    else
+    {
+        @foreach (var course in Model)
+        {
+            <div class="card shadow m-2" style="width: 18rem">
+                <div class="card-body">
+                    <h5 class="card-title">Couse: @course.Title</h5>
+                    <p>Coach: @course.Coach.Name</p>
+                    <p>Total Places: @course.TotalPlaces</p>
+                    <a asp-action="" asp-controller="" 
+                    asp-route-id="@course.Id_Course" class="btn btn-success">
+                    Enroll Course
+                    </a>
+                </div>
+            </div>
+        }
+        <a asp-action="Home" asp-controller="Swimmers">Swimmers panel</a>
+    }
+
 }
-    </tbody>
-</table>

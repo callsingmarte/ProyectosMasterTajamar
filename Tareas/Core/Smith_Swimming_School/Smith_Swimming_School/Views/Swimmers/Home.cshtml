@@ -1,0 +1,28 @@
+﻿@using Smith_Swimming_School.ViewModels;
+@model SwimmersHomeViewModel;
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Welcome @Model.Swimmer.Name</h1>
+
+<h2>Here's  a list of all courses you are in</h2>
+@if(Model.Courses.Count == 0){
+    <p>Not enrolled on any course yet</p>
+}else {
+    @foreach (var course in Model.Courses)
+    {
+        <div class="card shadow m-2" style="width: 18rem">
+            <div class="card-body">
+                <h5 class="card-title">Couse: @course.Course.Title</h5>
+                <p>Total Places: @course.Course.TotalPlaces</p>
+                <a asp-action="CourseGroups" asp-controller="Courses" asp-route-id="@course.Course.Id_Course" class="btn btn-info">Check Groups</a>
+            </div>
+        </div>
+    }
+}
+
+<p>If you want to enroll on a new course here's a list of all courses</p>
+<a asp-action="Index" asp-controller="Courses">All Courses</a>
+
