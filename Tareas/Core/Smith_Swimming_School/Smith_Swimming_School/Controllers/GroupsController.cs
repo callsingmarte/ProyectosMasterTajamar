@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,45 +11,22 @@ using Smith_Swimming_School.ViewModels;
 
 namespace Smith_Swimming_School.Controllers
 {
-    [Authorize(Roles = "Coach, Administrator")]
-    public class CoachesController : Controller
+    public class GroupsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CoachesController(ApplicationDbContext context)
+        public GroupsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> CoachAdmin()
-        {
-            var coach = await _context.Coaches.SingleOrDefaultAsync(c => c.CoachUser == User.Identity!.Name);
-            if(coach != null)
-            {
-                var coachCourses = await _context.Courses.Where(c => c.Id_Course == coach.Id_Coach).ToListAsync();
-
-                CoachAdminViewModel vm = new CoachAdminViewModel
-                {
-                    Coach = coach,
-                    Courses = coachCourses
-                };
-
-                return View(vm);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
-
-        // GET: Coaches
+        // GET: Groups
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Coaches.ToListAsync());
+            return View(await _context.Groups.ToListAsync());
         }
 
-        // GET: Coaches/Details/5
+        // GET: Groups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -58,39 +34,56 @@ namespace Smith_Swimming_School.Controllers
                 return NotFound();
             }
 
-            var coach = await _context.Coaches
-                .FirstOrDefaultAsync(m => m.Id_Coach == id);
-            if (coach == null)
+            var @group = await _context.Groups
+                .FirstOrDefaultAsync(m => m.Id_Grouping == id);
+            if (@group == null)
             {
                 return NotFound();
             }
 
-            return View(coach);
+            return View(@group);
         }
 
-        // GET: Coaches/Create
+        public async Task<IActionResult> GroupSwimmers(int idCourse, int idGroup)
+        {
+            var swimmers = await _context.Enrollments
+                .Where(e => e.Id_Course == idCourse && e.Id_Grouping == idGroup)
+                .Include(e => e.Swimmer)
+                .ToListAsync();
+
+            GroupSwimmersViewModel vm = new GroupSwimmersViewModel
+            {
+                Enrollments = swimmers,
+                Course = await _context.Courses.SingleAsync(c => c.Id_Course == idCourse),
+                Group = await _context.Groups.SingleAsync(g => g.Id_Grouping == idGroup)
+            };
+
+            return View(vm);
+        }
+
+        // GET: Groups/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Coaches/Create
+        // POST: Groups/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id_Coach,Name,Phone_Number,CoachUser")] Coach coach)
+        public async Task<IActionResult> Create([Bind("Id_Grouping,Name,Level,Start_Date,End_Date,Places")] Group @group)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(coach);
+                _context.Add(@group);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(coach);
+            return View(@group);
         }
 
-        // GET: Coaches/Edit/5
+        // GET: Groups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -98,22 +91,22 @@ namespace Smith_Swimming_School.Controllers
                 return NotFound();
             }
 
-            var coach = await _context.Coaches.FindAsync(id);
-            if (coach == null)
+            var @group = await _context.Groups.FindAsync(id);
+            if (@group == null)
             {
                 return NotFound();
             }
-            return View(coach);
+            return View(@group);
         }
 
-        // POST: Coaches/Edit/5
+        // POST: Groups/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id_Coach,Name,Phone_Number,CoachUser")] Coach coach)
+        public async Task<IActionResult> Edit(int id, [Bind("Id_Grouping,Name,Level,Start_Date,End_Date,Places")] Group @group)
         {
-            if (id != coach.Id_Coach)
+            if (id != @group.Id_Grouping)
             {
                 return NotFound();
             }
@@ -122,12 +115,12 @@ namespace Smith_Swimming_School.Controllers
             {
                 try
                 {
-                    _context.Update(coach);
+                    _context.Update(@group);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CoachExists(coach.Id_Coach))
+                    if (!GroupExists(@group.Id_Grouping))
                     {
                         return NotFound();
                     }
@@ -138,10 +131,10 @@ namespace Smith_Swimming_School.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(coach);
+            return View(@group);
         }
 
-        // GET: Coaches/Delete/5
+        // GET: Groups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -149,34 +142,34 @@ namespace Smith_Swimming_School.Controllers
                 return NotFound();
             }
 
-            var coach = await _context.Coaches
-                .FirstOrDefaultAsync(m => m.Id_Coach == id);
-            if (coach == null)
+            var @group = await _context.Groups
+                .FirstOrDefaultAsync(m => m.Id_Grouping == id);
+            if (@group == null)
             {
                 return NotFound();
             }
 
-            return View(coach);
+            return View(@group);
         }
 
-        // POST: Coaches/Delete/5
+        // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var coach = await _context.Coaches.FindAsync(id);
-            if (coach != null)
+            var @group = await _context.Groups.FindAsync(id);
+            if (@group != null)
             {
-                _context.Coaches.Remove(coach);
+                _context.Groups.Remove(@group);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CoachExists(int id)
+        private bool GroupExists(int id)
         {
-            return _context.Coaches.Any(e => e.Id_Coach == id);
+            return _context.Groups.Any(e => e.Id_Grouping == id);
         }
     }
 }

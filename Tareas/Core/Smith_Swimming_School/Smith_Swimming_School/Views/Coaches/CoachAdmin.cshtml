@@ -1,0 +1,23 @@
+﻿@using Smith_Swimming_School.ViewModels;
+@model CoachAdminViewModel
+
+@{
+    ViewData["Title"] = "CoachAdmin";
+}
+
+<h1>CoachAdmin</h1>
+<a asp-action="Details" asp-route-id="@Model.Coach!.Id_Coach">Coach Profile</a>
+@if(Model.Courses!.Count == 0){
+    <p>No courses for this coach yet</p>
+}else {
+
+    @foreach (var course in Model.Courses){
+        <div class="card m-2" style="width: 18rem">
+            <div class="card-body">
+                <h5 class="card-title">Couse: @course.Title</h5>
+                <p>Total Places: @course.TotalPlaces</p>
+                <a asp-action="CourseGroups" asp-controller="Courses" asp-route-id="@course.Id_Course" class="btn btn-info">Check Groups</a>
+            </div>
+        </div>
+    }
+}

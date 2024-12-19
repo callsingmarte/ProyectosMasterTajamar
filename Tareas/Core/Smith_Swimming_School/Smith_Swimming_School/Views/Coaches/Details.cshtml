@@ -32,5 +32,9 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id_Coach">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if(User.IsInRole("Coach")){
+        <a asp-action="CoachAdmin">Back Coach Panel</a>
+    }else if(User.IsInRole("Administrator")){
+        <a asp-action="Index">Back to List</a>    
+    }
 </div>

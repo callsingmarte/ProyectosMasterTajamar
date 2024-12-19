@@ -32,7 +32,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Index">Administration</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Coaches" asp-action="Index">Coach</a>
+                            @if(User.IsInRole("Coach")){
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Coaches" asp-action="CoachAdmin">Coach Panel</a>
+                            }else if(User.IsInRole("Administrator")){
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Coaches" asp-action="Index">Coach</a>
+                            }
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

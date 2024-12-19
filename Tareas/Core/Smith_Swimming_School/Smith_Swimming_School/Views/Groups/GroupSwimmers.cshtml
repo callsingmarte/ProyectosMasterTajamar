@@ -1,0 +1,62 @@
+﻿@using Smith_Swimming_School.ViewModels
+@model GroupSwimmersViewModel
+
+@{
+    ViewData["Title"] = "GroupSwimmers";
+}
+
+<h2>Course: @Model.Course.Title</h2>
+<h3>Group: @Model.Group.Name</h3>
+<h4>Swimmers</h4>
+@if(Model.Enrollments.Count == 0){
+    <p>No swimmers on this group yet</p>
+}else{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Genre
+                </th>
+                <th>
+                    Birth_Date
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model.Enrollments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => enrollment.Swimmer.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => enrollment.Swimmer.Phone_Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => enrollment.Swimmer.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => enrollment.Swimmer.Birth_Date)
+                    </td>
+                    <td>
+                        <a asp-action="CreateReportFromEnrollment" asp-controller="Reports" asp-route-enrollmentId="@enrollment.Id_Enrollment">
+                            Add Report
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="CourseGroups" asp-controller="Courses" asp-route-id="@Model.Course.Id_Course">Return To Course Group</a>

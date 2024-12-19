@@ -23,11 +23,19 @@
                 <input asp-for="Phone_Number" class="form-control" />
                 <span asp-validation-for="Phone_Number" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CoachUser" class="control-label"></label>
-                <input asp-for="CoachUser" class="form-control" />
-                <span asp-validation-for="CoachUser" class="text-danger"></span>
-            </div>
+            @if(User.IsInRole("Coach")){
+                <div class="form-group">
+                    <label asp-for="CoachUser" class="control-label"></label>
+                    <input asp-for="CoachUser" class="form-control" readonly/>
+                    <span asp-validation-for="CoachUser" class="text-danger"></span>
+                </div>
+            }else if(User.IsInRole("Administrator")){
+                <div class="form-group">
+                    <label asp-for="CoachUser" class="control-label"></label>
+                    <input asp-for="CoachUser" class="form-control" />
+                    <span asp-validation-for="CoachUser" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -36,6 +44,13 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Coach")) {
+        <a asp-action="Details" asp-action-id="@Model.Id_Coach">Back Coach Details</a>
+        <a asp-action="CoachAdmin" >Back Coach Panel</a>
+    }
+    else if (User.IsInRole("Administrator"))
+    {
+        <a asp-action="Index">Back to List</a>
+    }
 </div>
 

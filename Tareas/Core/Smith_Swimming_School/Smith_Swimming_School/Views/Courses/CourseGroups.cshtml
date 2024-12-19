@@ -1,0 +1,33 @@
+﻿@using Smith_Swimming_School.ViewModels
+@model CourseGroupsViewModel
+
+@{
+    ViewData["Title"] = "CourseGroups";
+}
+
+<h1>CourseGroups</h1>
+@if (Model.courseGroupEnrollment!.Count == 0)
+{
+    <p>No courses for this coach yet</p>
+}
+else
+{
+
+    @foreach (var group in Model.courseGroupEnrollment)
+    {
+        <div class="card m-2" style="width: 18rem">
+            <div class="card-body">
+                <h5 class="card-title">Group Name: @group.Grouping!.Name</h5>
+                <p>Places: @group.Grouping.Places</p>
+                <a asp-action="GroupSwimmers" asp-controller="Groups"
+                    asp-route-idCourse="@Model.Course.Id_Course"
+                    asp-route-idGroup="@group.Id_Grouping"
+                    class="btn btn-info">
+                    Check Swimmers
+                </a>
+            </div>
+        </div>
+    }
+    <a asp-action="CoachAdmin" asp-controller="Coaches" >Return To Coach Panel</a>
+}
+

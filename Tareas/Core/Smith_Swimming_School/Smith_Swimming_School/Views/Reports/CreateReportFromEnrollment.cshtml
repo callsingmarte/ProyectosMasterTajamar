@@ -1,0 +1,39 @@
+﻿@using Smith_Swimming_School.ViewModels
+@model ReportEnrollmentViewModel;
+
+@{
+    ViewData["Title"] = "CreateReportFromEnrollment";
+}
+
+<h1>CreateReportFromEnrollment</h1>
+
+<h4>Add Report For</h4>
+<hr />
+<p>Course @Model.Enrollment.Course!.Title </p>
+<p>Group @Model.Enrollment.Grouping!.Name </p>
+<p>Swimmer @Model.Enrollment.Swimmer!.Name </p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateReportFromEnrollment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Report!.ProgressReport" class="control-label"></label>
+                <textarea asp-for="@Model.Report!.ProgressReport" class="form-control" >
+                </textarea>
+                <span asp-validation-for="@Model.Report!.ProgressReport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Report!.Id_Enrollment" class="control-label"></label>
+                <input asp-for="@Model.Report!.Id_Enrollment" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<a asp-action="GroupSwimmers" asp-controller="Groups"
+   asp-route-idCourse="@Model.Enrollment.Id_Course"
+   asp-route-idGroup="@Model.Enrollment.Id_Grouping">
+    Return To Course Group
+</a>

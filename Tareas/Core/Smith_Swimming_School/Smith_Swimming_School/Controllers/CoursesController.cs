@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Smith_Swimming_School.Data;
 using Smith_Swimming_School.Models;
+using Smith_Swimming_School.ViewModels;
 
 namespace Smith_Swimming_School.Controllers
 {
-    [Authorize(Roles = "Coach")]
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,15 +20,11 @@ namespace Smith_Swimming_School.Controllers
             _context = context;
         }
 
-        public IActionResult CoachAdmin()
-        {
-            return View();
-        }
-
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Courses.ToListAsync());
+            var applicationDbContext = _context.Courses.Include(c => c.Coach);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Courses/Details/5
@@ -41,6 +36,7 @@ namespace Smith_Swimming_School.Controllers
             }
 
             var course = await _context.Courses
+                .Include(c => c.Coach)
                 .FirstOrDefaultAsync(m => m.Id_Course == id);
             if (course == null)
             {
@@ -50,9 +46,32 @@ namespace Smith_Swimming_School.Controllers
             return View(course);
         }
 
+        public async Task<IActionResult> CourseGroups(int id)
+        {
+            var groups = await _context.Enrollments.Where(e => e.Id_Course == id)
+                .Include(e => e.Grouping)
+                .Select(e => new CourseGroupEnrollmentViewModel
+                {
+                    Id_Course = e.Id_Course,
+                    Id_Grouping = e.Id_Grouping,
+                    Grouping = e.Grouping,
+                })
+                .Distinct()
+                .ToListAsync();
+
+            CourseGroupsViewModel vm = new CourseGroupsViewModel
+            {
+                courseGroupEnrollment = groups,
+                Course = await _context.Courses.SingleAsync(c => c.Id_Course == id)
+            };
+
+            return View(vm);
+        }
+
         // GET: Courses/Create
         public IActionResult Create()
         {
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach");
             return View();
         }
 
@@ -69,6 +88,7 @@ namespace Smith_Swimming_School.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach", course.Id_Coach);
             return View(course);
         }
 
@@ -85,6 +105,7 @@ namespace Smith_Swimming_School.Controllers
             {
                 return NotFound();
             }
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach", course.Id_Coach);
             return View(course);
         }
 
@@ -120,6 +141,7 @@ namespace Smith_Swimming_School.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach", course.Id_Coach);
             return View(course);
         }
 
@@ -132,6 +154,7 @@ namespace Smith_Swimming_School.Controllers
             }
 
             var course = await _context.Courses
+                .Include(c => c.Coach)
                 .FirstOrDefaultAsync(m => m.Id_Course == id);
             if (course == null)
             {
