@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "FilledCourse";
+}
+
+<h1>FilledCourse</h1>
+<div class="card shadow">
+    <div class="card-body">
+        <h5 class="card-title">⚠️This course is already full⚠️</h5>
+        <p>Unable to join the course </p>
+    </div>
+</div>
+@if (User.IsInRole("Swimmer"))
+{
+    <a asp-action="Home" asp-controller="Swimmers">Swimmers panel</a>
+}
+else if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Index">Back to list</a>
+}

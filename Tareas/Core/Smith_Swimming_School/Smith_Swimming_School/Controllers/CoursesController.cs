@@ -12,7 +12,7 @@ using Smith_Swimming_School.ViewModels;
 
 namespace Smith_Swimming_School.Controllers
 {
-    [Authorize(Roles ="Administrator, Coach, Swimmer")]
+    [Authorize(Roles = "Administrator, Coach, Swimmer")]
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,12 +23,14 @@ namespace Smith_Swimming_School.Controllers
         }
 
         // GET: Courses
+        [Authorize(Roles = "Administrator, Swimmer")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Courses.Include(c => c.Coach);
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -47,7 +49,7 @@ namespace Smith_Swimming_School.Controllers
 
             return View(course);
         }
-
+        [Authorize(Roles = "Administrator, Coach, Swimmer")]
         public async Task<IActionResult> CourseGroups(int id)
         {
             Swimmer? swimmer = null;
@@ -93,9 +95,10 @@ namespace Smith_Swimming_School.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
-            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach");
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Name");
             return View();
         }
 
@@ -104,6 +107,7 @@ namespace Smith_Swimming_School.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Id_Course,Id_Coach,Title,TotalPlaces")] Course course)
         {
             if (ModelState.IsValid)
@@ -112,11 +116,12 @@ namespace Smith_Swimming_School.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach", course.Id_Coach);
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Name", course.Id_Coach);
             return View(course);
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -129,7 +134,7 @@ namespace Smith_Swimming_School.Controllers
             {
                 return NotFound();
             }
-            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach", course.Id_Coach);
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Name", course.Id_Coach);
             return View(course);
         }
 
@@ -138,6 +143,7 @@ namespace Smith_Swimming_School.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("Id_Course,Id_Coach,Title,TotalPlaces")] Course course)
         {
             if (id != course.Id_Course)
@@ -165,11 +171,12 @@ namespace Smith_Swimming_School.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Id_Coach", course.Id_Coach);
+            ViewData["Id_Coach"] = new SelectList(_context.Coaches, "Id_Coach", "Name", course.Id_Coach);
             return View(course);
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -191,6 +198,7 @@ namespace Smith_Swimming_School.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var course = await _context.Courses.FindAsync(id);

@@ -31,10 +31,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id_Coach">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id_Coach" class="btn btn-warning">Edit</a> |
     @if(User.IsInRole("Coach")){
-        <a asp-action="CoachAdmin">Back Coach Panel</a>
+        <a asp-action="CoachAdmin" class="m-1 btn btn-dark">Back Coach Panel</a>
     }else if(User.IsInRole("Administrator")){
-        <a asp-action="Index">Back to List</a>    
+        <a asp-action="Index" class="m-1 btn btn-dark">Back to List</a>
     }
 </div>

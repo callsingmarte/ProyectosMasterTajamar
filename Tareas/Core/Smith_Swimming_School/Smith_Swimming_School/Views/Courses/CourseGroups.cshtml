@@ -5,14 +5,21 @@
     ViewData["Title"] = "CourseGroups";
 }
 
-<h1>CourseGroups</h1>
+<h1>Course: @Model.Course.Title</h1>
+<h2>Groups</h2>
 @if (Model.courseGroupEnrollment!.Count == 0)
 {
-    <p>No courses for this coach yet</p>
+    <p>No groups for this course yet</p>
 }
 else
 {
-
+    @if(User.IsInRole("Administrator")){
+        <a asp-action="create" asp-controller="Enrollments"
+        asp-route-idCourse="@Model.Course.Id_Course"
+           class="btn btn-primary">
+           ➕ Add Group
+        </a>
+    }
     @foreach (var group in Model.courseGroupEnrollment)
     {
         @if(group.Grouping == null){
@@ -27,7 +34,7 @@ else
                 <div class="card-body">
                     <h5 class="card-title">Group Name: @group.Grouping!.Name</h5>
                     <p>Places: @group.Grouping.Places</p>
-                    @if (User.IsInRole("Coach"))
+                    @if (User.IsInRole("Coach") || User.IsInRole("Administrator"))
                     {
                         <a asp-action="GroupSwimmers" asp-controller="Groups"
                            asp-route-idCourse="@Model.Course.Id_Course"
@@ -48,10 +55,12 @@ else
             </div>
         }
     }
-    @if(User.IsInRole("Coach")){
-        <a asp-action="CoachAdmin" asp-controller="Coaches">Return To Coach Panel</a>
+    @if(User.IsInRole("Administrator")){
+        <a asp-action="Index" asp-controller="Courses" class="btn btn-dark">Back to Courses List</a>
+    }else if(User.IsInRole("Coach")){
+        <a asp-action="CoachAdmin" asp-controller="Coaches" class="btn btn-dark">Return To Coach Panel</a>
     }else if(User.IsInRole("Swimmer")){
-        <a asp-action="Home" asp-controller="Swimmers">Back to Swimmer Panel</a>
+        <a asp-action="Home" asp-controller="Swimmers" class="btn btn-dark">Back to Swimmer Panel</a>
     }
 }
 

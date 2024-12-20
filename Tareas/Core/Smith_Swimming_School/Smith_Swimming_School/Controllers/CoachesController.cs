@@ -136,7 +136,14 @@ namespace Smith_Swimming_School.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (User.IsInRole("Coach"))
+                {
+                    return RedirectToAction("CoachAdmin");
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(coach);
         }

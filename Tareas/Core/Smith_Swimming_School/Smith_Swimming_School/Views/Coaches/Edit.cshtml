@@ -37,7 +37,7 @@
                 </div>
             }
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-warning" />
             </div>
         </form>
     </div>
@@ -46,11 +46,11 @@
 <div>
     @if (User.IsInRole("Coach")) {
         <a asp-action="Details" asp-action-id="@Model.Id_Coach">Back Coach Details</a>
-        <a asp-action="CoachAdmin" >Back Coach Panel</a>
+        <a asp-action="CoachAdmin" class="btn btn-dark" >Back Coach Panel</a>
     }
     else if (User.IsInRole("Administrator"))
     {
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" class="btn btn-dark">Back to List</a>
     }
 </div>
 

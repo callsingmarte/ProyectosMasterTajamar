@@ -2,13 +2,13 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<div>
-    <a asp-controller="Courses" asp-action="index" class="btn btn-dark">Courses Admin Panel</a>
-    <a asp-controller="Groups" asp-action="index" class="btn btn-dark">Groups Admin Panel</a>
-    <a asp-controller="Enrollments" asp-action="index" class="btn btn-dark">Enrollments Admin Panel</a>
-    <a asp-controller="Coaches" asp-action="index" class="btn btn-dark">Coaches Admin Panel</a>
+<div class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h1 class="mb-4">Administration Panel</h1>
+        <a asp-controller="Courses" asp-action="index" class="btn btn-dark d-block mb-2">Courses Admin Panel</a>
+        <a asp-controller="Groups" asp-action="index" class="btn btn-dark d-block mb-2">Groups Admin Panel</a>
+        <a asp-controller="Enrollments" asp-action="index" class="btn btn-dark d-block mb-2">Enrollments Admin Panel</a>
+        <a asp-controller="Coaches" asp-action="index" class="btn btn-dark d-block">Coaches Admin Panel</a>
+    </div>
 </div>
 

@@ -8,6 +8,12 @@
 <h2>Course: @Model.Course.Title</h2>
 <h3>Group: @Model.Group.Name</h3>
 <h4>Swimmers</h4>
+<a asp-action="create" asp-controller="Enrollments" 
+    asp-route-idCourse="@Model.Course.Id_Course"
+    asp-route-idGroup="@Model.Group.Id_Grouping" 
+    class="btn btn-primary">
+    ➕ Add Swimmer
+</a>
 @if(Model.Enrollments.Count == 0){
     <p>No swimmers on this group yet</p>
 }else{
@@ -49,9 +55,11 @@
                         @Html.DisplayFor(modelItem => enrollment.Swimmer.Birth_Date)
                     </td>
                     <td>
-                        <a asp-action="CreateReportFromEnrollment" asp-controller="Reports" asp-route-enrollmentId="@enrollment.Id_Enrollment">
-                            Add Report
-                        </a>
+                        @if(User.IsInRole("Coach")){
+                            <a asp-action="CreateReportFromEnrollment" asp-controller="Reports" asp-route-enrollmentId="@enrollment.Id_Enrollment">
+                                Add Report
+                            </a>
+                        }
                     </td>
                 </tr>
             }
@@ -59,4 +67,6 @@
     </table>
 }
 
-<a asp-action="CourseGroups" asp-controller="Courses" asp-route-id="@Model.Course.Id_Course">Return To Course Group</a>
+<a asp-action="CourseGroups" 
+asp-controller="Courses" asp-route-id="@Model.Course.Id_Course" 
+class="btn btn-dark">Return To Course Group</a>

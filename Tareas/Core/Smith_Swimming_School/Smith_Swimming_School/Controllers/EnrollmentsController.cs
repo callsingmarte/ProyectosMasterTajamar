@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Smith_Swimming_School.Models;
 
 namespace Smith_Swimming_School.Controllers
 {
+    [Authorize(Roles = "Administrator, Swimmer")]
     public class EnrollmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +22,14 @@ namespace Smith_Swimming_School.Controllers
         }
 
         // GET: Enrollments
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Enrollments.Include(e => e.Course).Include(e => e.Grouping).Include(e => e.Swimmer);
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Swimmer")]
         public async Task<IActionResult> SwimmerEnrollCourse(int idCourse)
         {
             Swimmer swimmer = await _context.Swimmers.SingleOrDefaultAsync(s => s.SwimmerUser == User.Identity.Name);
@@ -36,11 +40,16 @@ namespace Smith_Swimming_School.Controllers
             if (course == null) {
                 return NotFound();
             }
+            if (course.TotalPlaces == 0)
+            {
+                return View("FilledCourse");
+            }
+
             var enrolledCourse = await _context.Enrollments
-                .Where(e => e.Id_Course == idCourse && e.Id_Swimmer == swimmer.Id_Swimmer)
-                .Include(e => e.Course)
-                .Include(e => e.Swimmer)
-                .FirstOrDefaultAsync();
+            .Where(e => e.Id_Course == idCourse && e.Id_Swimmer == swimmer.Id_Swimmer)
+            .Include(e => e.Course)
+            .Include(e => e.Swimmer)
+            .FirstOrDefaultAsync();
 
             if(enrolledCourse != null)
             {
@@ -64,6 +73,8 @@ namespace Smith_Swimming_School.Controllers
         }
 
         // GET: Enrollments/Details/5
+        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -85,12 +96,23 @@ namespace Smith_Swimming_School.Controllers
         }
 
         // GET: Enrollments/Create
-        public IActionResult Create()
+        [Authorize(Roles = "Administrator")]
+
+        public IActionResult Create(int? idCourse = null, int? idGroup = null )
         {
-            ViewData["Id_Course"] = new SelectList(_context.Courses, "Id_Course", "Id_Course");
+            Enrollment enrollment = new Enrollment();
+            if (idCourse != null)
+            {
+                enrollment.Id_Course = (int)idCourse;
+            }
+            if(idGroup != null)
+            {
+                enrollment.Id_Grouping = (int)idGroup;
+            }
+            ViewData["Id_Course"] = new SelectList(_context.Courses, "Id_Course", "Title");
             ViewData["Id_Grouping"] = new SelectList(_context.Groups, "Id_Grouping", "Name");
             ViewData["Id_Swimmer"] = new SelectList(_context.Swimmers, "Id_Swimmer", "Name");
-            return View();
+            return View(enrollment);
         }
 
         // POST: Enrollments/Create
@@ -98,6 +120,8 @@ namespace Smith_Swimming_School.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Create([Bind("Id_Enrollment,Id_Course,Id_Swimmer,Id_Grouping")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
@@ -113,6 +137,8 @@ namespace Smith_Swimming_School.Controllers
         }
 
         // GET: Enrollments/Edit/5
+        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -136,6 +162,8 @@ namespace Smith_Swimming_School.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Edit(int id, [Bind("Id_Enrollment,Id_Course,Id_Swimmer,Id_Grouping")] Enrollment enrollment)
         {
             if (id != enrollment.Id_Enrollment)
@@ -170,6 +198,7 @@ namespace Smith_Swimming_School.Controllers
         }
 
         // GET: Enrollments/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -193,6 +222,7 @@ namespace Smith_Swimming_School.Controllers
         // POST: Enrollments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var enrollment = await _context.Enrollments.FindAsync(id);
