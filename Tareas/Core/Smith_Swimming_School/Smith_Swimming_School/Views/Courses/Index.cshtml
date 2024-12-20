@@ -61,8 +61,8 @@
                     <h5 class="card-title">Couse: @course.Title</h5>
                     <p>Coach: @course.Coach.Name</p>
                     <p>Total Places: @course.TotalPlaces</p>
-                    <a asp-action="" asp-controller="" 
-                    asp-route-id="@course.Id_Course" class="btn btn-success">
+                    <a asp-action="SwimmerEnrollCourse" asp-controller="Enrollments"
+                       asp-route-idCourse="@course.Id_Course" class="btn btn-success">
                     Enroll Course
                     </a>
                 </div>

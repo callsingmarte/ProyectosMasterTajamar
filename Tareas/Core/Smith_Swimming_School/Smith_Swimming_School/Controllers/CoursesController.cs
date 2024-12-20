@@ -50,30 +50,35 @@ namespace Smith_Swimming_School.Controllers
 
         public async Task<IActionResult> CourseGroups(int id)
         {
+            Swimmer? swimmer = null;
+            Coach? coach = null;
 
             if (User.IsInRole("Swimmer"))
             {
-                var swimmer = await _context.Swimmers.SingleOrDefaultAsync(s => s.SwimmerUser == User.Identity!.Name);
+                swimmer = await _context.Swimmers.SingleOrDefaultAsync(s => s.SwimmerUser == User.Identity!.Name);
                 if (swimmer == null) {
                     return NotFound();
                 }
-
             }
             else if (User.IsInRole("Coach"))
             {
-                var coach = await _context.Coaches.SingleOrDefaultAsync(c => c.CoachUser == User.Identity!.Name);
+                coach = await _context.Coaches.SingleOrDefaultAsync(c => c.CoachUser == User.Identity!.Name);
                 if (coach == null) {
                     return NotFound();
                 }
             }
 
-            var groups = await _context.Enrollments.Where(e => e.Id_Course == id)
+            IQueryable<Enrollment> query =  swimmer != null ? 
+                _context.Enrollments.Where(e => e.Id_Course == id && e.Id_Swimmer == swimmer.Id_Swimmer) :
+                _context.Enrollments.Where(e => e.Id_Course == id);
+            var groups = await query
                 .Include(e => e.Grouping)
                 .Select(e => new CourseGroupEnrollmentViewModel
                 {
+                    Id_Enrollment = e.Id_Enrollment,
                     Id_Course = e.Id_Course,
                     Id_Grouping = e.Id_Grouping,
-                    Grouping = e.Grouping,
+                    Grouping = e.Grouping,                    
                 })
                 .Distinct()
                 .ToListAsync();

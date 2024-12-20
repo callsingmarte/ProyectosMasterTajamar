@@ -27,6 +27,32 @@ namespace Smith_Swimming_School.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> SwimmerReports(int id)
+        {
+            Swimmer? swimmer = null;
+            if (User.IsInRole("Swimmer"))
+            {
+                swimmer = await _context.Swimmers.SingleOrDefaultAsync(s => s.SwimmerUser == User.Identity!.Name);
+                if (swimmer == null) {
+                    return NotFound();
+                }
+            }
+            var enrollment = await _context.Enrollments
+                .Include(e => e.Course)
+                .Include(e => e.Grouping)
+                .SingleOrDefaultAsync(e => e.Id_Enrollment == id);
+            var swimmerReports = await _context.Reports.Where(r => r.Id_Enrollment == id).ToListAsync();
+
+            SwimmerReportsViewmodel vm = new SwimmerReportsViewmodel
+            {
+                Swimmer = swimmer,
+                Reports = swimmerReports,
+                Enrollment = enrollment
+            };
+
+            return View(vm);
+        }
+
         // GET: Reports/Details/5
         public async Task<IActionResult> Details(int? id)
         {

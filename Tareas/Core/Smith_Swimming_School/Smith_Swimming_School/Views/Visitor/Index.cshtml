@@ -1,13 +1,32 @@
-﻿
-<h1>Welcome </h1>
-<ul>
-    <li>
-        <a asp-action="Offers">Check our offers!</a>
-    </li>
-    <li>
-        <a asp-action="Facilities">Check our facilities</a>
-    </li>
-    <li>
-        <a asp-action="AddSwimmer">Register as a Swimmer!</a>
-    </li>
-</ul>
+﻿<div class="container mt-5">
+    <h1 class="text-center">Welcome! 🎉</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Special Offers 🏷️</h5>
+                    <p class="card-text">Discover our amazing offers!</p>
+                    <a asp-action="Offers" class="btn btn-success">Check Offers!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Facilities 🏊</h5>
+                    <p class="card-text">Explore our top-notch facilities.</p>
+                    <a asp-action="Facilities" class="btn btn-info">Check Facilities!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Register 📝</h5>
+                    <p class="card-text">Join us as a swimmer!</p>
+                    <a asp-action="AddSwimmer" class="btn btn-dark">Register Now!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

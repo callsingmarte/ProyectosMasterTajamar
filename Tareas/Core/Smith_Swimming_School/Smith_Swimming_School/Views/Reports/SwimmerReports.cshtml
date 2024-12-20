@@ -1,0 +1,30 @@
+﻿@using Smith_Swimming_School.ViewModels;
+@model SwimmerReportsViewmodel;
+
+@{
+    ViewData["Title"] = "SwimmerReports";
+}
+
+<h1>@Model.Swimmer.Name Swimmer Reports</h1>
+<h2>Course: @Model.Enrollment.Course.Title</h2>
+<h2>Group: @Model.Enrollment.Grouping.Name</h2>
+@if(Model.Reports.Count == 0){
+    <p>No reports of this swimmer yet</p>
+}else{
+    <table>
+        <thead>
+            <tr>
+                <th>Progress Report</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model.Reports)
+            {
+                <tr>
+                    <td><pre>@report.ProgressReport</pre></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<a asp-action="CourseGroups" asp-controller="Courses" asp-route-id="@Model.Enrollment.Course.Id_Course" class="btn btn-dark">Back to Groups</a>

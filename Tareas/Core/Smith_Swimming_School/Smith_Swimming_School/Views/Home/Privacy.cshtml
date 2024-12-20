@@ -1,6 +1,77 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container mt-5">
+    <h1 class="text-center display-5">🔒 @ViewData["Title"]</h1>
+    <p class="text-center text-muted">Your privacy is our priority. We are committed to protecting your data. 🌐</p>
+
+    <div class="row mt-4">
+        <!-- Card 1: Data Collection -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📊 Data Collection</h5>
+                    <p class="card-text">We collect personal data, such as your name, email, and contact details, only to provide better services.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Data Usage -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📂 Data Usage</h5>
+                    <p class="card-text">Your data is used to personalize your experience, improve our services, and send important updates. ✉️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Data Sharing -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">🔗 Data Sharing</h5>
+                    <p class="card-text">We never sell your data. We may share it with trusted partners for essential services. 🤝</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Card 4: Security Measures -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">🛡️ Security Measures</h5>
+                    <p class="card-text">We use encryption and secure servers to keep your information safe. 🔐</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5: Your Rights -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📜 Your Rights</h5>
+                    <p class="card-text">You have the right to access, update, or delete your personal data at any time. 📝</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6: Contact Us -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📞 Contact Us</h5>
+                    <p class="card-text">For any questions or concerns, please reach out to us at privacy@smithswimming.com. 📬</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 text-center">
+        <h5>Thank you for trusting Smith Swimming School (3S)! 🌊</h5>
+        <p class="text-muted">Last updated: <span>@DateTime.Now.ToString("MMMM dd, yyyy")</span></p>
+    </div>
+</div>

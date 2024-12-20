@@ -75,6 +75,9 @@ namespace Smith_Swimming_School.Controllers
         // GET: Swimmers/Create
         public IActionResult Create()
         {
+            ViewBag.GenreList = new SelectList(Enum.GetValues(typeof(Genre)).Cast<Genre>()
+                .Select(g => new { Value = (int)g, Text = g.ToString() }), "Value", "Text");
+
             return View();
         }
 

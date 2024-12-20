@@ -15,19 +15,43 @@ else
 
     @foreach (var group in Model.courseGroupEnrollment)
     {
-        <div class="card m-2" style="width: 18rem">
-            <div class="card-body">
-                <h5 class="card-title">Group Name: @group.Grouping!.Name</h5>
-                <p>Places: @group.Grouping.Places</p>
-                <a asp-action="GroupSwimmers" asp-controller="Groups"
-                    asp-route-idCourse="@Model.Course.Id_Course"
-                    asp-route-idGroup="@group.Id_Grouping"
-                    class="btn btn-info">
-                    Check Swimmers
-                </a>
+        @if(group.Grouping == null){
+            if (User.IsInRole("Coach")){
+                <p>No groups for this course yet</p>
+            }else if (User.IsInRole("Swimmer"))
+            {
+                <p>Swimmer is not assigned to a group for this course yet</p>
+            }
+        }else{
+            <div class="card m-2" style="width: 18rem">
+                <div class="card-body">
+                    <h5 class="card-title">Group Name: @group.Grouping!.Name</h5>
+                    <p>Places: @group.Grouping.Places</p>
+                    @if (User.IsInRole("Coach"))
+                    {
+                        <a asp-action="GroupSwimmers" asp-controller="Groups"
+                           asp-route-idCourse="@Model.Course.Id_Course"
+                           asp-route-idGroup="@group.Id_Grouping"
+                           class="btn btn-info">
+                            Check Swimmers
+                        </a>
+                    }
+                    else if (User.IsInRole("Swimmer"))
+                    {
+                        <a asp-action="SwimmerReports" asp-controller="Reports"
+                           asp-route-id="@group.Id_Enrollment"
+                           class="btn btn-info">
+                            Check Reports
+                        </a>
+                    }
+                </div>
             </div>
-        </div>
+        }
     }
-    <a asp-action="CoachAdmin" asp-controller="Coaches" >Return To Coach Panel</a>
+    @if(User.IsInRole("Coach")){
+        <a asp-action="CoachAdmin" asp-controller="Coaches">Return To Coach Panel</a>
+    }else if(User.IsInRole("Swimmer")){
+        <a asp-action="Home" asp-controller="Swimmers">Back to Swimmer Panel</a>
+    }
 }
 

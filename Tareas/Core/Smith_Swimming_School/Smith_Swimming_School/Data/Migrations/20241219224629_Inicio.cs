@@ -214,7 +214,6 @@ namespace Smith_Swimming_School.Migrations
                     Id_Course = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Id_Coach = table.Column<int>(type: "int", nullable: false),
-                    CoachId_Coach = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalPlaces = table.Column<int>(type: "int", nullable: false)
                 },
@@ -222,10 +221,11 @@ namespace Smith_Swimming_School.Migrations
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id_Course);
                     table.ForeignKey(
-                        name: "FK_Courses_Coaches_CoachId_Coach",
-                        column: x => x.CoachId_Coach,
+                        name: "FK_Courses_Coaches_Id_Coach",
+                        column: x => x.Id_Coach,
                         principalTable: "Coaches",
-                        principalColumn: "Id_Coach");
+                        principalColumn: "Id_Coach",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,28 +235,26 @@ namespace Smith_Swimming_School.Migrations
                     Id_Enrollment = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Id_Course = table.Column<int>(type: "int", nullable: false),
-                    CourseId_Course = table.Column<int>(type: "int", nullable: true),
-                    Id_Swimmer = table.Column<int>(type: "int", nullable: false),
-                    SwimmerId_Swimmer = table.Column<int>(type: "int", nullable: true),
-                    Id_Grouping = table.Column<int>(type: "int", nullable: false),
-                    GroupingId_Grouping = table.Column<int>(type: "int", nullable: true)
+                    Id_Swimmer = table.Column<int>(type: "int", nullable: true),
+                    Id_Grouping = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enrollments", x => x.Id_Enrollment);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Courses_CourseId_Course",
-                        column: x => x.CourseId_Course,
+                        name: "FK_Enrollments_Courses_Id_Course",
+                        column: x => x.Id_Course,
                         principalTable: "Courses",
-                        principalColumn: "Id_Course");
+                        principalColumn: "Id_Course",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Groups_GroupingId_Grouping",
-                        column: x => x.GroupingId_Grouping,
+                        name: "FK_Enrollments_Groups_Id_Grouping",
+                        column: x => x.Id_Grouping,
                         principalTable: "Groups",
                         principalColumn: "Id_Grouping");
                     table.ForeignKey(
-                        name: "FK_Enrollments_Swimmers_SwimmerId_Swimmer",
-                        column: x => x.SwimmerId_Swimmer,
+                        name: "FK_Enrollments_Swimmers_Id_Swimmer",
+                        column: x => x.Id_Swimmer,
                         principalTable: "Swimmers",
                         principalColumn: "Id_Swimmer");
                 });
@@ -268,17 +266,17 @@ namespace Smith_Swimming_School.Migrations
                     Id_Report = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProgressReport = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id_Enrollment = table.Column<int>(type: "int", nullable: false),
-                    EnrollmentId_Enrollment = table.Column<int>(type: "int", nullable: true)
+                    Id_Enrollment = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reports", x => x.Id_Report);
                     table.ForeignKey(
-                        name: "FK_Reports_Enrollments_EnrollmentId_Enrollment",
-                        column: x => x.EnrollmentId_Enrollment,
+                        name: "FK_Reports_Enrollments_Id_Enrollment",
+                        column: x => x.Id_Enrollment,
                         principalTable: "Enrollments",
-                        principalColumn: "Id_Enrollment");
+                        principalColumn: "Id_Enrollment",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -286,10 +284,10 @@ namespace Smith_Swimming_School.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "822e8f95-1892-4f87-b0d4-c8d0fce8dbad", null, "Coach", "COACH" },
-                    { "97c10d82-6f23-45d8-b507-88b605697185", null, "Administrator", "ADMINISTRATOR" },
-                    { "bd8ec400-0f70-47e3-a519-c8b91fa544f5", null, "Visitor", "VISITOR" },
-                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", null, "Swimmer", "SWIMMER" }
+                    { "0fae9880-33b1-4ab0-9497-d7bb1fda8746", null, "Administrator", "ADMINISTRATOR" },
+                    { "25973d9b-4ec1-4cb9-9b8a-6ab650210cd9", null, "Visitor", "VISITOR" },
+                    { "32eaeec6-155f-4309-ba9c-0db45a01c857", null, "Swimmer", "SWIMMER" },
+                    { "39942655-b610-46e1-840e-1fbc34fd5317", null, "Coach", "COACH" }
                 });
 
             migrationBuilder.InsertData(
@@ -297,13 +295,13 @@ namespace Smith_Swimming_School.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "04b75633-aa57-4d5d-bc37-63eb5b8d6b38", 0, "dfc3908b-5a84-4ec0-9d7f-b38b139521de", "martin.sanchez@gmail.com", true, false, null, "MARTIN.SANCHEZ@GMAIL.COM", "MARTIN.SANCHEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEFLdxaZJScSZjwVYShkMHMmms9Zea1TcjPlZj55Lys+zz+awzSVjlnZUWrJXCc3yhw==", "602145318", false, "fbd3807e-c8f9-4fd6-a9c9-cd2d0591f7a7", false, "martin.sanchez@gmail.com" },
-                    { "357d0739-17eb-4db2-988d-ee1a6e50987d", 0, "8d3ef028-50ce-4515-8fc2-a0b251b002f6", "admin@3s.com", true, false, null, "ADMIN@3S.COM", "ADMIN@3S.COM", "AQAAAAIAAYagAAAAEK/shcbWUOaLfkv8xIhYXh2O0MNVVwAtgFAkmp50S4V9w7qCQixUY9LBml8Ty9jx6g==", "653124875", false, "d6c55217-b3f7-44c5-8ec3-238e515d3475", false, "admin@3s.com" },
-                    { "56b6dd7e-30be-4593-9437-ee27c0887d4a", 0, "2737113a-2ae6-4541-ad60-3c3cdaf670ab", "raul.hernandez@gmail.com", true, false, null, "RAUL.HERNANDEZ@GMAIL.COM", "RAUL.HERNANDEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEKKqAS/3tFGLb/H9ANiNm2jFBIcnLDdg1lEYMhpYN6rithqoxmqRgjPrmoU0emkROA==", "693251487", false, "6e1cd847-1b09-4397-a1f2-e43c3992a885", false, "raul.hernandez@gmail.com" },
-                    { "61433e78-2efb-42ed-a220-22ba8439df70", 0, "5741e054-f254-494b-b1dd-d7f167d4f534", "lucia.sanchiz@gmail.com", true, false, null, "LUCIA.SANCHIZ@GMAIL.COM", "LUCIA.SANCHIZ@GMAIL.COM", "AQAAAAIAAYagAAAAEE+oZqjGJsTjrMTome0w0AywhImMN5ZrU/cqbm5B9aoAZ2SDdSkk3u9ATyaAu098jw==", "685214739", false, "365ad339-4c5c-4016-add7-2124362da625", false, "lucia.sanchiz@gmail.com" },
-                    { "c5b85380-b13a-41bc-9d09-33e0257ed25e", 0, "0069eff1-d16e-4ce4-9425-60daa5313b6f", "paco.montoro@3s.com", true, false, null, "PACO.MONTORO@3S.COM", "PACO.MONTORO@3S.COM", "AQAAAAIAAYagAAAAEEnaK7egTQ2qESXvw0Q1420uNSSq8g6QouhccjyLiSLQtZe+W3GBfjSIkQTObtrkTw==", "632514785", false, "1e393a92-2507-4067-94aa-429723bac556", false, "paco.montoro@3s.com" },
-                    { "d32ffd42-0478-4e4e-abb8-136150cdb68c", 0, "63b9cc99-d9df-44af-9e0c-ad023f7fa326", "marta.alonso@3s.com", true, false, null, "MARTA.ALONSO@3S.COM", "MARTA.ALONSO@3S.COM", "AQAAAAIAAYagAAAAELey9qFJTh5YXml6d14wg2uhW24RSi+JOSiO2LPOAqjTfuk+zUDvcsCATKVcOYN/yw==", "632541278", false, "fc7caaff-f797-4d90-afce-2c7f85519fe1", false, "marta.alonso@3s.com" },
-                    { "ec100f8c-ca2c-4a56-9646-7d0dfc3dfc25", 0, "92fcc023-574f-4f30-bad3-1f7b9d2e380c", "maria.guerrero@gmail.com", true, false, null, "MARIA.GUERRERO@GMAIL.COM", "MARIA.GUERRERO@GMAIL.COM", "AQAAAAIAAYagAAAAEGKjgKOGmtA2pm3sUznUuZDjfVMxJPo0Um8xJs8ACZyvB9NxSw1pa9/RrH2AFgjlyA==", "685214378", false, "24b17937-8517-41f2-8d21-8affe8da3eef", false, "maria.guerrero@gmail.com" }
+                    { "05e475e9-a02f-4241-b274-eeae127c2125", 0, "eb3e1854-0d73-46ae-bba5-6976802ae5e7", "martin.sanchez@gmail.com", true, false, null, "MARTIN.SANCHEZ@GMAIL.COM", "MARTIN.SANCHEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEGOw2RzDkBRucDr99QBd1BibqoihJkp+2nf0pnp4W1geWEV5rchrKUT1t0GFdx22Uw==", "602145318", false, "16bea7ba-4454-429f-8731-5cc55518b218", false, "martin.sanchez@gmail.com" },
+                    { "302cd363-98b2-4644-bc6b-b6c7860b1c32", 0, "da06ec36-8711-4779-a240-a467e794874b", "maria.guerrero@gmail.com", true, false, null, "MARIA.GUERRERO@GMAIL.COM", "MARIA.GUERRERO@GMAIL.COM", "AQAAAAIAAYagAAAAEMUYHlck5xgEDTe4kQmO6GCYyKIe8op0EMvkEMUam80ynYDx7XCPZYyeQY3X8CBXcg==", "685214378", false, "dd4c369e-7ada-4575-afed-609e9bc59626", false, "maria.guerrero@gmail.com" },
+                    { "3e80a641-a193-4ab9-8310-6e220f2c3b5d", 0, "02d761ec-f37e-4e12-a7f9-2c0058c95ad0", "raul.hernandez@gmail.com", true, false, null, "RAUL.HERNANDEZ@GMAIL.COM", "RAUL.HERNANDEZ@GMAIL.COM", "AQAAAAIAAYagAAAAEK0WoNvLIPnu8eY3O9GHiWeadBOVcvHI1v0ZB2EcVmbW0ThUS9lld3SuBIfwHZ10Gw==", "693251487", false, "825160be-4e17-4ba2-8e18-9f3d9ddb971e", false, "raul.hernandez@gmail.com" },
+                    { "5363a831-0116-4509-9e1d-968442431031", 0, "dfa660e9-c96d-4ccd-8934-67ec7ec4aa60", "lucia.sanchiz@gmail.com", true, false, null, "LUCIA.SANCHIZ@GMAIL.COM", "LUCIA.SANCHIZ@GMAIL.COM", "AQAAAAIAAYagAAAAEJg7aWYlQHpdiSJGOGN6WLJty70F083cBrXPiMlS/Q4pa32auhR32dy7YfAoUI9aTQ==", "685214739", false, "570ccada-5d99-458b-8952-3258fbee59fb", false, "lucia.sanchiz@gmail.com" },
+                    { "87d800a8-427e-4d6d-b28d-c9e6eb3cbae6", 0, "b1df788a-aa46-49eb-ab4a-e409ea3befd1", "admin@3s.com", true, false, null, "ADMIN@3S.COM", "ADMIN@3S.COM", "AQAAAAIAAYagAAAAEA2YjuQkG7+QoQTQmLsCUHcG8ZNvnVskhj8z/ur3Y8hZAnCwD+uDWza89BrKcw8IWQ==", "653124875", false, "6304fd23-6b1d-471b-8ccb-8a2ef4067ca1", false, "admin@3s.com" },
+                    { "b50f0011-ecfa-42de-96b1-2a9f268c9e5f", 0, "704f133e-2cbf-46f4-96d8-6c7156405e0d", "paco.montoro@3s.com", true, false, null, "PACO.MONTORO@3S.COM", "PACO.MONTORO@3S.COM", "AQAAAAIAAYagAAAAEHPAHHR37icx0+C6uKHNA8iqyuyuolMkPojImnociYyKFIIBFa7xweEDQKl4xQ420g==", "632514785", false, "a43b88bb-feda-4eaf-91cc-a716320eb9c0", false, "paco.montoro@3s.com" },
+                    { "f1e6d15a-1f1e-4df1-94ce-f28d9abb2ebb", 0, "2645d4df-ec5a-42f1-b68f-38c91f37829f", "marta.alonso@3s.com", true, false, null, "MARTA.ALONSO@3S.COM", "MARTA.ALONSO@3S.COM", "AQAAAAIAAYagAAAAEEl8qd7ZHIdu3KV1MryJy3sKL4qyk8/2NAf30VeEdE6hZR60BXMRO6jd+v5HXXw4iQ==", "632541278", false, "2f07ccb1-0447-45de-ad90-71b3b364d1d9", false, "marta.alonso@3s.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -316,24 +314,6 @@ namespace Smith_Swimming_School.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Courses",
-                columns: new[] { "Id_Course", "CoachId_Coach", "Id_Coach", "Title", "TotalPlaces" },
-                values: new object[,]
-                {
-                    { 1, null, 2, "Swim Training for Endurance", 15 },
-                    { 2, null, 1, "Breaststroke Fundamentals", 10 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Enrollments",
-                columns: new[] { "Id_Enrollment", "CourseId_Course", "GroupingId_Grouping", "Id_Course", "Id_Grouping", "Id_Swimmer", "SwimmerId_Swimmer" },
-                values: new object[,]
-                {
-                    { 1, null, null, 2, 1, 1, null },
-                    { 2, null, null, 1, 2, 3, null }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id_Grouping", "End_Date", "Level", "Name", "Places", "Start_Date" },
                 values: new object[,]
@@ -342,11 +322,6 @@ namespace Smith_Swimming_School.Migrations
                     { 2, new DateTime(2024, 1, 30, 18, 30, 0, 0, DateTimeKind.Unspecified), 7, "Adult Learning for endurance", 15, new DateTime(2024, 10, 1, 9, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 3, new DateTime(2024, 12, 31, 14, 0, 0, 0, DateTimeKind.Unspecified), 3, "Young Swimmer lv3 fundamentals", 5, new DateTime(2024, 10, 1, 10, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Reports",
-                columns: new[] { "Id_Report", "EnrollmentId_Enrollment", "Id_Enrollment", "ProgressReport" },
-                values: new object[] { 1, null, 2, "El alumno progresa adecuadamente" });
 
             migrationBuilder.InsertData(
                 table: "Swimmers",
@@ -363,14 +338,37 @@ namespace Smith_Swimming_School.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", "04b75633-aa57-4d5d-bc37-63eb5b8d6b38" },
-                    { "97c10d82-6f23-45d8-b507-88b605697185", "357d0739-17eb-4db2-988d-ee1a6e50987d" },
-                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", "56b6dd7e-30be-4593-9437-ee27c0887d4a" },
-                    { "bd8ec400-0f70-47e3-a519-c8b91fa544f5", "61433e78-2efb-42ed-a220-22ba8439df70" },
-                    { "822e8f95-1892-4f87-b0d4-c8d0fce8dbad", "c5b85380-b13a-41bc-9d09-33e0257ed25e" },
-                    { "822e8f95-1892-4f87-b0d4-c8d0fce8dbad", "d32ffd42-0478-4e4e-abb8-136150cdb68c" },
-                    { "f0c80341-a483-4f8e-8e0a-8938ebf36b47", "ec100f8c-ca2c-4a56-9646-7d0dfc3dfc25" }
+                    { "32eaeec6-155f-4309-ba9c-0db45a01c857", "05e475e9-a02f-4241-b274-eeae127c2125" },
+                    { "32eaeec6-155f-4309-ba9c-0db45a01c857", "302cd363-98b2-4644-bc6b-b6c7860b1c32" },
+                    { "32eaeec6-155f-4309-ba9c-0db45a01c857", "3e80a641-a193-4ab9-8310-6e220f2c3b5d" },
+                    { "25973d9b-4ec1-4cb9-9b8a-6ab650210cd9", "5363a831-0116-4509-9e1d-968442431031" },
+                    { "0fae9880-33b1-4ab0-9497-d7bb1fda8746", "87d800a8-427e-4d6d-b28d-c9e6eb3cbae6" },
+                    { "39942655-b610-46e1-840e-1fbc34fd5317", "b50f0011-ecfa-42de-96b1-2a9f268c9e5f" },
+                    { "39942655-b610-46e1-840e-1fbc34fd5317", "f1e6d15a-1f1e-4df1-94ce-f28d9abb2ebb" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Courses",
+                columns: new[] { "Id_Course", "Id_Coach", "Title", "TotalPlaces" },
+                values: new object[,]
+                {
+                    { 1, 2, "Swim Training for Endurance", 15 },
+                    { 2, 1, "Breaststroke Fundamentals", 10 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Enrollments",
+                columns: new[] { "Id_Enrollment", "Id_Course", "Id_Grouping", "Id_Swimmer" },
+                values: new object[,]
+                {
+                    { 1, 2, 1, 1 },
+                    { 2, 1, 2, 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reports",
+                columns: new[] { "Id_Report", "Id_Enrollment", "ProgressReport" },
+                values: new object[] { 1, 2, "El alumno progresa adecuadamente" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -412,29 +410,29 @@ namespace Smith_Swimming_School.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_CoachId_Coach",
+                name: "IX_Courses_Id_Coach",
                 table: "Courses",
-                column: "CoachId_Coach");
+                column: "Id_Coach");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_CourseId_Course",
+                name: "IX_Enrollments_Id_Course",
                 table: "Enrollments",
-                column: "CourseId_Course");
+                column: "Id_Course");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_GroupingId_Grouping",
+                name: "IX_Enrollments_Id_Grouping",
                 table: "Enrollments",
-                column: "GroupingId_Grouping");
+                column: "Id_Grouping");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_SwimmerId_Swimmer",
+                name: "IX_Enrollments_Id_Swimmer",
                 table: "Enrollments",
-                column: "SwimmerId_Swimmer");
+                column: "Id_Swimmer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_EnrollmentId_Enrollment",
+                name: "IX_Reports_Id_Enrollment",
                 table: "Reports",
-                column: "EnrollmentId_Enrollment");
+                column: "Id_Enrollment");
         }
 
         /// <inheritdoc />

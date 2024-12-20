@@ -26,6 +26,43 @@ namespace Smith_Swimming_School.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> SwimmerEnrollCourse(int idCourse)
+        {
+            Swimmer swimmer = await _context.Swimmers.SingleOrDefaultAsync(s => s.SwimmerUser == User.Identity.Name);
+            if (swimmer == null) {
+                return NotFound();
+            }
+            Course course = await _context.Courses.SingleOrDefaultAsync(c => c.Id_Course == idCourse);
+            if (course == null) {
+                return NotFound();
+            }
+            var enrolledCourse = await _context.Enrollments
+                .Where(e => e.Id_Course == idCourse && e.Id_Swimmer == swimmer.Id_Swimmer)
+                .Include(e => e.Course)
+                .Include(e => e.Swimmer)
+                .FirstOrDefaultAsync();
+
+            if(enrolledCourse != null)
+            {
+                //Retornar vista ya esta matriculado en ese curso
+                return View("AlreadyEnrolled", enrolledCourse);
+            }
+
+            Enrollment enrollment = new Enrollment
+            {
+                Id_Course = course.Id_Course,
+                Id_Swimmer = swimmer.Id_Swimmer
+            };
+
+            _context.Enrollments.Add(enrollment);
+            //Reducimos el numero de plazas del curso
+            course.TotalPlaces--;
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Home", "Swimmers");
+        }
+
         // GET: Enrollments/Details/5
         public async Task<IActionResult> Details(int? id)
         {

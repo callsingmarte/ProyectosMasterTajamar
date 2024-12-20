@@ -51,25 +51,25 @@ namespace Smith_Swimming_School.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "97c10d82-6f23-45d8-b507-88b605697185",
+                            Id = "0fae9880-33b1-4ab0-9497-d7bb1fda8746",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "822e8f95-1892-4f87-b0d4-c8d0fce8dbad",
+                            Id = "39942655-b610-46e1-840e-1fbc34fd5317",
                             Name = "Coach",
                             NormalizedName = "COACH"
                         },
                         new
                         {
-                            Id = "bd8ec400-0f70-47e3-a519-c8b91fa544f5",
+                            Id = "25973d9b-4ec1-4cb9-9b8a-6ab650210cd9",
                             Name = "Visitor",
                             NormalizedName = "VISITOR"
                         },
                         new
                         {
-                            Id = "f0c80341-a483-4f8e-8e0a-8938ebf36b47",
+                            Id = "32eaeec6-155f-4309-ba9c-0db45a01c857",
                             Name = "Swimmer",
                             NormalizedName = "SWIMMER"
                         });
@@ -167,120 +167,120 @@ namespace Smith_Swimming_School.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "357d0739-17eb-4db2-988d-ee1a6e50987d",
+                            Id = "87d800a8-427e-4d6d-b28d-c9e6eb3cbae6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d3ef028-50ce-4515-8fc2-a0b251b002f6",
+                            ConcurrencyStamp = "b1df788a-aa46-49eb-ab4a-e409ea3befd1",
                             Email = "admin@3s.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@3S.COM",
                             NormalizedUserName = "ADMIN@3S.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEK/shcbWUOaLfkv8xIhYXh2O0MNVVwAtgFAkmp50S4V9w7qCQixUY9LBml8Ty9jx6g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA2YjuQkG7+QoQTQmLsCUHcG8ZNvnVskhj8z/ur3Y8hZAnCwD+uDWza89BrKcw8IWQ==",
                             PhoneNumber = "653124875",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d6c55217-b3f7-44c5-8ec3-238e515d3475",
+                            SecurityStamp = "6304fd23-6b1d-471b-8ccb-8a2ef4067ca1",
                             TwoFactorEnabled = false,
                             UserName = "admin@3s.com"
                         },
                         new
                         {
-                            Id = "61433e78-2efb-42ed-a220-22ba8439df70",
+                            Id = "5363a831-0116-4509-9e1d-968442431031",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5741e054-f254-494b-b1dd-d7f167d4f534",
+                            ConcurrencyStamp = "dfa660e9-c96d-4ccd-8934-67ec7ec4aa60",
                             Email = "lucia.sanchiz@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUCIA.SANCHIZ@GMAIL.COM",
                             NormalizedUserName = "LUCIA.SANCHIZ@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE+oZqjGJsTjrMTome0w0AywhImMN5ZrU/cqbm5B9aoAZ2SDdSkk3u9ATyaAu098jw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJg7aWYlQHpdiSJGOGN6WLJty70F083cBrXPiMlS/Q4pa32auhR32dy7YfAoUI9aTQ==",
                             PhoneNumber = "685214739",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "365ad339-4c5c-4016-add7-2124362da625",
+                            SecurityStamp = "570ccada-5d99-458b-8952-3258fbee59fb",
                             TwoFactorEnabled = false,
                             UserName = "lucia.sanchiz@gmail.com"
                         },
                         new
                         {
-                            Id = "c5b85380-b13a-41bc-9d09-33e0257ed25e",
+                            Id = "b50f0011-ecfa-42de-96b1-2a9f268c9e5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0069eff1-d16e-4ce4-9425-60daa5313b6f",
+                            ConcurrencyStamp = "704f133e-2cbf-46f4-96d8-6c7156405e0d",
                             Email = "paco.montoro@3s.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PACO.MONTORO@3S.COM",
                             NormalizedUserName = "PACO.MONTORO@3S.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEnaK7egTQ2qESXvw0Q1420uNSSq8g6QouhccjyLiSLQtZe+W3GBfjSIkQTObtrkTw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHPAHHR37icx0+C6uKHNA8iqyuyuolMkPojImnociYyKFIIBFa7xweEDQKl4xQ420g==",
                             PhoneNumber = "632514785",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1e393a92-2507-4067-94aa-429723bac556",
+                            SecurityStamp = "a43b88bb-feda-4eaf-91cc-a716320eb9c0",
                             TwoFactorEnabled = false,
                             UserName = "paco.montoro@3s.com"
                         },
                         new
                         {
-                            Id = "d32ffd42-0478-4e4e-abb8-136150cdb68c",
+                            Id = "f1e6d15a-1f1e-4df1-94ce-f28d9abb2ebb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "63b9cc99-d9df-44af-9e0c-ad023f7fa326",
+                            ConcurrencyStamp = "2645d4df-ec5a-42f1-b68f-38c91f37829f",
                             Email = "marta.alonso@3s.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MARTA.ALONSO@3S.COM",
                             NormalizedUserName = "MARTA.ALONSO@3S.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELey9qFJTh5YXml6d14wg2uhW24RSi+JOSiO2LPOAqjTfuk+zUDvcsCATKVcOYN/yw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEl8qd7ZHIdu3KV1MryJy3sKL4qyk8/2NAf30VeEdE6hZR60BXMRO6jd+v5HXXw4iQ==",
                             PhoneNumber = "632541278",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fc7caaff-f797-4d90-afce-2c7f85519fe1",
+                            SecurityStamp = "2f07ccb1-0447-45de-ad90-71b3b364d1d9",
                             TwoFactorEnabled = false,
                             UserName = "marta.alonso@3s.com"
                         },
                         new
                         {
-                            Id = "ec100f8c-ca2c-4a56-9646-7d0dfc3dfc25",
+                            Id = "302cd363-98b2-4644-bc6b-b6c7860b1c32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "92fcc023-574f-4f30-bad3-1f7b9d2e380c",
+                            ConcurrencyStamp = "da06ec36-8711-4779-a240-a467e794874b",
                             Email = "maria.guerrero@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MARIA.GUERRERO@GMAIL.COM",
                             NormalizedUserName = "MARIA.GUERRERO@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGKjgKOGmtA2pm3sUznUuZDjfVMxJPo0Um8xJs8ACZyvB9NxSw1pa9/RrH2AFgjlyA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMUYHlck5xgEDTe4kQmO6GCYyKIe8op0EMvkEMUam80ynYDx7XCPZYyeQY3X8CBXcg==",
                             PhoneNumber = "685214378",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "24b17937-8517-41f2-8d21-8affe8da3eef",
+                            SecurityStamp = "dd4c369e-7ada-4575-afed-609e9bc59626",
                             TwoFactorEnabled = false,
                             UserName = "maria.guerrero@gmail.com"
                         },
                         new
                         {
-                            Id = "56b6dd7e-30be-4593-9437-ee27c0887d4a",
+                            Id = "3e80a641-a193-4ab9-8310-6e220f2c3b5d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2737113a-2ae6-4541-ad60-3c3cdaf670ab",
+                            ConcurrencyStamp = "02d761ec-f37e-4e12-a7f9-2c0058c95ad0",
                             Email = "raul.hernandez@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RAUL.HERNANDEZ@GMAIL.COM",
                             NormalizedUserName = "RAUL.HERNANDEZ@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKKqAS/3tFGLb/H9ANiNm2jFBIcnLDdg1lEYMhpYN6rithqoxmqRgjPrmoU0emkROA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK0WoNvLIPnu8eY3O9GHiWeadBOVcvHI1v0ZB2EcVmbW0ThUS9lld3SuBIfwHZ10Gw==",
                             PhoneNumber = "693251487",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6e1cd847-1b09-4397-a1f2-e43c3992a885",
+                            SecurityStamp = "825160be-4e17-4ba2-8e18-9f3d9ddb971e",
                             TwoFactorEnabled = false,
                             UserName = "raul.hernandez@gmail.com"
                         },
                         new
                         {
-                            Id = "04b75633-aa57-4d5d-bc37-63eb5b8d6b38",
+                            Id = "05e475e9-a02f-4241-b274-eeae127c2125",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dfc3908b-5a84-4ec0-9d7f-b38b139521de",
+                            ConcurrencyStamp = "eb3e1854-0d73-46ae-bba5-6976802ae5e7",
                             Email = "martin.sanchez@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MARTIN.SANCHEZ@GMAIL.COM",
                             NormalizedUserName = "MARTIN.SANCHEZ@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFLdxaZJScSZjwVYShkMHMmms9Zea1TcjPlZj55Lys+zz+awzSVjlnZUWrJXCc3yhw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGOw2RzDkBRucDr99QBd1BibqoihJkp+2nf0pnp4W1geWEV5rchrKUT1t0GFdx22Uw==",
                             PhoneNumber = "602145318",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fbd3807e-c8f9-4fd6-a9c9-cd2d0591f7a7",
+                            SecurityStamp = "16bea7ba-4454-429f-8731-5cc55518b218",
                             TwoFactorEnabled = false,
                             UserName = "martin.sanchez@gmail.com"
                         });
@@ -352,38 +352,38 @@ namespace Smith_Swimming_School.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "357d0739-17eb-4db2-988d-ee1a6e50987d",
-                            RoleId = "97c10d82-6f23-45d8-b507-88b605697185"
+                            UserId = "87d800a8-427e-4d6d-b28d-c9e6eb3cbae6",
+                            RoleId = "0fae9880-33b1-4ab0-9497-d7bb1fda8746"
                         },
                         new
                         {
-                            UserId = "61433e78-2efb-42ed-a220-22ba8439df70",
-                            RoleId = "bd8ec400-0f70-47e3-a519-c8b91fa544f5"
+                            UserId = "5363a831-0116-4509-9e1d-968442431031",
+                            RoleId = "25973d9b-4ec1-4cb9-9b8a-6ab650210cd9"
                         },
                         new
                         {
-                            UserId = "c5b85380-b13a-41bc-9d09-33e0257ed25e",
-                            RoleId = "822e8f95-1892-4f87-b0d4-c8d0fce8dbad"
+                            UserId = "b50f0011-ecfa-42de-96b1-2a9f268c9e5f",
+                            RoleId = "39942655-b610-46e1-840e-1fbc34fd5317"
                         },
                         new
                         {
-                            UserId = "d32ffd42-0478-4e4e-abb8-136150cdb68c",
-                            RoleId = "822e8f95-1892-4f87-b0d4-c8d0fce8dbad"
+                            UserId = "f1e6d15a-1f1e-4df1-94ce-f28d9abb2ebb",
+                            RoleId = "39942655-b610-46e1-840e-1fbc34fd5317"
                         },
                         new
                         {
-                            UserId = "ec100f8c-ca2c-4a56-9646-7d0dfc3dfc25",
-                            RoleId = "f0c80341-a483-4f8e-8e0a-8938ebf36b47"
+                            UserId = "302cd363-98b2-4644-bc6b-b6c7860b1c32",
+                            RoleId = "32eaeec6-155f-4309-ba9c-0db45a01c857"
                         },
                         new
                         {
-                            UserId = "56b6dd7e-30be-4593-9437-ee27c0887d4a",
-                            RoleId = "f0c80341-a483-4f8e-8e0a-8938ebf36b47"
+                            UserId = "3e80a641-a193-4ab9-8310-6e220f2c3b5d",
+                            RoleId = "32eaeec6-155f-4309-ba9c-0db45a01c857"
                         },
                         new
                         {
-                            UserId = "04b75633-aa57-4d5d-bc37-63eb5b8d6b38",
-                            RoleId = "f0c80341-a483-4f8e-8e0a-8938ebf36b47"
+                            UserId = "05e475e9-a02f-4241-b274-eeae127c2125",
+                            RoleId = "32eaeec6-155f-4309-ba9c-0db45a01c857"
                         });
                 });
 
@@ -454,9 +454,6 @@ namespace Smith_Swimming_School.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Course"));
 
-                    b.Property<int?>("CoachId_Coach")
-                        .HasColumnType("int");
-
                     b.Property<int>("Id_Coach")
                         .HasColumnType("int");
 
@@ -468,7 +465,7 @@ namespace Smith_Swimming_School.Migrations
 
                     b.HasKey("Id_Course");
 
-                    b.HasIndex("CoachId_Coach");
+                    b.HasIndex("Id_Coach");
 
                     b.ToTable("Courses");
 
@@ -497,31 +494,22 @@ namespace Smith_Swimming_School.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Enrollment"));
 
-                    b.Property<int?>("CourseId_Course")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GroupingId_Grouping")
-                        .HasColumnType("int");
-
                     b.Property<int>("Id_Course")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_Grouping")
+                    b.Property<int?>("Id_Grouping")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_Swimmer")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SwimmerId_Swimmer")
+                    b.Property<int?>("Id_Swimmer")
                         .HasColumnType("int");
 
                     b.HasKey("Id_Enrollment");
 
-                    b.HasIndex("CourseId_Course");
+                    b.HasIndex("Id_Course");
 
-                    b.HasIndex("GroupingId_Grouping");
+                    b.HasIndex("Id_Grouping");
 
-                    b.HasIndex("SwimmerId_Swimmer");
+                    b.HasIndex("Id_Swimmer");
 
                     b.ToTable("Enrollments");
 
@@ -608,9 +596,6 @@ namespace Smith_Swimming_School.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Report"));
 
-                    b.Property<int?>("EnrollmentId_Enrollment")
-                        .HasColumnType("int");
-
                     b.Property<int>("Id_Enrollment")
                         .HasColumnType("int");
 
@@ -619,7 +604,7 @@ namespace Smith_Swimming_School.Migrations
 
                     b.HasKey("Id_Report");
 
-                    b.HasIndex("EnrollmentId_Enrollment");
+                    b.HasIndex("Id_Enrollment");
 
                     b.ToTable("Reports");
 
@@ -745,7 +730,9 @@ namespace Smith_Swimming_School.Migrations
                 {
                     b.HasOne("Smith_Swimming_School.Models.Coach", "Coach")
                         .WithMany()
-                        .HasForeignKey("CoachId_Coach");
+                        .HasForeignKey("Id_Coach")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Coach");
                 });
@@ -754,15 +741,17 @@ namespace Smith_Swimming_School.Migrations
                 {
                     b.HasOne("Smith_Swimming_School.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId_Course");
+                        .HasForeignKey("Id_Course")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Smith_Swimming_School.Models.Group", "Grouping")
                         .WithMany()
-                        .HasForeignKey("GroupingId_Grouping");
+                        .HasForeignKey("Id_Grouping");
 
                     b.HasOne("Smith_Swimming_School.Models.Swimmer", "Swimmer")
                         .WithMany()
-                        .HasForeignKey("SwimmerId_Swimmer");
+                        .HasForeignKey("Id_Swimmer");
 
                     b.Navigation("Course");
 
@@ -775,7 +764,9 @@ namespace Smith_Swimming_School.Migrations
                 {
                     b.HasOne("Smith_Swimming_School.Models.Enrollment", "Enrollment")
                         .WithMany()
-                        .HasForeignKey("EnrollmentId_Enrollment");
+                        .HasForeignKey("Id_Enrollment")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Enrollment");
                 });
