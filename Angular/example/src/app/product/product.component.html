@@ -1,0 +1,136 @@
+<!--<div [ngClass]="getClasses()">
+  Hello master-->
+<!--The are {{model.getProducts().length}} products in the model-->
+<!--</div>-->
+<!-- A las instrucciones entre [] se las llama directivas -->
+<!-- [ngClass] es una directiva -->
+<!-- Todo lo que sean [] significa que vienen desde el componente al html-->
+<!--<div class="form-group m-2">
+  <label>Name:</label>
+  <input class="form-control" [value]="model.getProduct(1).name || 'None'" />
+</div>-->
+<!--<div [ngClass]="getClasses()"
+     [textContent]="'Name: ' + (model.getProduct(1)?.name || 'None')"
+     >
+</div>-->
+<!--<div [ngClass]="getClasses()">
+  Name: {{(model.getProduct(1)?.name || 'None')}}
+</div>-->
+<!--
+  Directivas Basicas:
+  1. [ngClass]: asigna clases a elementos HTML
+  2. [ngStyle]: adjudica estilos CSS
+  [ngIf]: inserta contenido en un HTML evaluando una expresion booleana
+  [ngFor]: inserta el mismo contenido para cada elemento en un datasource
+  [ngSwitch]: elige entre bloques para insertar HTML
+  [ngTemplateOutlet]: repite un bloque de contenido
+
+  //Para definir la clase de un determinado elemento en 1
+  1. <div [class]="expr"></div>
+  2. <div [class.myClass]="expr"></div>
+  3. <div [ngClass]="map"></div>
+
+  //para definir styles en un determinado elemento en 2
+  1. <div [style.myStyle]="expr"></div> asigna un estilo al resultado de una expresion
+  2. <div [style.myStyle.units] = "expr"></div> permite usar unidades de medida para el estilo
+  3. <div [ngClass]="map"></div>: usamos multiples estilos desde un mapa de objetos
+  div *ngIf="getProductCount() > 4"
+  por detras hace:
+  <ng-template ngIf="getProductCount()" > 4
+-->
+<!--<div class="text-black m-2">
+  <div class="p-2 bg-warning">
+    The <span [ngStyle]="getStyles(1)">first</span> product is {{model.getProduct(1).name }}
+  </div>
+  <div class="p-2 bg-info">
+    The <span [ngStyle]="getStyles(2)">second</span> product is {{model.getProduct(2).name }}
+  </div>-->
+<!--<div class="p-2 bg-warning">
+  The <span [style.fontSize]="fontSizeWithUnits">first</span> product is {{model.getProduct(1).name }}
+</div>
+<div class="p-2 bg-info">
+  The <span [style.fontSize.px]="fontSizeWithoutUnits">second</span> product is {{model.getProduct(2).name }}
+</div>-->
+<!--<div class="p-2 " [ngClass]="getClassesMap(1)">
+  the first product is {{model.getProduct(1).name }}
+</div>
+<div class="p-2 " [ngClass]="getClassesMap(2)">
+  the second product is {{model.getProduct(1).name }}
+</div>
+<div class="p-2 " [ngClass]="{'bg-success':model.getProduct(3).price < 50, 'bg-info':model.getProduct(3).price >= 50}">
+  the third product is {{model.getProduct(3).name }}
+</div>
+<div [class]="getClasses(1)">
+  the first product is {{model.getProduct(1).name }}
+</div>
+<div class="p-2"
+     [class.bg-success]="model.getProduct(2)?.price < 50"
+     [class.bg-info]="model.getProduct(2)?.price >= 50">
+  the second product is {{model.getProduct(2).name }}
+</div>-->
+<!--<div [class]="getClasses(2)">
+  the second product is {{model.getProduct(2).name }}
+</div>-->
+<!--</div>-->
+<!--<div class="text-white m-2">
+  <div class="bg-info p-2">
+    There are {{ getProductCount() }} products
+  </div>
+  <div *ngIf="getProductCount() > 4" class="bg-info p-2">
+    There are more the 4 products in the model
+  </div>
+  <div *ngIf="getProductByPosition(0).name == 'Kayak'" class="bg-info p-2">
+    The first product is Kayak
+  </div>
+</div>-->
+<!--<div class="text-white m-2">
+  <div class="bg-info p-2">
+    There are {{getProductCount()}} products.
+  </div>
+  <div class="bg-info p-2 mt-1" [ngSwitch]="getProductCount()">
+    <span *ngSwitchCase="2">There are two products</span>
+    <span *ngSwitchCase="5">There are five products</span>
+    <span *ngSwitchDefault>This is the default</span>
+  </div>
+</div>-->
+
+<!--<div class="text-white m-2">
+  <div class="bg-info p-2">
+    There are {{getProductCount()}} products.
+  </div>
+  <table class="table table-sm table-bordered mt-1 text-dark">
+    <thead>
+      <tr>
+        <th>Index</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of getProducts(); let i = index; let odd = odd; let last = last; let first= first; let c=count">
+        <td [class.bg-warning]="first || last">{{i + 1}} of {{c}}</td>
+        <td [class.bg-primary]="odd" [class.bg-info]="!odd">{{item.name}}</td>
+        <td [class.bg-primary]="odd" [class.bg-info]="!odd">{{item.category}}</td>
+        <td [class.bg-primary]="odd" [class.bg-info]="!odd">${{item.price}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>-->
+
+<ng-template #titleTemplate let-text="title">
+  <h4 class="p-2 bg-success text-white">{{text}}</h4>
+</ng-template>
+
+<ng-template [ngTemplateOutlet]="titleTemplate"
+             [ngTemplateOutletContext]="{title:'Header'}"
+              ></ng-template>
+
+<div class="bg-info p-2">
+  There are {{getProductCount()}} products.
+</div>
+
+<ng-template [ngTemplateOutlet]="titleTemplate"
+             [ngTemplateOutletContext]="{title:'Footer'}"
+             ></ng-template>
+
