@@ -1,15 +1,15 @@
-<div class="bg-info text-white m-2 p-2">
+<!--<div class="bg-info text-white m-2 p-2">
   The are {{model.getCourses().length}} courses in the model
-</div>
+</div>-->
 <!-- Ejercicio 10.1-->
-<p class="text-center mt-2 mb-2">Ejercicio 10.1</p>
+<!--<p class="text-center mt-2 mb-2">Ejercicio 10.1</p>
 <div class="p-2"
      [class.bg-warning]="model.getCourse(2)?.seatCapacity < 17"
      [class.bg-success]="model.getCourse(2)?.seatCapacity >= 17">
   the second course is {{model.getCourse(2).title }}
-</div>
+</div>-->
 <!-- Ejercicio 10.2-->
-<p class="text-center mb-2">Ejercicio 10.2</p>
+<!--<p class="text-center mb-2">Ejercicio 10.2</p>
 <div class="p-2 " [ngClass]="getClassesMap(1)">
   the first course is {{model.getCourse(1).title }}
 </div>
@@ -18,10 +18,9 @@
 </div>
 <div class="p-2 " [ngClass]="getClassesMap(3)">
   the third course is {{model.getCourse(3).title }}
-</div>
-
+</div>-->
 <!--Ejercicio 10.3 -->
-<p class="text-center mb-2">Ejercicio 10.3</p>
+<!--<p class="text-center mb-2">Ejercicio 10.3</p>
 <div [ngStyle]="getStyles(1)">
   The first course is {{model.getCourse(1).title }}
 </div>
@@ -30,9 +29,9 @@
 </div>
 <div [ngStyle]="getStyles(3)">
   The third course is {{model.getCourse(3).title }}
-</div>
+</div>-->
 <!--Ejercicio 11.1-->
-<p class="text-center mb-2">Ejercicio 11.1</p>
+<!--<p class="text-center mb-2">Ejercicio 11.1</p>
 <div class="text-white m-2">
   <div class="bg-info p-2">
     There are {{getCourseCount()}} courses.
@@ -40,9 +39,9 @@
   <div class="bg-success" *ngIf="getCourseCount() >= 4 && getCourse(1).title !='Angular'">
     There are 4 or more courses and the first course isn't named Angular
   </div>
-</div>
+</div>-->
 <!--Ejercicio 11.2-->
-<p class="text-center mb-2">Ejercicio 11.2</p>
+<!--<p class="text-center mb-2">Ejercicio 11.2</p>
 <div class="m-2">
   <table class="table table-sm table-bordered mt-1 text-dark">
     <thead>
@@ -62,4 +61,70 @@
       </tr>
     </tbody>
   </table>
+</div>-->
+<!--Ejercicio 12.1-->
+<p class="text-center mb-2">Ejercicio 12.1</p>
+<div>
+  <p>Title: {{selectedCourse.title ?? 'None'}} </p>
+  <p>Seat Capacity: {{selectedCourse.seatCapacity ?? 'None'}}</p>
+</div>
+<div class="m-2">
+  <table class="table table-sm table-bordered mt-1 text-dark">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Seat Capacity</th>
+        <th>Instructor Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let course of getCourses(); let i = index;">
+        <td [class.bg-primary]="selectedCourse.title == course.title" (mouseover)="selectedCourse = course" (mouseout)="selectedCourse = {}">{{i + 1}}</td>
+        <td [class.bg-primary]="selectedCourse.title == course.title">{{course.title}}</td>
+        <td [class.bg-primary]="selectedCourse.title == course.title">{{course.seatCapacity}}</td>
+        <td [class.bg-primary]="selectedCourse.title == course.title">{{course.instructorName}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    Titulo Curso:
+    <input class="form-control" [(ngModel)]="selectedCourse.title" />
+    Titulo Curso:
+    <input class="form-control" [(ngModel)]="selectedCourse.title" />
+  </div>
+</div>
+<!--Ejercicio 12.2-->
+<div>
+  <h2>Create Course</h2>
+  <form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+    <div>
+      <div class="bg-danger text-white p-2 mb-2" *ngIf="formSubmitted && form.invalid">
+        There are problems with the form
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Course Title</label>
+      <input class="form-control" name="title" [(ngModel)]="newCourse.title" #name="ngModel" required minlength="5" pattern="^[A-Za-z ]+$" />
+      <ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
+        <li *ngFor="let error of getValidationMessages(name)">
+          {{error}}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Seat Capacity</label>
+      <input class="form-control" name="seatCapacity" [(ngModel)]="newCourse.seatCapacity" #name="ngModel" required type="number" />
+    </div>
+    <div class="form-group">
+      <label>Instructor Name</label>
+      <input class="form-control" name="instructorName" [(ngModel)]="newCourse.instructorName" #name="ngModel" />
+    </div>
+    <button class="btn btn-primary"
+            [disabled]="formSubmitted && form.invalid"
+            [class.btn-secondary]="formSubmitted && form.invalid"
+            type="submit">
+      Create
+    </button>
+  </form>
 </div>

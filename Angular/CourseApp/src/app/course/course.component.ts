@@ -2,10 +2,11 @@ import { ApplicationRef, Component } from '@angular/core';
 import { Model } from './repository.model';
 import { CommonModule } from '@angular/common';
 import { Course } from './course.model';
+import { FormsModule, NgForm, NgModel, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-course',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })
@@ -46,5 +47,54 @@ export class CourseComponent {
       color: course?.seatCapacity >= 17 ? "green" : "red",
       fontSize: course?.title == "Angular" ? "30px" : "20px"
     };
+  }
+
+  selectedCourse: Course = new Course();
+
+  newCourse: Course = new Course();
+
+  getMessages(errs: ValidationErrors | null, name: string): string[] {
+    let messages: string[] = [];
+
+    for (let errorName in errs) {
+      switch (errorName) {
+        case "required":
+          messages.push(`You must enter a ${name}`);
+          break;
+        case "minlength":
+          messages.push(`A ${name} must be at least ${errs['minlength'].requiredLength} characters`);
+          break;
+        case "pattern":
+          messages.push(`The ${name} contains illegal characters`);
+          break;
+      }
+    }
+
+    return messages;
+  }
+
+  getValidationMessages(state: NgModel, thingName?: string) {
+    let thing: string = state.path[0] ?? thingName;
+    return this.getMessages(state.errors, thing);
+  }
+
+  formSubmitted: boolean = false;
+
+  get jsonCourse() {
+    return JSON.stringify(this.newCourse);
+  }
+
+  addCourse(course: Course) {
+    console.log("New Course: " + this.jsonCourse);
+  }
+
+  submitForm(form: NgForm) {
+    this.formSubmitted = true;
+    if (form.valid) {
+      this.addCourse(this.newCourse);
+      this.newCourse = new Course();
+      form.resetForm();
+      this.formSubmitted = false;
+    }
   }
 }
