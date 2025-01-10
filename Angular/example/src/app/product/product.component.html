@@ -93,7 +93,6 @@
     <span *ngSwitchDefault>This is the default</span>
   </div>
 </div>-->
-
 <!--<div class="text-white m-2">
   <div class="bg-info p-2">
     There are {{getProductCount()}} products.
@@ -169,7 +168,6 @@
     <input class="form-control" [(ngModel)]="selectedProduct" />
   </div>
 </div>-->
-
 <!--<ng-template #titleTemplate let-text="title">
   <h4 class="p-2 bg-success text-white">{{text}}</h4>
 </ng-template>
@@ -185,8 +183,7 @@
 <ng-template [ngTemplateOutlet]="titleTemplate"
              [ngTemplateOutletContext]="{title:'Footer'}"
              ></ng-template>-->
-
-<!--  
+<!--
   Estos eventos se conocen como Hooks
   ngOnInit: despues de lanzar los valores iniciales se ejecuta
   ngOnChanges: cuando el input ha cambiado se ejecuta
@@ -194,6 +191,103 @@
   ngAfterContentInit: cuando se inicializa la directiva
   ngAfterContentChecked: verficar cambios producidos
   ngOnDestroy: Antes de que la directiva se destruya
+-->
+<!--<div class="container-fluid">
+  <div class="row p-2">
+    <div class="col-6">
+      <form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+        <div class="bg-danger text-white p-2 mb-2" *ngIf="formSubmitted && form.invalid">
+          There are problems with the form
+          <ul>
+            <li *ngFor="let error of getFormValidationMessages(form)">
+              {{error}}
+            </li>
+          </ul>
+        </div>
+        <div class="form-group">
+          <label>Product Name</label>
+          <input class="form-control" name="name" [(ngModel)]="newProduct.name" required minlength="5" pattern="^[A-Za-z ]+$" />-->
+<!--
+<ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
+  <li *ngFor="let error of getValidationMessages(name)">
+    {{error}}
+  </li>
+   <li *ngIf="name.errors?.['required']">
+    You must enter a product name
+  </li>
+  <li *ngIf="name.errors?.['pattern']">
+    Product names can only contain letters and spaces
+  </li>
+  <li *ngIf="name.errors?.['minlength']">
+    Product names must be at least {{name.errors?.['minlength'].requiredLength}} characters
+  </li>
+  </ul>
+-->
+<!--</div>
+<div class="form-group">
+  <label>Category</label>
+  <input class="form-control" name="category" [(ngModel)]="newProduct.category" required />-->
+<!--<ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
+  <li *ngFor="let error of getValidationMessages(name)">
+    {{error}}
+  </li>
+</ul>-->
+<!--</div>
+<div class="form-group">
+  <label>Price</label>
+  <input class="form-control" name="price" [(ngModel)]="newProduct.price" required type="number" />-->
+<!--<ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
+  <li *ngFor="let error of getValidationMessages(name)">
+    {{error}}
+  </li>
+</ul>-->
+<!--</div>
+    <button class="btn btn-primary"
+            [disabled]="formSubmitted && form.invalid"
+            [class.btn-secondary]="formSubmitted && form.invalid"
+            type="submit">
+      Create
+    </button>
+  </form>
+</div>
+<div class="col">
+  <div class="form-group bg-info text-white p-2">
+    <label>Name</label>
+    <input class="bg-primary text-white form-control"
+           [(paModel)]="newProduct.name" />-->
+<!--Forma con input y output-->
+<!--[paModel]="newProduct.name"
+(paModelChange)="newProduct.name = $event"-->
+<!--</div>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of getProducts(); let i = index;"
+              [pa-attr]="getProducts().length < 6 ? 'table-success' : 'table-warning'"
+              [pa-product]="item"
+              (pa-category)="newProduct.category = $event"
+              >
+            <td>{{i + 1}}</td>
+            <td>{{item.name}}</td>
+            <td [pa-attr]="item.category == 'Soccer' ? 'table-info' : null">{{item.category}}</td>
+            <td [pa-attr]="'table-info'">${{item.price}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>-->
+<!--
+  Directives Structural: Modifica el layout: añade y elimina elementos
+  microtemplates *
+  ng-template
 -->
 <div class="container-fluid">
   <div class="row p-2">
@@ -209,70 +303,47 @@
         </div>
         <div class="form-group">
           <label>Product Name</label>
-          <input class="form-control" name="name" [(ngModel)]="newProduct.name" #name="ngModel" required minlength="5" pattern="^[A-Za-z ]+$" />
-          <!--
-        <ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
-          <li *ngFor="let error of getValidationMessages(name)">
-            {{error}}
-          </li>
-           <li *ngIf="name.errors?.['required']">
-            You must enter a product name
-          </li>
-          <li *ngIf="name.errors?.['pattern']">
-            Product names can only contain letters and spaces
-          </li>
-          <li *ngIf="name.errors?.['minlength']">
-            Product names must be at least {{name.errors?.['minlength'].requiredLength}} characters
-          </li>
-          </ul>
-        -->
+          <input class="form-control" name="name" [(ngModel)]="newProduct.name" required minlength="5" pattern="^[A-Za-z ]+$" />
         </div>
         <div class="form-group">
-          <label>Category</label>
-          <input class="form-control" name="category" [(ngModel)]="newProduct.category" #name="ngModel" required />
-          <!--<ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
-          <li *ngFor="let error of getValidationMessages(name)">
-            {{error}}
-          </li>
-        </ul>-->
+          <label>Product Category</label>
+          <input class="form-control" name="category" [(ngModel)]="newProduct.category" required />
         </div>
         <div class="form-group">
-          <label>Price</label>
-          <input class="form-control" name="price" [(ngModel)]="newProduct.price" #name="ngModel" required type="number" />
-          <!--<ul class="text-danger list-unstyled" *ngIf="name.dirty && name.invalid">
-          <li *ngFor="let error of getValidationMessages(name)">
-            {{error}}
-          </li>
-        </ul>-->
+          <label>Product Price</label>
+          <input class="form-control" name="price" [(ngModel)]="newProduct.price" required type="number" />
         </div>
-        <button class="btn btn-primary"
-                [disabled]="formSubmitted && form.invalid"
-                [class.btn-secondary]="formSubmitted && form.invalid"
-                type="submit">
-          Create
-        </button>
+        <button class="btn btn-primary mt-2" type="submit" [disabled]="formSubmitted && form.invalid" [class.btn-secondary]="formSubmitted && form.invalid">Create</button>
       </form>
     </div>
     <div class="col">
-      <table class="table table-bordered table-striped">
+      <div class="form-check">
+        <label class="form-check-label">Dark Cell Color</label>
+        <input type="checkbox" class="form-check-input" [(ngModel)]="darkColor" />
+      </div>
+      <table class="table table-bordered table-striped" [PaCellDarkColor]="darkColor">
         <thead>
           <tr>
-            <th></th>
+            <th>Index</th>
             <th>Name</th>
             <th>Category</th>
             <th>Price</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of getProducts(); let i = index;" [pa-attr]="getProducts().length < 6 ? 'table-success' : 'bg-warning'">
-            <td>{{i + 1}}</td>
+          <tr *paFor="let item of getProducts(); let i=index let odd=odd; let even=even"
+              [class.bg-info]="odd" [class.bg-warning]="even" class="align-middle">
+            <td>{{i+1}}</td>
             <td>{{item.name}}</td>
-            <td [pa-attr]="item.category == 'Soccer' ? 'table-info' : null">{{item.category}}</td>
-            <td [pa-attr]="'bg-info'">${{item.price}}</td>
+            <td>{{item.category}}</td>
+            <td>${{item.price}}</td>
+            <td class="text-center">
+              <button class="btn btn-danger btn-sm" (click)="deleteProduct(item.id)">Delete</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-

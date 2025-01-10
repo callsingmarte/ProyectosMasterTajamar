@@ -4,14 +4,23 @@ import { CommonModule } from '@angular/common';
 import { Product } from "./product.model";
 import { FormsModule, NgForm, NgModel, ValidationErrors } from "@angular/forms";
 import { PaAttrDirective } from "../directives/attr.directive";
+import { PaModel } from "../directives/twoway.directive";
+import { PaStructureDirective } from "../directives/structure.directive";
+import { PaIteratorDirective } from "../directives/iterator.directive";
+import { PaCellColor } from "../directives/cellColor.directive";
+import { PaCellColorSwitcher } from "../directives/cellColorSwitcher.directive";
 @Component({
   selector: "app-product",
-  imports: [CommonModule, FormsModule, PaAttrDirective], // Importa CommonModule aquí
+  imports: [CommonModule, FormsModule, PaAttrDirective,
+    PaModel, PaStructureDirective, PaIteratorDirective,
+    PaCellColor, PaCellColorSwitcher], // Importa CommonModule aquí
   standalone: true, //Para corregir el error de cuando se usa el ngModel
   templateUrl: "./product.component.html"
 })
 export class ProductComponent {
   model: Model = new Model();
+  showTable: boolean = false;
+  darkColor: boolean = false;
 
   getProductByPosition(position: number): Product {
     return this.model.getProducts()[position];
@@ -75,4 +84,10 @@ export class ProductComponent {
       this.formSubmitted = false;
     }
   }
+
+  deleteProduct(key: number)
+  {
+    this.model.deleteProduct(key);
+  }
+
 }
