@@ -289,7 +289,7 @@
   microtemplates *
   ng-template
 -->
-<div class="container-fluid">
+<!--<div class="container-fluid">
   <div class="row p-2">
     <div class="col-6">
       <form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
@@ -344,6 +344,17 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>-->
+
+<div class="container-fluid">
+  <div class="row p-2">
+    <div class="col-4 p-2 bg-success text-white">
+      <app-product-form (paNewProduct)="addProduct($event)"></app-product-form>
+    </div>
+    <div class="col p-2 bg-primary text-white">
+        <app-product-table [model]="model"></app-product-table>
     </div>
   </div>
 </div>
