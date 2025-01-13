@@ -3,10 +3,11 @@ import { Model } from './repository.model';
 import { CommonModule } from '@angular/common';
 import { Course } from './course.model';
 import { FormsModule, NgForm, NgModel, ValidationErrors } from '@angular/forms';
+import { CuAttrDirective } from '../directives/CuAttr.directive';
 
 @Component({
   selector: 'app-course',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CuAttrDirective],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })
