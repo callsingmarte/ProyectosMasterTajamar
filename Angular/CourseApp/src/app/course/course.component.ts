@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Course } from './course.model';
 import { FormsModule, NgForm, NgModel, ValidationErrors } from '@angular/forms';
 import { CuAttrDirective } from '../directives/CuAttr.directive';
+import { PaModel } from '../directives/twoway.directive';
 
 @Component({
   selector: 'app-course',
-  imports: [CommonModule, FormsModule, CuAttrDirective],
+  imports: [CommonModule, FormsModule, CuAttrDirective, PaModel],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })
