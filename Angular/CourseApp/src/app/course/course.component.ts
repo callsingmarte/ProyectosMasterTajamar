@@ -5,10 +5,13 @@ import { Course } from './course.model';
 import { FormsModule, NgForm, NgModel, ValidationErrors } from '@angular/forms';
 import { CuAttrDirective } from '../directives/CuAttr.directive';
 import { PaModel } from '../directives/twoway.directive';
+import { CourseFormComponent } from '../components/course-form/course-form.component';
+import { CourseTableComponent } from '../components/course-table/course-table.component';
 
 @Component({
   selector: 'app-course',
-  imports: [CommonModule, FormsModule, CuAttrDirective, PaModel],
+  imports: [CommonModule, FormsModule, CuAttrDirective,
+    PaModel, CourseFormComponent, CourseTableComponent],
   templateUrl: './course.component.html',
   styleUrl: './course.component.css'
 })

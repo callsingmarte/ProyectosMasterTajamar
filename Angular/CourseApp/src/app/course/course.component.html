@@ -129,7 +129,7 @@
   </form>
 </div>-->
 <!-- Ejercicio 13.1 -->
-<div class="container-fluid">
+<!--<div class="container-fluid">
   <div class="row p-2">
     <div class="col-6">
       <form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
@@ -187,6 +187,16 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </div>
+</div>-->
+<div class="container-fluid">
+  <div class="row p-2">
+    <div class="col-6">
+      <app-course-form (paNewCourse)="addCourse($event)"></app-course-form>
+    </div>
+    <div class="col-6">
+      <app-course-table [model]="model"></app-course-table>
     </div>
   </div>
 </div>

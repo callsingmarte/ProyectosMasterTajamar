@@ -3,20 +3,24 @@ import { Product } from '../product.model';
 import { Model } from '../repository.model';
 import { FormsModule, NgForm, NgModel, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DiscountDisplayComponent } from '../../../components/discount-display/discount-display.component';
+import { DiscountEditorComponent } from '../../../components/discount-editor/discount-editor.component';
 
 @Component({
   selector: 'app-product-form',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, DiscountDisplayComponent, DiscountEditorComponent],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent {
   newProduct: Product = new Product();
-  model: Model = new Model();
+  //model: Model = new Model();
   formSubmitted: boolean = false;
 
-  @Output("paNewProduct")
-  newProductEvent = new EventEmitter<Product>
+  //@Output("paNewProduct")
+  //newProductEvent = new EventEmitter<Product>
+
+  constructor(public model:Model) { }
 
   getMessages(errs: ValidationErrors | null, name: string): string[] {
     let messages: string[] = [];
@@ -55,15 +59,15 @@ export class ProductFormComponent {
   submitForm(form: NgForm) {
     this.formSubmitted = true;
     if (form.valid) {
-      this.newProductEvent.emit(this.newProduct);
+      //this.newProductEvent.emit(this.newProduct);
+      this.model.saveProduct(this.newProduct)
       this.newProduct = new Product();
       form.resetForm();
       this.formSubmitted = false;
     }
   }
 
-  addProduct(p: Product) {
-    this.model.saveProduct(p);
-  }
-
+  //addProduct(p: Product) {
+  //  this.model.saveProduct(p);
+  //}
 }

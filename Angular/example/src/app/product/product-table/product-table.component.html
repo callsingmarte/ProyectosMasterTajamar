@@ -1,4 +1,4 @@
-<div class="bg-info p-2 text-white">
+<!--<div class="bg-info p-2 text-white">
   <div>{{getProducts() | json}}</div>
 </div>
 <div>
@@ -27,7 +27,7 @@
     <option>Soccer</option>
     <option>Chess</option>
   </select>
-</div>
+</div>-->
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -39,24 +39,30 @@
     </tr>
   </thead>
   <tbody>
+    <!--
+    con "paginador"
     <tr *paFor="let item of (getProducts() ?? []) | slice: 0 : (itemCount || 1) | categoryFilter:categoryFilter; let i=index let odd=odd; let even=even"
-        [class.bg-info]="odd" [class.bg-warning]="even" class="align-middle">
-      <td>{{i+1}}</td>
-      <td>{{item.name | uppercase}}</td>
-      <td>{{item.category | lowercase }}</td>
-      <td>{{item.price | addTax:(taxRate ?? 0) | currency:"EUR":"symbol":"1.0-2" }}</td>
+      [class.bg-info]="odd" [class.bg-warning]="even" class="align-middle">-->
+    <tr *paFor="let item of (getProducts() ?? []) let i=index; let odd=odd; let even=even"
+        class="align-middle">
+      <td [class.bg-info]="odd" [class.bg-warning]="even" >{{i+1}}</td>
+      <td [class.bg-info]="odd" [class.bg-warning]="even" >{{item.name }}</td>
+      <td [class.bg-info]="odd" [class.bg-warning]="even" >{{item.category }}</td>
+      <td [class.bg-info]="odd" [class.bg-warning]="even" [appDiscountAmount]="item.price" #discount="discount" >{{ discount.discountAmount | currency:"EUR":"symbol":"1.0-2" }}</td>
       <td class="text-center">
         <button class="btn btn-danger btn-sm" (click)="deleteProduct(item.id)">Delete</button>
       </td>
     </tr>
   </tbody>
 </table>
+<app-discount-display></app-discount-display>
+<app-discount-editor></app-discount-editor>
 
-<div class="bg-info text-white p-2">
+<!--<div class="bg-info text-white p-2">
   <div>
     Counter: {{numbers | async | currency: "USD":"symbol":"1.0-2"}}
   </div>
-</div>
+</div>-->
 
 <!--<div class="bg-info p-2 text-white">
   <div>Date Formatted from object {{ dateObject | date }}</div>
