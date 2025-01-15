@@ -1,0 +1,28 @@
+<form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+  <div class="bg-danger text-white p-2 mb-2" *ngIf="formSubmitted && form.invalid">
+    Hay problemas con el formulario
+    <ul>
+      <li *ngFor="let error of getFormValidationMessages(form)">
+        {{error}}
+      </li>
+    </ul>
+  </div>
+  <!--<div class="form-group">
+    <input type="hidden" class="form-control" name="id" />
+  </div>-->
+  <div class="form-group">
+    <label>Nombre de Tren</label>
+    <input class="form-control" name="name" [(ngModel)]="newTrain.name" required minlength="5" pattern="^[A-Za-z 1-9]+$"/>    
+  </div>
+  <div class="form-group">
+    <label>Salida de Tren</label>
+    <input class="form-control" #departureInput name="departure" [(ngModel)]="newTrain.departure" required type="datetime-local" />
+  </div>
+  <div class="form-group">
+    <label>Destino de Tren</label>
+    <input class="form-control" name="destination" [(ngModel)]="newTrain.destination"
+           required minlength="3" pattern="^[A-Za-z ]+$" />
+  </div>
+  <button class="btn btn-primary mt-2" type="submit" [disabled]="formSubmitted && form.invalid"
+          [ngClass]="formSubmitted && form.invalid ? 'btn-secondary' : ''">Crear</button>
+</form>

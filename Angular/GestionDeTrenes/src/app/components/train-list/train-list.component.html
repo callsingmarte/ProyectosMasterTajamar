@@ -1,0 +1,29 @@
+<div class="form-group mb-2">
+  <label>Busqueda por nombre de tren</label>
+  <input class="form-control" name="name" [(ngModel)]="trainFilter" />
+</div>
+<table class="table table-bordered">
+  <thead class="table-primary">
+    <tr>
+      <th>Tren</th>
+      <th>Salida</th>
+      <th>Estado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let train of getTrains() | trainFilter:trainFilter" [appHighlight]="train.departure">
+      <td>{{train.name | trainName}}</td>
+      <td>{{train.departure | date:'dd/MM/yyyy hh:mm a'}}</td>
+      <td>{{ train.departure | trainStatus }}</td>
+      <td class="text-center">
+        <button class="btn btn-sm"
+                [ngClass]="EditOrCancelClass(train)"
+                (click)="selectedTrain == null ? editTrain(train) : cancelEdit()">
+          {{ EditOrCancelText(train) }}
+        </button>
+        <button class="btn btn-danger btn-sm ms-2" (click)="deleteTrain((train?.id||-1))">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

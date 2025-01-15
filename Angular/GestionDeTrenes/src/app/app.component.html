@@ -1,0 +1,13 @@
+<div class="container-fluid mt-5">
+  <header>
+    <app-header></app-header>
+  </header>
+  <div class="row">
+    <div class="col-6">
+      <app-train-form (paNewTrain)="addTrain($event)" [trainToEdit]="trainToEdit" [cancelEdit]="cancelEditField" ></app-train-form>
+    </div>
+    <div class="col-6">
+      <app-train-list [model]="model" (onEdit)="onEdit($event)" (onCancelEdit)="cancelEdit()"></app-train-list>
+    </div>
+  </div>
+</div>
