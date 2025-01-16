@@ -31,4 +31,17 @@ export class CourseTableComponent {
     return this.getCourses().length;
   }
 
+  getInstructorsList() : string[] {
+
+    let instructors: string[] = new Array();
+    //TODO
+    for (let course of this.getCourses()) {
+      instructors.push(course.instructorName!);
+
+    }
+
+
+    return [""]
+  }
+
 }

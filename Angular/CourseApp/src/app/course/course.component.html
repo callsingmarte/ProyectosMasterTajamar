@@ -196,7 +196,9 @@
       <app-course-form (paNewCourse)="addCourse($event)"></app-course-form>
     </div>
     <div class="col-6">
-      <app-course-table [model]="model"></app-course-table>
+      <app-toggle-view>
+        <app-course-table [model]="model"></app-course-table>
+      </app-toggle-view>
     </div>
   </div>
 </div>
