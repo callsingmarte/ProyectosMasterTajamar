@@ -1,4 +1,4 @@
-<form #form="ngForm" (ngSubmit)="submitForm(form)" (reset)="form.resetForm()">
+<!--<form #form="ngForm" (ngSubmit)="submitForm(form)" (reset)="form.resetForm()">
   <div class="form-group">
     <label>Name</label>
     <input class="form-control" name="name"
@@ -23,4 +23,55 @@
     </button>
     <button type="reset" class="btn btn-secondary m-1">Cancel</button>
   </div>
+</form>-->
+<form [formGroup]="productForm" #form="ngForm" (ngSubmit)="submitForm()" (reset)="resetForm()">
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-control" formControlName="name" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *validationErrors="productForm;control:'name';let err">
+          {{err}}
+        </li>        
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <input class="form-control" formControlName="category" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *validationErrors="productForm;control:'category';let err">
+          {{err}}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Price</label>
+      <input class="form-control" formControlName="price" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *validationErrors="productForm;control:'price';let err">
+          {{err}}
+        </li>
+      </ul>
+    </div>
+  <div class="mt-2">
+    <button type="submit" class="btn btn-primary"
+             [class.btn-warning]="editing"
+             [disabled]="form.invalid"
+            >
+      {{editing ? "Save" : "Create"}}
+    </button>
+    <button type="reset" class="btn btn-secondary m-1">Cancel</button>
+  </div>
 </form>
+<!--<div class="form-group">
+  <label>Name</label>
+  <input class="form-control" name="name" formControlName="name" />-->
+  <!--<ul class="text-danger list-unstyled mt-1" *ngIf="name.dirty && name.invalid">
+    <li *ngFor="let err of name.errors | validationHelper:'name'">
+      {{err}}
+    </li>
+  </ul>-->
+<!--</div>
+<div class="form-group">
+  <label>Category</label>
+  <input class="form-control" name="category" formControlName="category" />
+</div>-->

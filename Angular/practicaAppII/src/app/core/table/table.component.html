@@ -1,0 +1,34 @@
+<table class="table table-sm table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Seat Capacity</th>
+      <th>Instructor Name</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let course of getCourses();">
+      <td>{{course.id}}</td>
+      <td>{{course.title}}</td>
+      <td>{{course.seatCapacity}}</td>
+      <td>{{course.instructorName}}</td>
+      <td>{{course.price | currency:"USD" }}</td>
+      <td class="text-center">
+        <button class="btn btn-danger btn-sm m-1"
+                (click)="deleteCourse(course.id)">
+          Delete
+        </button>
+        <button class="btn btn-warning btn-sm" (click)="editCourse(course.id)">
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-primary mt-1" (click)="createCourse()">
+  Create New Course
+</button>
+
