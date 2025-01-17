@@ -1,3 +1,21 @@
+<div class="mb-2">
+  <label>Reserved Seat Rate: </label>
+  <select class="form-select" [value]="reservedSeatRate || 0"
+          (change)="reservedSeatRate=$any($event).target.value">
+    <option value="0">None</option>
+    <option value="10">10%</option>
+    <option value="20">20%</option>
+    <option value="50">50%</option>
+  </select>
+</div>
+<div class="mb-2">
+  <label>Instructors:</label>
+  <select class="form-select" [(ngModel)]="instructorFilter">
+    <option *ngFor="let instructor of getInstructorsList()">
+      {{instructor}}
+    </option>
+  </select>
+</div>
 <table class="table table-striped table-bordered mt-1 text-dark">
   <thead>
     <tr>
@@ -8,11 +26,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let course of getCourses(); let i = index;">
+    <tr *ngFor="let course of getCourses() | instructorFilter:instructorFilter; let i = index;">
       <td cu-attr (mouseover)="selectedCourse = course" (mouseout)="selectedCourse = {}">{{i + 1}}</td>
       <td cu-attr>{{course.title}}</td>
-      <td [cu-attr]="(course?.seatCapacity || 0)  < 15 ? 'bg-success' : 'bg-danger'">{{course.seatCapacity}}</td>
-      <td [cu-attr]="'bg-success'">{{course.instructorName}}</td>
+      <td [cu-attr]="(course?.seatCapacity || 0)  < 15 ? 'bg-success' : 'bg-danger'">
+        {{course.seatCapacity | reservedSeatRate:(reservedSeatRate || 0)}}
+      </td>
+      <td [cu-attr]="'bg-success'">{{course.instructorName | uppercase}}</td>
     </tr>
   </tbody>
 </table>

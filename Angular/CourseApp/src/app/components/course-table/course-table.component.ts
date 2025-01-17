@@ -3,15 +3,21 @@ import { CuAttrDirective } from '../../directives/CuAttr.directive';
 import { CommonModule } from '@angular/common';
 import { Course } from '../../course/course.model';
 import { Model } from '../../course/repository.model';
+import { InstructorFilterPipe } from '../../pipes/instructor-filter.pipe';
+import { FormsModule } from '@angular/forms';
+import { ReservedSeatRatePipe } from '../../pipes/reserved-seat-rate.pipe';
 
 @Component({
   selector: 'app-course-table',
-  imports: [CuAttrDirective, CommonModule],
+  imports: [CuAttrDirective, FormsModule, CommonModule,
+    InstructorFilterPipe, ReservedSeatRatePipe],
   templateUrl: './course-table.component.html',
   styleUrl: './course-table.component.css'
 })
 export class CourseTableComponent {
   selectedCourse: Course = new Course();
+  instructorFilter: string = "None";
+  reservedSeatRate: number = 0;
 
   @Input("model")
   model: Model = new Model();
@@ -32,16 +38,17 @@ export class CourseTableComponent {
   }
 
   getInstructorsList() : string[] {
+    let instructors: Set<string> = new Set();
 
-    let instructors: string[] = new Array();
-    //TODO
     for (let course of this.getCourses()) {
-      instructors.push(course.instructorName!);
-
+      instructors.add(course.instructorName!);
     }
 
+    let list: string[] = Array.from(instructors);
 
-    return [""]
+    list.unshift("None");
+
+    return list;
   }
 
 }
