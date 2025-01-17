@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Product } from '../../model/product.model';
 import { Model } from '../../model/repository.model';
 import { MODES, SharedStateService, StateUpdate } from '../shared-state.service';
@@ -8,11 +8,17 @@ import { Message } from '../../messages/message.model';
 import { CommonModule } from '@angular/common';
 import { ValidationHelperPipe } from '../validation-helper.pipe';
 import { ValidationErrorsDirective } from '../validation-errors.directive';
+import { FilteredFormArray } from '../filteredFormArray';
+import { LimitValidator } from '../../validation/limit';
+import { HillowValidatorDirective } from '../../validation/hillow.directive';
+import { ProhibitedValidator } from '../../validation/prohibited';
+import { UniqueValidator } from '../../validation/unique';
 
 @Component({
   selector: 'app-form',
   imports: [FormsModule, ReactiveFormsModule,
-    ValidationHelperPipe, CommonModule, ValidationErrorsDirective],
+    ValidationHelperPipe, CommonModule,
+    ValidationErrorsDirective, HillowValidatorDirective],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
@@ -20,6 +26,10 @@ export class FormComponent {
 
   product: Product = new Product();
   editing: boolean = false;
+
+  keywordGroup = new FilteredFormArray([this.createKeywordFormControl()], {
+    validators: UniqueValidator.unique()
+  });
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl("", {
@@ -30,12 +40,20 @@ export class FormComponent {
       ],
       updateOn: "change"
     }),
-    category: new FormControl("", { validators: Validators.required }),
+    category: new FormControl("", {
+      validators: Validators.required,
+      asyncValidators: ProhibitedValidator.prohibited()
+    }),
     price: new FormControl("", {
       validators: [
         Validators.required,
-        Validators.pattern("^[0-9\.]+$")
+        Validators.pattern("^[0-9\.]+$"),
+        LimitValidator.Limit(300)
       ]
+    }),
+    details: new FormGroup({
+      supplier: new FormControl("", { validators: Validators.required }),
+      keywords: this.keywordGroup,
     })
   })
 
@@ -46,6 +64,12 @@ export class FormComponent {
     this.state.changes.subscribe((upd) => this.handleStateChange(upd))
     this.messageService.reportMessage(new Message("Creating new Product"));
   }
+
+  //ngOnInit() {
+  //  this.productForm.get('details')?.statusChanges.subscribe(newStatus => {
+  //    this.messageService.reportMessage(new Message(`Details ${newStatus}`));
+  //  })
+  //}
 
   //ngOnInit() {
   //  //comprueba cambios de valor en el namefield
@@ -69,12 +93,19 @@ export class FormComponent {
 
   handleStateChange(newState: StateUpdate) {
     this.editing = newState.mode == MODES.EDIT;
+    this.keywordGroup.clear();
     if (this.editing && newState.id) {
       Object.assign(this.product, this.model.getProduct(newState.id) ?? new Product());
       this.messageService.reportMessage(new Message(`Editing ${this.product.name}`));
+      this.product.details?.keywords?.forEach(() => {
+        this.keywordGroup.push(this.createKeywordFormControl())
+      })
     } else {
       this.product = new Product();
       this.messageService.reportMessage(new Message("Creating new product"));
+    }
+    if (this.keywordGroup.length == 0) {
+      this.keywordGroup.push(this.createKeywordFormControl());
     }
     this.productForm.reset(this.product);
   }
@@ -84,6 +115,8 @@ export class FormComponent {
       Object.assign(this.product, this.productForm.value);
       this.model.saveProduct(this.product);
       this.product = new Product()
+      this.keywordGroup.clear();
+      this.keywordGroup.push(this.createKeywordFormControl())
       this.productForm.reset();
     }
   }
@@ -92,6 +125,20 @@ export class FormComponent {
     this.editing = true;
     this.product = new Product();
     this.productForm.reset();
+    this.keywordGroup.clear();
+    this.keywordGroup.push(this.createKeywordFormControl())
+  }
+
+  addKeywordControl() {
+    this.keywordGroup.push(this.createKeywordFormControl());
+  }
+
+  removeKeywordControl(index: number) {
+    this.keywordGroup.removeAt(index);
+  }
+
+  createKeywordFormControl(): FormControl {
+    return new FormControl("", { validators: Validators.pattern("^[A-Za-z ]+$") });
   }
 
   //submitForm(form: NgForm) {
