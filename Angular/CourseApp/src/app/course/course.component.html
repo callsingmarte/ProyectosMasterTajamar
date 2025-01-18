@@ -193,11 +193,13 @@
 <div class="container-fluid">
   <div class="row p-2">
     <div class="col-6">
-      <app-course-form (paNewCourse)="addCourse($event)"></app-course-form>
+      <!--<app-course-form (paNewCourse)="addCourse($event)"></app-course-form>-->
+      <app-course-form></app-course-form>
     </div>
     <div class="col-6">
       <app-toggle-view>
-        <app-course-table [model]="model"></app-course-table>
+<!--        <app-course-table [model]="model"></app-course-table>-->
+        <app-course-table></app-course-table>
       </app-toggle-view>
     </div>
   </div>

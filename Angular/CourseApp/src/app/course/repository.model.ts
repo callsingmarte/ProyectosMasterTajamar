@@ -1,11 +1,17 @@
+import { Injectable } from "@angular/core";
 import { Course } from "./course.model";
 import { SimpleDataSource } from "./datasource.model";
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class Model {
-  private dataSource: SimpleDataSource;
+  //private dataSource: SimpleDataSource;
   private courses: Course[];
   private locator = (p: Course, id: number) => p.id == id;
-  constructor() {
-    this.dataSource = new SimpleDataSource();
+  constructor(private dataSource: SimpleDataSource) {
+    //this.dataSource = new SimpleDataSource();
     this.courses = new Array<Course>();
     this.dataSource.getData().forEach(p => this.courses.push(p));
   }

@@ -1,4 +1,9 @@
+import { Injectable } from "@angular/core";
 import { Course } from "./course.model";
+
+@Injectable({
+  providedIn: 'root'
+})
 export class SimpleDataSource {
   private data: Course[];
   constructor() {

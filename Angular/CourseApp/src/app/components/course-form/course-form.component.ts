@@ -12,11 +12,13 @@ import { CommonModule } from '@angular/common';
 })
 export class CourseFormComponent {
   newCourse: Course = new Course();
-  model: Model = new Model();
+  //model: Model = new Model();
   formSubmitted: boolean = false;
 
-  @Output("paNewCourse")
-  newCourseEvent = new EventEmitter<Course>
+  //@Output("paNewCourse")
+  //newCourseEvent = new EventEmitter<Course>
+
+  constructor(private model: Model) { }
 
   getMessages(errs: ValidationErrors | null, name: string): string[] {
     let messages: string[] = [];
@@ -60,7 +62,7 @@ export class CourseFormComponent {
   submitForm(form: NgForm) {
     this.formSubmitted = true;
     if (form.valid) {
-      this.newCourseEvent.emit(this.newCourse);
+      //this.newCourseEvent.emit(this.newCourse);
       this.addCourse(this.newCourse);
       this.newCourse = new Course();
       form.resetForm();

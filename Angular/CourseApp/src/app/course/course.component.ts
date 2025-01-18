@@ -8,6 +8,8 @@ import { PaModel } from '../directives/twoway.directive';
 import { CourseFormComponent } from '../components/course-form/course-form.component';
 import { CourseTableComponent } from '../components/course-table/course-table.component';
 import { ToggleViewComponent } from '../components/toggle-view/toggle-view.component';
+import { DiscountService } from '../services/discount.service';
+import { SimpleDataSource } from './datasource.model';
 
 @Component({
   selector: 'app-course',
@@ -15,10 +17,11 @@ import { ToggleViewComponent } from '../components/toggle-view/toggle-view.compo
     PaModel, CourseFormComponent, CourseTableComponent,
     ToggleViewComponent],
   templateUrl: './course.component.html',
-  styleUrl: './course.component.css'
+  styleUrl: './course.component.css',
+  providers: [DiscountService, SimpleDataSource, Model]
 })
 export class CourseComponent {
-  model: Model = new Model();
+  //model: Model = new Model();
   //constructor(ref: ApplicationRef) {
   //  if (typeof window !== 'undefined') {
   //    (<any>window).appRef = ref;
@@ -91,10 +94,10 @@ export class CourseComponent {
   //  return JSON.stringify(this.newCourse);
   //}
 
-  addCourse(course: Course) {
-    //console.log("New Course: " + this.jsonCourse);
-    this.model.saveCourse(course);
-  }
+  //addCourse(course: Course) {
+  //  //console.log("New Course: " + this.jsonCourse);
+  //  this.model.saveCourse(course);
+  //}
 
   //submitForm(form: NgForm) {
   //  this.formSubmitted = true;

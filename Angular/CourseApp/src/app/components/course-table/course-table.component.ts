@@ -6,11 +6,19 @@ import { Model } from '../../course/repository.model';
 import { InstructorFilterPipe } from '../../pipes/instructor-filter.pipe';
 import { FormsModule } from '@angular/forms';
 import { ReservedSeatRatePipe } from '../../pipes/reserved-seat-rate.pipe';
+import { DiscountDisplayComponent } from '../discount-display/discount-display.component';
+import { DiscountEditorComponent } from '../discount-editor/discount-editor.component';
+//import { DiscountService } from '../../services/discount.service';
+import { DiscountPipe } from '../../pipes/discount.pipe';
+import { DiscountAmountDirective } from '../../directives/discount-amount.directive';
 
 @Component({
   selector: 'app-course-table',
   imports: [CuAttrDirective, FormsModule, CommonModule,
-    InstructorFilterPipe, ReservedSeatRatePipe],
+    InstructorFilterPipe, ReservedSeatRatePipe,
+    DiscountDisplayComponent, DiscountEditorComponent,
+    DiscountPipe, DiscountAmountDirective
+  ],
   templateUrl: './course-table.component.html',
   styleUrl: './course-table.component.css'
 })
@@ -18,9 +26,11 @@ export class CourseTableComponent {
   selectedCourse: Course = new Course();
   instructorFilter: string = "None";
   reservedSeatRate: number = 0;
+  //discounter: DiscountService = new DiscountService();
+  //@Input("model")
+  //model: Model = new Model();
 
-  @Input("model")
-  model: Model = new Model();
+  constructor(private model: Model) { }
 
   getCourseByPosition(position: number): Course {
     return this.model.getCourses()[position];

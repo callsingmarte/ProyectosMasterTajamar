@@ -12,6 +12,9 @@ export class DiscountService {
   public set discount(newValue: number) {
     this.discountValue = newValue ?? 0;
   }
+  public applyDiscount(price: number) {
+    return Math.max(price - this.discountValue, 5);
+  }
 
   constructor() { }
 }

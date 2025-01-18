@@ -23,6 +23,8 @@
       <th>Title</th>
       <th>Seat Capacity</th>
       <th>Instructor Name</th>
+      <th>Price</th>
+      <th>Price Discount</th>
     </tr>
   </thead>
   <tbody>
@@ -33,6 +35,12 @@
         {{course.seatCapacity | reservedSeatRate:(reservedSeatRate || 0)}}
       </td>
       <td [cu-attr]="'bg-success'">{{course.instructorName | uppercase}}</td>
+      <td cu-attr>{{ course.price! | discount | currency:"USD":"symbol"}}</td>
+      <td cu-attr [appDiscountAmount]="course.price" #discount="discount">
+      {{ discount.discountAmount | currency:"USD":"symbol" }}
+      </td>
     </tr>
   </tbody>
 </table>
+<app-discount-editor></app-discount-editor>
+<app-discount-display></app-discount-display>
