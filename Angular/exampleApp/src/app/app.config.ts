@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -7,6 +7,8 @@ import { Model } from './model/repository.model';
 import { StaticDataSource } from './model/static.datasource';
 import { REST_URL, RestDataSource } from './model/rest.datasource';
 import { provideHttpClient } from '@angular/common/http';
+import { MessageService } from './messages/message.service';
+import { MessageErrorHandler } from './messages/message/errorHandler';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -16,6 +18,8 @@ export const appConfig: ApplicationConfig = {
     Model,
     StaticDataSource,
     RestDataSource,
-    { provide: REST_URL, useValue: 'http://localhost:3500/products' }
+    { provide: REST_URL, useValue: 'http://localhost:3500/products' },
+    MessageService,
+    { provide: ErrorHandler, useClass: MessageErrorHandler }
   ]
 };

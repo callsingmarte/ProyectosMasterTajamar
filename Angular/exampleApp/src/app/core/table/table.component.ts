@@ -3,10 +3,11 @@ import { MODES, SharedStateService } from '../shared-state.service';
 import { Model } from '../../model/repository.model';
 import { Product } from '../../model/product.model';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-table',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })

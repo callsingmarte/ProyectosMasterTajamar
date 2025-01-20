@@ -32,16 +32,19 @@ export class Model {
     }
   }
   deleteProduct(id: number) {
-    let index = this.products.findIndex(p => this.locator(p, id));
-    if (index > -1) {
-      this.products.splice(index, 1);
-    }
+    this.dataSource.deleteProduct(id).subscribe(() => {
+      let index = this.products.findIndex(p => this.locator(p, id));
+      if (index > -1) {
+        this.products.splice(index, 1);
+      }
+    })
   }
-  private generateID(): number {
-    let candidate = 100;
-    while (this.getProduct(candidate) != null) {
-      candidate++;
-    }
-    return candidate;
-  }
+
+//  private generateID(): number {
+//    let candidate = 100;
+//    while (this.getProduct(candidate) != null) {
+//      candidate++;
+//    }
+//    return candidate;
+//  }
 }

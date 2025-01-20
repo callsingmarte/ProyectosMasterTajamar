@@ -13,12 +13,14 @@ import { LimitValidator } from '../../validation/limit';
 import { HillowValidatorDirective } from '../../validation/hillow.directive';
 import { ProhibitedValidator } from '../../validation/prohibited';
 import { UniqueValidator } from '../../validation/unique';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-form',
   imports: [FormsModule, ReactiveFormsModule,
     ValidationHelperPipe, CommonModule,
-    ValidationErrorsDirective, HillowValidatorDirective],
+    ValidationErrorsDirective, HillowValidatorDirective,
+    RouterModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
@@ -27,9 +29,9 @@ export class FormComponent {
   product: Product = new Product();
   editing: boolean = false;
 
-  keywordGroup = new FilteredFormArray([this.createKeywordFormControl()], {
-    validators: UniqueValidator.unique()
-  });
+  //keywordGroup = new FilteredFormArray([this.createKeywordFormControl()], {
+  //  validators: UniqueValidator.unique()
+  //});
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl("", {
@@ -51,18 +53,26 @@ export class FormComponent {
         LimitValidator.Limit(300)
       ]
     }),
-    details: new FormGroup({
-      supplier: new FormControl("", { validators: Validators.required }),
-      keywords: this.keywordGroup,
-    })
+  //  details: new FormGroup({
+  //    supplier: new FormControl("", { validators: Validators.required }),
+  //    keywords: this.keywordGroup,
+  //  })
   })
 
-  constructor(private model: Model,
-    private state: SharedStateService,
-    private messageService: MessageService)
+  //private state: SharedStateService
+  //private messageService: MessageService
+  constructor(private model: Model, activeRoute: ActivatedRoute)
   {
-    this.state.changes.subscribe((upd) => this.handleStateChange(upd))
-    this.messageService.reportMessage(new Message("Creating new Product"));
+    this.editing = activeRoute.snapshot.url[1].path == "edit";
+    let id = activeRoute.snapshot.params["id"];
+
+    if (id != null) {
+      Object.assign(this.product, model.getProduct(id) || new Product());
+      this.productForm.patchValue(this.product);
+    }
+
+  //  this.state.changes.subscribe((upd) => this.handleStateChange(upd))
+  //  this.messageService.reportMessage(new Message("Creating new Product"));
   }
 
   //ngOnInit() {
@@ -91,55 +101,61 @@ export class FormComponent {
   //  });
   //}
 
-  handleStateChange(newState: StateUpdate) {
-    this.editing = newState.mode == MODES.EDIT;
-    this.keywordGroup.clear();
-    if (this.editing && newState.id) {
-      Object.assign(this.product, this.model.getProduct(newState.id) ?? new Product());
-      this.messageService.reportMessage(new Message(`Editing ${this.product.name}`));
-      this.product.details?.keywords?.forEach(() => {
-        this.keywordGroup.push(this.createKeywordFormControl())
-      })
-    } else {
-      this.product = new Product();
-      this.messageService.reportMessage(new Message("Creating new product"));
-    }
-    if (this.keywordGroup.length == 0) {
-      this.keywordGroup.push(this.createKeywordFormControl());
-    }
-    this.productForm.reset(this.product);
-  }
+  //handleStateChange(newState: StateUpdate) {
+  //  this.editing = newState.mode == MODES.EDIT;
+  //  this.keywordGroup.clear();
+  //  if (this.editing && newState.id) {
+  //    Object.assign(this.product, this.model.getProduct(newState.id) ?? new Product());
+  //    this.messageService.reportMessage(new Message(`Editing ${this.product.name}`));
+  //    this.product.details?.keywords?.forEach(() => {
+  //      this.keywordGroup.push(this.createKeywordFormControl())
+  //    })
+  //  } else {
+  //    this.product = new Product();
+  //    this.messageService.reportMessage(new Message("Creating new product"));
+  //  }
+  //  if (this.keywordGroup.length == 0) {
+  //    this.keywordGroup.push(this.createKeywordFormControl());
+  //  }
+  //  this.productForm.reset(this.product);
+  //}
  
-  submitForm() {
-    if (this.productForm.valid) {
-      Object.assign(this.product, this.productForm.value);
+  submitForm(form: NgForm) {
+    if (form.valid) {
       this.model.saveProduct(this.product);
-      this.product = new Product()
-      this.keywordGroup.clear();
-      this.keywordGroup.push(this.createKeywordFormControl())
-      this.productForm.reset();
+      this.product = new Product();
+      form.reset();
     }
+
+  //  if (this.productForm.valid) {
+  //    Object.assign(this.product, this.productForm.value);
+  //    this.model.saveProduct(this.product);
+  //    this.product = new Product()
+  //    this.keywordGroup.clear();
+  //    this.keywordGroup.push(this.createKeywordFormControl())
+  //    this.productForm.reset();
+  //  }
   }
 
-  resetForm() {
-    this.editing = true;
-    this.product = new Product();
-    this.productForm.reset();
-    this.keywordGroup.clear();
-    this.keywordGroup.push(this.createKeywordFormControl())
-  }
+  //resetForm() {
+  //  this.editing = true;
+  //  this.product = new Product();
+  //  this.productForm.reset();
+  //  this.keywordGroup.clear();
+  //  this.keywordGroup.push(this.createKeywordFormControl())
+  //}
 
-  addKeywordControl() {
-    this.keywordGroup.push(this.createKeywordFormControl());
-  }
+  //addKeywordControl() {
+  //  this.keywordGroup.push(this.createKeywordFormControl());
+  //}
 
-  removeKeywordControl(index: number) {
-    this.keywordGroup.removeAt(index);
-  }
+  //removeKeywordControl(index: number) {
+  //  this.keywordGroup.removeAt(index);
+  //}
 
-  createKeywordFormControl(): FormControl {
-    return new FormControl("", { validators: Validators.pattern("^[A-Za-z ]+$") });
-  }
+  //createKeywordFormControl(): FormControl {
+  //  return new FormControl("", { validators: Validators.pattern("^[A-Za-z ]+$") });
+  //}
 
   //submitForm(form: NgForm) {
   //  if (form.valid) {
