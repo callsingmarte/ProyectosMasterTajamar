@@ -7,8 +7,7 @@ import { Book } from "./book.model";
 
 export class BookList {
 
-  constructor(public user: string, private books: Book[] = []) {
-  }
+  private books = [new Book("Don quijote", false), new Book("The witcher", true)];
 
   getBooks(): Book[] {
     return this.books;
@@ -18,7 +17,7 @@ export class BookList {
     return this.books.find(b => b.title == title)
   }
 
-  saveBook(title: string) {
+  addBook(title: string) {
     this.books.push(new Book(title));
   }
 
@@ -27,14 +26,5 @@ export class BookList {
     if (index > -1) {
       this.books.splice(index, 1);
     }
-  }
-
-  private generateID() : number {
-    let candidate = this.books.length;
-    while (this.getBook(candidate) != null) {
-      candidate++;
-    }
-
-    return candidate;
   }
 }

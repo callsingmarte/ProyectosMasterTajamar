@@ -1,8 +1,4 @@
 <div class="container">
-  <div class="col-6">
-    <app-book-form></app-book-form>
-  </div>
-  <div class="col-6">
-    <app-book-table></app-book-table>
-  </div>
+    <app-book-form  [bookList]="bookList"></app-book-form>
+    <app-book-table [bookList]="bookList"></app-book-table>
 </div>
