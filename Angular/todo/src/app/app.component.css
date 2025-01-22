@@ -1,0 +1,32 @@
+.spacer{
+    flex: 0.1 content
+}
+
+.flexible-spacer{
+    flex: 1;
+    max-width: 100px;
+}
+
+.tableContainer{
+    padding: 15px;
+}
+.fullWidth {
+    width: 100%
+}
+
+.content-margin{
+    margin: 3rem;
+}
+
+.inputContainer{
+    margin: 15px 15px 5px;
+}
+
+.addButton{
+    margin: 5px;
+}
+
+.toggleContainer {
+    margin: 15px;
+    display: flex;
+}
