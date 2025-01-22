@@ -13,7 +13,7 @@ import { LimitValidator } from '../../validation/limit';
 import { HillowValidatorDirective } from '../../validation/hillow.directive';
 import { ProhibitedValidator } from '../../validation/prohibited';
 import { UniqueValidator } from '../../validation/unique';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -29,9 +29,9 @@ export class FormComponent {
   product: Product = new Product();
   editing: boolean = false;
 
-  //keywordGroup = new FilteredFormArray([this.createKeywordFormControl()], {
-  //  validators: UniqueValidator.unique()
-  //});
+  keywordGroup = new FilteredFormArray([this.createKeywordFormControl()], {
+    validators: UniqueValidator.unique()
+  });
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl("", {
@@ -53,23 +53,47 @@ export class FormComponent {
         LimitValidator.Limit(300)
       ]
     }),
-  //  details: new FormGroup({
-  //    supplier: new FormControl("", { validators: Validators.required }),
-  //    keywords: this.keywordGroup,
-  //  })
+    details: new FormGroup({
+      supplier: new FormControl("", { validators: Validators.required }),
+      keywords: this.keywordGroup,
+    })
   })
 
   //private state: SharedStateService
   //private messageService: MessageService
-  constructor(private model: Model, activeRoute: ActivatedRoute)
+  constructor(public model: Model, activeRoute: ActivatedRoute, private router: Router)
   {
-    this.editing = activeRoute.snapshot.url[1].path == "edit";
-    let id = activeRoute.snapshot.params["id"];
 
-    if (id != null) {
-      Object.assign(this.product, model.getProduct(id) || new Product());
-      this.productForm.patchValue(this.product);
-    }
+    activeRoute.params.subscribe(params => {
+      if (params['id']) {
+        this.editing = true;
+        let id = params['id'];
+        this.model.getProductObservable(id).subscribe(p => {
+          Object.assign(this.product, p || new Product());
+          this.productForm.patchValue(this.product);
+        })
+      } else if (params['mode'] === 'create') {
+        this.editing = false;
+      }
+    })
+
+    //this.editing = activeRoute.snapshot.url[1].path == "edit";
+    //let id = activeRoute.snapshot.params["id"];
+
+    //if (id != null) {
+    //  model.getProductObservable(id).subscribe(p => {
+    //    Object.assign(this.product, model.getProduct(id) || new Product());
+    //    //this.product.name = activeRoute.snapshot.params["name"] ?? this.product.name
+    //    //this.product.category = activeRoute.snapshot.params["category"] ?? this.product.category
+
+    //    //let price = activeRoute.snapshot.params["price"];
+    //    //if (price != null) {
+    //    //  this.product.price = Number.parseFloat(price);
+    //    //}
+
+    //    this.productForm.patchValue(this.product);
+    //  })
+    //}
 
   //  this.state.changes.subscribe((upd) => this.handleStateChange(upd))
   //  this.messageService.reportMessage(new Message("Creating new Product"));
@@ -120,11 +144,13 @@ export class FormComponent {
   //  this.productForm.reset(this.product);
   //}
  
-  submitForm(form: NgForm) {
-    if (form.valid) {
+  submitForm() {
+    if (this.productForm.valid) {
+      Object.assign(this.product, this.productForm.value);
       this.model.saveProduct(this.product);
-      this.product = new Product();
-      form.reset();
+      //  this.product = new Product();
+      //  this.productForm.reset();
+      this.router.navigateByUrl("/")
     }
 
   //  if (this.productForm.valid) {
@@ -137,25 +163,25 @@ export class FormComponent {
   //  }
   }
 
-  //resetForm() {
-  //  this.editing = true;
-  //  this.product = new Product();
-  //  this.productForm.reset();
-  //  this.keywordGroup.clear();
-  //  this.keywordGroup.push(this.createKeywordFormControl())
-  //}
+  resetForm() {
+    this.editing = true;
+    this.product = new Product();
+    this.productForm.reset();
+    this.keywordGroup.clear();
+    this.keywordGroup.push(this.createKeywordFormControl())
+  }
 
-  //addKeywordControl() {
-  //  this.keywordGroup.push(this.createKeywordFormControl());
-  //}
+  addKeywordControl() {
+    this.keywordGroup.push(this.createKeywordFormControl());
+  }
 
-  //removeKeywordControl(index: number) {
-  //  this.keywordGroup.removeAt(index);
-  //}
+  removeKeywordControl(index: number) {
+    this.keywordGroup.removeAt(index);
+  }
 
-  //createKeywordFormControl(): FormControl {
-  //  return new FormControl("", { validators: Validators.pattern("^[A-Za-z ]+$") });
-  //}
+  createKeywordFormControl(): FormControl {
+    return new FormControl("", { validators: Validators.pattern("^[A-Za-z ]+$") });
+  }
 
   //submitForm(form: NgForm) {
   //  if (form.valid) {

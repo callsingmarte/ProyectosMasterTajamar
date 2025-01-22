@@ -21,14 +21,18 @@
                 (click)="deleteCourse(course.id)">
           Delete
         </button>
-        <button class="btn btn-warning btn-sm" (click)="editCourse(course.id)">
+        <!--(click)="editCourse(course.id)"-->
+        <button class="btn btn-warning btn-sm"
+                [routerLink]="['/form','mode', course.id]"
+                >
           Edit
         </button>
       </td>
     </tr>
   </tbody>
 </table>
-<button class="btn btn-primary mt-1" (click)="createCourse()">
+<!--(click)="createCourse()"-->
+<button class="btn btn-primary mt-1" routerLink="/form/create">
   Create New Course
 </button>
 

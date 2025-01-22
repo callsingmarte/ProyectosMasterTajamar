@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { MODES, SharedStateService } from '../shared-state.service';
 import { Model } from '../../model/repository.model';
 import { Course } from '../../model/course.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-table',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
@@ -27,11 +28,11 @@ export class TableComponent {
     }
   }
 
-  editCourse(key?: number) {
-    this.state.update(MODES.EDIT, key)
-  }
+//  editCourse(key?: number) {
+//    this.state.update(MODES.EDIT, key)
+//  }
 
-  createCourse() {
-    this.state.update(MODES.CREATE)
-  }
+//  createCourse() {
+//    this.state.update(MODES.CREATE)
+//  }
 }
