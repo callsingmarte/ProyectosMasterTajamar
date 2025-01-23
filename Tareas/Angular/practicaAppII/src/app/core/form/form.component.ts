@@ -19,6 +19,11 @@ export class FormComponent {
 
   constructor(private model: Model, activeRoute: ActivatedRoute) {
     this.editing = activeRoute.snapshot.params["mode"] == "edit"
+    let id = activeRoute.snapshot.params["id"];
+    if (id != null) {
+      Object.assign(this.course, model.getCourse(id) || new Course());
+
+    }
     //this.editing = activeRoute.snapshot.url[1].path == "edit";
   }
 
