@@ -3,7 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BookList } from '../../model/bookList';
+import { Model } from '../../model/repository.model';
+import { SimpleDataSource } from '../../model/datasource.model';
 
 @Component({
   selector: 'app-book-form',
@@ -12,12 +13,11 @@ import { BookList } from '../../model/bookList';
   styleUrl: './book-form.component.css'
 })
 export class BookFormComponent {
-  @Input("BookList")
-  bookList: BookList | undefined
 
-  addBook(newBook: string) {
-    if (newBook != "") {
-      this.bookList?.addBook(newBook);
-    }
+  @Input("model")
+  model: Model  = new Model(new SimpleDataSource());
+
+  addBook(title:string) {
+    this.model.addBook(title);
   }
 }

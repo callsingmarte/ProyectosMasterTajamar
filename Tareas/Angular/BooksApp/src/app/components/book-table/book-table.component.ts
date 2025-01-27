@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { BookList } from '../../model/bookList';
+import { Component, Inject, Injectable, Input } from '@angular/core';
 import { Book } from '../../model/book.model';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { Model } from '../../model/repository.model';
+import { SimpleDataSource } from '../../model/datasource.model';
 
 @Component({
   selector: 'app-book-table',
@@ -13,12 +14,14 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './book-table.component.css'
 })
 export class BookTableComponent {
-  @Input("BookList")
-  bookList: BookList | undefined
 
-  private books = new Array<Book>
+  @Input("model")
+  public model: Model = new Model(new SimpleDataSource());
+
+  public books : Book[] = new Array<Book>();
 
   ngOnInit() {
-    this.books = this.bookList!.getBooks();
+    this.books = this.model.getBooks()
   }
+
 }
