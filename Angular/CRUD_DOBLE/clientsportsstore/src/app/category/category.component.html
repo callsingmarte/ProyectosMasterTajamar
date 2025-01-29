@@ -1,0 +1,9 @@
+<select class="form-control"
+        [(ngModel)]="opcionSeleccionado"
+        (change)="capturar()">
+  <option value=""></option>
+  <option *ngFor="let cate of categories"
+          [ngValue]="cate.categoryID">
+    {{cate.categoryName}}
+  </option>
+</select>
