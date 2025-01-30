@@ -80,6 +80,16 @@ export class ArticleFormComponent {
       })
   }
 
+  cargarObjetoCategoria(): Promise<ICategory> {
+    return new Promise((resolve, reject) => {
+      this.categoryServices.getCategory(this.categoryId.toString())
+        .subscribe({
+          next: (category) => resolve(category),
+          error: (error) => reject(error)
+        });
+    })
+  }
+
   cargarCategorias() {
     this.categoryServices.getCategories()
       .subscribe({
@@ -87,6 +97,47 @@ export class ArticleFormComponent {
         error: (error) => console.error(error),
         complete: () => console.log('Categories cargadas correctamente')
       })
+  }
+
+  save() {
+    let article: IArticle = Object.assign({}, this.formGroup.value);
+
+    if (this.modoEdicion) {
+      //Editando
+      const articleToSend = {
+        id: this.articleId,
+        name: article.name,
+        categoryID: this.categoryId,
+        price: article.price,
+        stock: article.stock
+      };
+      this.articleServices.updateArticle(articleToSend).subscribe({
+        next: () => this.onSaveSuccess(),
+        error: (error) => {
+          console.error('Error al crear el articulo: ', error);
+          this.router.navigate(['/article']);
+        }
+      })
+    } else {
+      //Modo Create
+      const articleToSend = {
+        name: article.name,
+        categoryID: this.categoryId,
+        price: article.price,
+        stock: article.stock
+      };
+      this.articleServices.createArticle(articleToSend).subscribe({
+        next: () => this.onSaveSuccess(),
+        error: (error) => {
+          console.error('Error al crear el articulo: ', error);
+          this.router.navigate(['/article']);
+        }       
+      })
+    }
+  }
+
+  onSaveSuccess() {
+    this.router.navigate(["/article"]);
   }
 
   get f() {

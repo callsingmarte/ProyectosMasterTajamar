@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label for="discount" class="form-label">Select Discount Percentage</label>
+  <select class="form-select"
+          [(ngModel)]="discountPercentage"
+          (change)="onDiscountChange()"
+          id="discount">
+    <option [ngValue]="null">Select a discount</option>
+    <option *ngFor="let percentage of discountOptions" [value]="percentage">{{percentage}}%</option>
+  </select>
+</div>

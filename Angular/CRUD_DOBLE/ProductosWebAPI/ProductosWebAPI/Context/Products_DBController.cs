@@ -106,5 +106,36 @@ namespace ProductosWebAPI.Context
         {
             return _context.Products.Any(e => e.Id == id);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateArticleStock(int id, [FromBody] Products_DB products_DB)
+        {
+            if (id != products_DB.Id)
+            {
+                return BadRequest("El ID del artículo no coincide con el parámetro.");
+            }
+
+            var existingArticle = await _context.Products.FindAsync(id);
+            if (existingArticle == null)
+            {
+                return NotFound("Artículo no encontrado.");
+            }
+
+            // Actualizar valores en la entidad existente
+            //existingArticle.Price = article.Price;
+            existingArticle.Stock = products_DB.Stock; // Actualizar stock
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return StatusCode(500, "Error al actualizar el artículo.");
+            }
+
+            // Devolver el artículo actualizado
+            return Ok(existingArticle);
+        }
     }
 }

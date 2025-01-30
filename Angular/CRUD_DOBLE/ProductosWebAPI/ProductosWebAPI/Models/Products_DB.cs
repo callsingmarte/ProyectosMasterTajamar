@@ -10,5 +10,6 @@ namespace ProductosWebAPI.Models
         public int CategoryID { get; set; }
         public Categories_DB? Category { get; set; }
         public decimal Price { get; set; }
+        public int? Stock { get; set; }
     }
 }
