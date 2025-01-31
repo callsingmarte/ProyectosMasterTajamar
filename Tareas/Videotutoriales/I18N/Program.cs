@@ -24,7 +24,7 @@ builder.Services.AddMvc().
 //Configura los servicios de localizacion
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    var supportedCultures = new[] { "en", "es" };
+    var supportedCultures = new[] { "en", "es", "fr" };
     //Pese a establecer el idioma por defecto asi El navegador puede establecer
     //un idioma por defecto con el encabezado accept-language
     options.SetDefaultCulture(supportedCultures[0])
