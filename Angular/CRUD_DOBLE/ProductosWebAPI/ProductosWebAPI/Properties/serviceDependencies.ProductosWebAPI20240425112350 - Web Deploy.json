@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/mitajamarapim/apis/ProductosWebAPI",
+      "type": "apis.azure"
+    },
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "Conexion"
+    },
+    "mssql2": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/ProductosWebAPI20240425112350/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsConexion_7F19B6C807",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/tajamarservert/databases/Product_Store",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Conexion",
+      "dynamicId": null
+    }
+  }
+}

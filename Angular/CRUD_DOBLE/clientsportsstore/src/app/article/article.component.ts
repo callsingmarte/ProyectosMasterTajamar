@@ -8,13 +8,14 @@ import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DiscountEditorComponent } from '../discount-editor/discount-editor.component';
 import * as FileSaver from 'file-saver';
+import { StockRowDirective } from '../directives/stock-row.directive';
 
 declare const bootstrap: any;
 
 @Component({
   selector: 'app-article',
   imports: [FormsModule, CommonModule, RouterModule,
-    NgxPaginationModule, DiscountEditorComponent],
+    NgxPaginationModule, DiscountEditorComponent, StockRowDirective],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css'
 })
@@ -230,4 +231,63 @@ export class ArticleComponent {
     })
     return csv;
   }
+
+  //Gestion del Stock
+  onStockInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement
+    const newStock = Number(inputElement.value);
+    this.selectedArticle.stock = newStock; //Actualizamos el valor del nuevo stock
+  }
+
+  //Funcion que escucha el evento del StockEdit
+  onStockEdit(article: IArticle) {
+    console.log('Articulo recibido: ', article);
+    //abrir un modal que muestre el articulo
+    this.openModalStock(article);
+  }
+
+  private modalInstance: any; //Propiedad para guardar la instancia de la modal
+  openModalStock(article: IArticle): void {
+    this.selectedArticle = { ...article }; //copiar el articulo seleccionado
+    const modalElement: HTMLElement | null = document.getElementById('stockModal');
+    if (modalElement) {
+      this.modalInstance = new bootstrap.Modal(modalElement, {
+        backdrop: 'static', //evita que el modal se cierre al hacer click fuera de el
+        Keyboard: false //desactiva el cierre con teclado
+      });
+      this.modalInstance.show();
+    }
+  }
+
+  closeModalStock(): void {
+    if (this.modalInstance) {
+      this.modalInstance.hide();
+      this.modalInstance = null;
+    } else {
+      console.log('no hay instancia de modal para cerrar');
+    }
+  }
+
+  updateStock(): void {
+    if (this.selectedArticle && this.selectedArticle.stock >= 0) {
+      this.articleService.updateArticleStock(this.selectedArticle)
+        .subscribe({
+          next: (updateArticle: IArticle) => {
+            //Actualizar el stock en la lista principal
+            this.articles = this.articles.map(article =>
+              article.id === updateArticle.id ? { ...article, stock: updateArticle.stock } : article
+            )
+            //filtrar nuevamente los datos
+            this.filteredArticles = [...this.articles];
+            this.closeModalStock();
+          },
+          error: (err) => {
+            console.log('Error al actualizar el articulo', err);
+          }
+        })
+    } else {
+      alert('La cantidad del stock no puede ser negativa');
+    }
+  }
+
 }

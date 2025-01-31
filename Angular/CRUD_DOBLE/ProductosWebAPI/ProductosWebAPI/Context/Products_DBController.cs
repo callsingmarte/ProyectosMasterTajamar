@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductosWebAPI.Models;
@@ -21,7 +16,11 @@ namespace ProductosWebAPI.Context
         {
             _context = context;
         }
-
+        [HttpOptions]
+        public IActionResult Options()
+        {
+            return Ok();
+        }
         // GET: api/Products_DB
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Products_DB>>> GetProducts()
@@ -72,7 +71,18 @@ namespace ProductosWebAPI.Context
                 }
             }
 
-            return NoContent();
+            //return NoContent();
+            // Recuperar el artículo actualizado desde la base de datos
+            var updatedProduct = await _context.Products.FindAsync(id);
+
+            // Verifica que el producto actualizado exista
+            if (updatedProduct == null)
+            {
+                return NotFound();
+            }
+
+            // Devuelve el producto actualizado con un código HTTP 200
+            return Ok(updatedProduct);
         }
 
         // POST: api/Products_DB
@@ -105,37 +115,6 @@ namespace ProductosWebAPI.Context
         private bool Products_DBExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateArticleStock(int id, [FromBody] Products_DB products_DB)
-        {
-            if (id != products_DB.Id)
-            {
-                return BadRequest("El ID del artículo no coincide con el parámetro.");
-            }
-
-            var existingArticle = await _context.Products.FindAsync(id);
-            if (existingArticle == null)
-            {
-                return NotFound("Artículo no encontrado.");
-            }
-
-            // Actualizar valores en la entidad existente
-            //existingArticle.Price = article.Price;
-            existingArticle.Stock = products_DB.Stock; // Actualizar stock
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return StatusCode(500, "Error al actualizar el artículo.");
-            }
-
-            // Devolver el artículo actualizado
-            return Ok(existingArticle);
         }
     }
 }

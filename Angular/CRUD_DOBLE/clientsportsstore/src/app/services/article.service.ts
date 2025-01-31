@@ -28,7 +28,7 @@ export class ArticleService {
 
   updateArticle(article: { id: number; name: string; categoryID: number, price: number; stock: number }): Observable<IArticle> {
     this.apiURL = "https://localhost:7122/api/Products_DB";
-    return this.http.put<IArticle>(`${this.apiURL} + '/' + ${article.id}`, article);
+    return this.http.put<IArticle>(`${this.apiURL}/${article.id}`, article);
   }
 
   createArticle(article: { name: string; categoryID: number, price: number; stock: number}) {
@@ -39,9 +39,12 @@ export class ArticleService {
   updateArticlePrice(article: { id: number; price: number }): Observable<IArticle> {
     this.apiURL = "https://localhost:7122/api/Products_DB";
     const body = { ...article }; // Incluye el id y el nuevo price
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    return this.http.put<IArticle>(`${this.apiURL}/${article.id}`, body, { headers });
+    return this.http.put<IArticle>(`${this.apiURL}/${article.id}`, body);
+  }
+
+  updateArticleStock(article: IArticle): Observable<IArticle> {
+    this.apiURL = "https://localhost:7122/api/Products_DB";
+    //const body = { ...article }; // Incluye el id y el nuevo price
+    return this.http.put<IArticle>(`${this.apiURL}/${article.id}`, article);
   }
 }

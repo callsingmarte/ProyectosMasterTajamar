@@ -82,12 +82,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let article of filteredArticles | paginate: {itemsPerPage: itemsPerPage, currentPage: pageActual}">
+          <tr *ngFor="let article of filteredArticles | paginate: {itemsPerPage: itemsPerPage, currentPage: pageActual}"
+              class="transition-row"
+              [attr.data-article]="article | json"
+              [appStockRow]="article.stock"
+              (stockEdit)="onStockEdit($event)">
             <td>{{article.id}}</td>
             <td>{{article.name}}</td>
             <td>{{article.category.categoryName}}</td>
             <td>{{article.price | currency: 'USD'}}</td>
-            <td>{{article.stock}}</td>
+            <td [ngClass]="{'text-success fw-bold':article.stock >= 10, 'text-warning fw-bold': article.stock < 10}">{{article.stock}}</td>
             <td class="text-center">
               <div class="btn-group" role="group">
                 <button class="btn btn-outline-danger btn-sm" (click)="delete(article)" title="Delete Article">
@@ -99,7 +103,7 @@
                 <button class="btn btn-outline-success" (click)="openDiscountModal(article)">
                   <i class="bi bi-tag">Apply Discount</i>
                 </button>
-                <button>
+                <button class="btn btn-outline-primary btn-sm" title="Update stock for less than 10 items" disabled>
                   <i class="bi bi-list-check">Update Stock</i>
                 </button>
               </div>
@@ -185,6 +189,47 @@
       <div class="modal-footer bg-light border-top-0">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-success" (click)="applyDiscount_Article(selectedArticle, discountPercentage)">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal para el stock-->
+<div class="modal fade" id="stockModal" tabindex="-1" aria-labelledby="stockModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold" id="stockModalLabel">Edit Stock to {{ selectedArticle?.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModalStock()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-light">
+        <form>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="articleName" value="{{selectedArticle?.name}}" disabled />
+                <label for="articleName">Article</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="articleCategory"
+                       value="{{selectedArticle?.category?.categoryName}}" disabled>
+                <label for="articleCategory">Category</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="articleStock"
+                       [value]="selectedArticle?.stock" (input)="onStockInput($event)" />
+                <label for="articleStock">Stock</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light border-top-0">
+        <button type="button" class="btn btn-outline-secondary" (click)="closeModalStock()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updateStock()">Update Stock</button>
       </div>
     </div>
   </div>

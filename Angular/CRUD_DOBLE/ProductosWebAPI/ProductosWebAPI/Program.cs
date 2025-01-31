@@ -7,12 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "MyPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
-                        //builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-                    });
+    options.AddPolicy("MyPolicy", builder =>
+    {
+        //Probar con este si falla el de abajo
+        builder.SetIsOriginAllowed(_ => true)
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+    //options.AddPolicy(name: "MyPolicy",
+    //                builder =>
+    //                {
+    //                    builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+    //                    //builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    //                });
 });
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
