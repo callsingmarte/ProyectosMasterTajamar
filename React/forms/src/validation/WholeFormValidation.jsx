@@ -7,7 +7,7 @@ export function ValidateForm(data) {
     if (!data.email.toLowerCase().startsWith(data.name.toLowerCase())) {
         errors.push("Email address must start with the name")
     }
-    if (data.name.toLowerCase() === "Javier") {
+    if (data.name.toLowerCase() === "javier") {
         errors.push("A parla")
     }
 

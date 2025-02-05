@@ -14,12 +14,16 @@ export class FormValidator extends Component {
         }
     }
 
-    static getDerivedStateFromProps(props) {
-        return {
-            errors: ValidateData(props.data, props.rules)
+    static getDerivedStateFromProps(props, state) {
+        state.errors = ValidateData(props.data, props.rules);
+        if (state.formSubmitted && Object.keys(state.errors).length === 0) {
+            let formErrors = props.validateForm(props.data);
+            if (formErrors.length > 0) {
+                state.errors.form = formErrors;
+            }
         }
+        return state
     }
-
     get formValid() {
         return Object.keys(this.state.errors).length === 0
     }

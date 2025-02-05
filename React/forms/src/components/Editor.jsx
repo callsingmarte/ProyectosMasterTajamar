@@ -22,7 +22,7 @@ export class Editor extends Component {
             email: { required: true, email: true, equals: "emailConfirm" },
             order: { required: true },
             emailConfirm: { required: true, email: true, equals: "email"},
-            terms: { true: true }
+            //terms: { true: true }
         }
 
         //this.flavors = ["Chocolate", "Double Chocolate", "Triple Chocolate", "Vanilla"]
