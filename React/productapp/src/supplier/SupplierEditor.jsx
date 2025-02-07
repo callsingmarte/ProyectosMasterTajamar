@@ -23,7 +23,7 @@ export class SupplierEditor extends Component {
     handleClick = () => {
         this.props.saveCallback({
             ...this.state.formData,
-            products: this.state.formData.products.map(val => Number(val) || "")
+            products: this.state.formData.products.map(val => val)
         })
     }
 

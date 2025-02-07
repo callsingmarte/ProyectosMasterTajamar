@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import modelReducer from "./modelReducer";
+import { combineReducers } from "redux"
+import stateReducer from "./stateReducer";
 
-
-const store = configureStore({
-    reducer: modelReducer
+export default configureStore({
+    reducer: combineReducers({
+        modelData: modelReducer,
+        stateData: stateReducer
+    })
 })
-
-export default store
 
 export { saveProduct, saveSupplier, deleteProduct, deleteSupplier } from "./modelActionCreators"

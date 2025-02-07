@@ -11,10 +11,10 @@ export const initialData = {
             { id: 1, name: "Zoom Shoes", city: "London", products: ["Trail Shoes"] },
             { id: 2, name: "Cosy Gear", city: "New York", products: ["Thermal Hat", "Heated Gloves"] }
         ],
-        stateData: {
-            editing: false,
-            selectedId: -1,
-            selectedType: PRODUCTS
-        }
+    },
+    stateData: {
+        editing: false,
+        selectedId: -1,
+        selectedType: PRODUCTS
     }
 }
