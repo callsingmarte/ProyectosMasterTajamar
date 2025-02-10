@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Link, Route, Routes, Navigate, NavLink } from 
 import { ProductDisplay } from "./product/ProductDisplay"
 import { SupplierDisplay } from "./supplier/SupplierDisplay"
 import { ToggleLink } from "./route/ToggleLink";
-
+import { IsolatedTable } from "./IsolatedTable";
+import { IsolatedEditor } from "./IsolatedEditor";
 export class Selector extends Component {
     //constructor(props) {
     //    super(props)
@@ -50,11 +51,21 @@ export class Selector extends Component {
                                     Suppliers
                                 </ToggleLink>
                             </div>
+                            <div className="row p-2">
+                                <ToggleLink to="/isolated" className={({ isActive }) =>
+                                    isActive ? 'nav-link btn btn-white text-dark text-center border border-primary'
+                                        : 'nav-link btn btn-outline-primary text-dark text-center'
+                                } >
+                                   IsolatedTable
+                                </ToggleLink>
+                            </div>
                         </div>
                         <div className="col">
                             <Routes>
                                 <Route path="/products" element={<ProductDisplay />} />
                                 <Route path="/suppliers" element={<SupplierDisplay />} />
+                                <Route path="/isolated" element={<IsolatedTable />} />
+                                <Route path="/isolated/:mode/:id?" element={<IsolatedEditor />} />
                                 <Route path="*" element={<Navigate to="/products" />} />
                             </Routes>
                         </div>
