@@ -6,7 +6,7 @@ export class UserCard extends Component {
         let user = this.props.user
         return (
             <div className="col mb-2">
-                <div className="card">
+                <div className="card shadow">
                     <div className="card-body">
                         <p>Name: { user.name }</p>
                         <p>Email: {user.email}</p>
