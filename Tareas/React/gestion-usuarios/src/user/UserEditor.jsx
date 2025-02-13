@@ -1,7 +1,9 @@
 import { Component, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { RestDataSource } from "../webservice/RestDataSource";
-
+import { ValidationMessage } from "../validation/ValidationMessage";
+import { FormValidator } from "../validation/FormValidator";
+import { ValidateForm } from "../validation/WholeFormValidation"
 
 function UserEditorWrapper() {
     const { mode, id } = useParams()
@@ -43,6 +45,10 @@ class UserEditor extends Component {
                 email: props.user.email || "",
             }
         }
+        this.rules = {
+            name: { required: true },
+            email: { required: true, email: true },
+        }
     }
 
     handleChange = (ev) => {
@@ -54,41 +60,41 @@ class UserEditor extends Component {
         this.props.saveCallback(this.state.formData)
     }
 
+    
+
     render() {
         return (
-            <div className="m-2">                
-                <div className="form-group">
-                    <label>ID</label>
-                    <input className="form-control"
-                        name="id"
-                        value={this.state.formData.id}
-                        disabled
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input className="form-control"
-                        name="name"
-                        value={this.state.formData.name}
-                        onChange={this.handleChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input className="form-control"
-                        name="email"
-                        value={this.state.formData.email}
-                        onChange={this.handleChange}
-                    />
-                </div>
-                <div className="text-center">
-                    <button className="btn btn-primary m-1" onClick={this.handleClick}>
-                        Save
-                    </button>
-                    <Link className="btn btn-secondary m-1" to="/userList">
-                        Cancel
-                    </Link>
-                </div>
+            <div className="m-2"> 
+                <FormValidator data={this.state.formData} rules={this.rules}
+                    submit={this.handleClick} validateForm={ValidateForm}>
+                    <ValidationMessage field = "form" />
+                    <div className="form-group">
+                        <label>ID</label>
+                        <input className="form-control"
+                            name="id"
+                            value={this.state.formData.id}
+                            disabled
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Name</label>
+                        <input className="form-control"
+                            name="name"
+                            value={this.state.formData.name}
+                            onChange={this.handleChange}
+                        />
+                        <ValidationMessage field="name" />
+                    </div>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input className="form-control"
+                            name="email"
+                            value={this.state.formData.email}
+                            onChange={this.handleChange}
+                        />
+                        <ValidationMessage field="email" />
+                    </div>
+                </FormValidator>
             </div>
         )
     }
