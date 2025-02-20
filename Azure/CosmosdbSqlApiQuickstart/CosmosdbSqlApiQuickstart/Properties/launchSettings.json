@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "CosmosdbSqlApiQuickstart": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "PrimaryKey": "",
+        "EndpointUri": ""
+      }
+    }
+  }
+}
