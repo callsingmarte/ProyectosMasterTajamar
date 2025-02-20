@@ -397,3 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 Azure/dotnet/ProcessImage/local.settings.json
+Azure/CarMakeAPI/CarMakeAPI/Properties/launchSettings.json
+Azure/CosmosToDo/CosmosToDo/Properties/launchSettings.json
