@@ -1,0 +1,6 @@
+@CosmosDBCategoriesAPI_HostAddress = http://localhost:5111
+
+GET {{CosmosDBCategoriesAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
