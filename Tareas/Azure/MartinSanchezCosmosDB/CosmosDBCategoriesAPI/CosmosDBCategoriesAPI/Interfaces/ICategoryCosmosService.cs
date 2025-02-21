@@ -8,6 +8,6 @@ namespace CosmosDBCategoriesAPI.Interfaces
         Task<Category> GetCategory(string sqlCosmosQuery);
         Task<Category> Add(Category newCategory);
         Task<Category> Update(Category categoryToUpdate);
-        Task Delete(string id, string make);
+        Task Delete(string id);
     }
 }

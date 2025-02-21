@@ -1,6 +1,7 @@
 ﻿using CosmosDBCategoriesAPI.Interfaces;
 using CosmosDBCategoriesAPI.Models;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
 namespace CosmosDBCategoriesAPI.Services
 {
@@ -13,14 +14,15 @@ namespace CosmosDBCategoriesAPI.Services
             _container = cosmosDbClient.GetContainer(databaseName, containerName);
         }
 
-        public Task<Category> Add(Category newCategory)
+        public async Task<Category> Add(Category newCategory)
         {
-            throw new NotImplementedException();
+            var item = await _container.CreateItemAsync(newCategory, new PartitionKey(newCategory.CategoryID));
+            return item;
         }
 
-        public Task Delete(string id, string make)
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            await _container.DeleteItemAsync<Category>(id, new PartitionKey(id));
         }
 
         public async Task<List<Category>> GetCategories(string sqlCosmosQuery)
@@ -36,16 +38,23 @@ namespace CosmosDBCategoriesAPI.Services
             return result;
         }
 
-        public Task<Category> GetCategory(string sqlCosmosQuery)
+        public async Task<Category> GetCategory(string sqlCosmosQuery)
         {
             var query = _container.GetItemQueryIterator<Category>(new QueryDefinition(sqlCosmosQuery));
-            //TODO
-            return null;
+            Category? result = new Category();
+            while (query.HasMoreResults)
+            {
+                var response = await query.ReadNextAsync();
+                result = response.FirstOrDefault();
+            }
+
+            return result;
         }
 
-        public Task<Category> Update(Category categoryToUpdate)
+        public async Task<Category> Update(Category categoryToUpdate)
         {
-            throw new NotImplementedException();
+            var item = await _container.UpsertItemAsync(categoryToUpdate, new PartitionKey(categoryToUpdate.CategoryID));
+            return item;
         }
     }
 }

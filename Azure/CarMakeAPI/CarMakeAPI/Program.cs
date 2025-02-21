@@ -28,8 +28,6 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-Console.WriteLine("CarsDb:Account (desde config): " + builder.Configuration["CarsDb:Account"]);
-
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<ICarCosmosService>(options =>
 {
