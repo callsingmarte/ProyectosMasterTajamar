@@ -399,3 +399,4 @@ FodyWeavers.xsd
 Azure/dotnet/ProcessImage/local.settings.json
 Azure/CarMakeAPI/CarMakeAPI/Properties/launchSettings.json
 Azure/CosmosToDo/CosmosToDo/Properties/launchSettings.json
+/Tareas/Azure/MartinSanchezCosmosDB/CosmosDBCategoriesAPI/CosmosDBCategoriesAPI/Properties/launchSettings.json

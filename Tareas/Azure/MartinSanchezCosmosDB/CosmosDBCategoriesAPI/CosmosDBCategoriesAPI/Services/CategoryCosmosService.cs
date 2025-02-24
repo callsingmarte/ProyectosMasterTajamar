@@ -17,12 +17,13 @@ namespace CosmosDBCategoriesAPI.Services
         public async Task<Category> Add(Category newCategory)
         {
             var item = await _container.CreateItemAsync(newCategory, new PartitionKey(newCategory.CategoryID));
+
             return item;
         }
 
-        public async Task Delete(string id)
+        public async Task Delete(string id, string categoryID)
         {
-            await _container.DeleteItemAsync<Category>(id, new PartitionKey(id));
+            await _container.DeleteItemAsync<Category>(id, new PartitionKey(categoryID));
         }
 
         public async Task<List<Category>> GetCategories(string sqlCosmosQuery)
@@ -38,17 +39,17 @@ namespace CosmosDBCategoriesAPI.Services
             return result;
         }
 
-        public async Task<Category> GetCategory(string sqlCosmosQuery)
+        public async Task<Category?> GetCategory(string id, string categoryID)
         {
-            var query = _container.GetItemQueryIterator<Category>(new QueryDefinition(sqlCosmosQuery));
-            Category? result = new Category();
-            while (query.HasMoreResults)
+            try
             {
-                var response = await query.ReadNextAsync();
-                result = response.FirstOrDefault();
+                ItemResponse<Category> response = await _container.ReadItemAsync<Category>(id, new PartitionKey(categoryID));
+                return response.Resource;
+            }catch(CosmosException ex)
+            when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
             }
-
-            return result;
         }
 
         public async Task<Category> Update(Category categoryToUpdate)
