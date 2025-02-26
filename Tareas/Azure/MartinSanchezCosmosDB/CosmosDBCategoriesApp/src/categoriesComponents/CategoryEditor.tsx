@@ -56,7 +56,7 @@ function CategoryEditor() {
 }
 
 type Props = {
-    category: Category 
+    category?: Category 
     saveCallback: Function
 }
 
@@ -70,14 +70,14 @@ class CategoryForm extends Component<Props, MyState> {
     constructor(props : Props) {
         super(props)
         this.state = {
-            formData: props.category ? props.category : new Category(),
+            formData: props.category ? { ...props.category } : {},
             picturePreview: "",
             pictureToUpload: null
         }
     }
 
     rules = {
-        CategoryName: { required: true}
+        categoryName: { required: true}
     }
 
     handleChange = (ev : any) => {
@@ -136,7 +136,7 @@ class CategoryForm extends Component<Props, MyState> {
                                 <div className="form-group">
                                     <label>CategoryID</label>
                                     <input className="form-control"
-                                        name="CategoryId"
+                                        name="categoryId"
                                         value={this.state.formData.categoryID}
                                         disabled
                                     />
@@ -145,20 +145,20 @@ class CategoryForm extends Component<Props, MyState> {
                             <div className="form-group">
                                 <label>Name</label>
                                 <input className="form-control"
-                                    name="CategoryName"
+                                    name="categoryName"
                                     value={this.state.formData.categoryName}
                                     onChange={this.handleChange}
                                 />
-                                <ValidationMessage field="CategoryName" />
+                                <ValidationMessage field="categoryName" />
                             </div>
                             <div className="form-group">
                                 <label>Description</label>
                                 <input className="form-control"
-                                    name="Description"
+                                    name="description"
                                     value={this.state.formData.description}
                                     onChange={this.handleChange}
                                 />
-                                <ValidationMessage field="Description" />
+                                <ValidationMessage field="description" />
                             </div>
                         </div>
                         <div className="col">
@@ -168,11 +168,11 @@ class CategoryForm extends Component<Props, MyState> {
                             <div className="form-group">
                                 <label>Picture</label>
                                 <input className="form-control"
-                                    name="Picture"
+                                    name="picture"
                                     value={this.state.formData.picture}
                                     onChange={this.handleChange}
                                 />
-                                <ValidationMessage field="Picture" />
+                                <ValidationMessage field="picture" />
                             </div>
 
                             {this.state.picturePreview &&
@@ -210,7 +210,7 @@ class CategoryForm extends Component<Props, MyState> {
                                         <img className="img-fluid img-thumbnail" width="400px" src={this.state.picturePreview} alt="" />
                                     }
                                     <input className="form-control"
-                                        name="Picture"
+                                        name="pictureToUpload"
                                         onChange={this.handleChangePicture}
                                         type="file"
                                         accept="image/*"
