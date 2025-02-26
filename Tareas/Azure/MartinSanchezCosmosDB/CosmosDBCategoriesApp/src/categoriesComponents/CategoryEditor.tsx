@@ -136,7 +136,7 @@ class CategoryForm extends Component<Props, MyState> {
                                 <div className="form-group">
                                     <label>CategoryID</label>
                                     <input className="form-control"
-                                        name="categoryId"
+                                        name="categoryID"
                                         value={this.state.formData.categoryID}
                                         disabled
                                     />
