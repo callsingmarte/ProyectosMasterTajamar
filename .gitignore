@@ -400,3 +400,6 @@ Azure/dotnet/ProcessImage/local.settings.json
 Azure/CarMakeAPI/CarMakeAPI/Properties/launchSettings.json
 Azure/CosmosToDo/CosmosToDo/Properties/launchSettings.json
 /Tareas/Azure/MartinSanchezCosmosDB/CosmosDBCategoriesAPI/CosmosDBCategoriesAPI/Properties/launchSettings.json
+/Tareas/Azure/6 - Authentication/Ejemplo/NewWebAppLocal/NewWebAppLocal/Properties/launchSettings.json
+/Tareas/Azure/6 - Authentication/EjAzureAutenticacion/EjAzureAutenticacion/Properties/launchSettings.json
+/Azure/JWT/NewWebApplicationLocal/NewWebApplicationLocal/Properties/launchSettings.json
