@@ -1,0 +1,27 @@
+﻿@model List<Empleado>
+
+<h1>Subordinados de @Context.User.Identity!.Name</h1>
+
+<a asp-controller="Empleados" asp-action="Index">Volver al Perfil</a>
+
+<table class="table table-light">
+    <tr>
+        <th>APELLIDO</th>
+        <th>OFICIO</th>
+        <th></th>
+    </tr>
+    @foreach(Empleado empleado in Model){
+        <tr>
+            <td>@empleado.Apellido</td>
+            <td>@empleado.Oficio</td>
+            <td>
+                <a 
+                asp-controller="Empleados" 
+                asp-action="DetallesEmpleado" 
+                asp-route-empno="@empleado.IdEmpleado">
+                Detalles
+                </a>
+            </td>
+        </tr>
+    }
+</table>

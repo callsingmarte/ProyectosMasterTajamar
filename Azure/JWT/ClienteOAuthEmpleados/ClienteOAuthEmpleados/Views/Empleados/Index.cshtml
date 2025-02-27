@@ -1,1 +1,16 @@
-﻿<h2>Perfil del Empleado</h2>
+﻿@model Empleado
+
+<a asp-action="Subordinados" asp-controller="Empleados">
+    Mis Empleados
+</a>
+
+<h1 style="color: blue">Perfil del Empleado: @Model.Apellido</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Oficio:</dt>
+    <dd class="col-sm-9">@Model.Oficio</dd>
+    <dt class="col-sm-3">Salario:</dt>
+    <dd class="col-sm-9">@Model.Salario</dd>
+    <dt class="col-sm-3">Director:</dt>
+    <dd class="col-sm-9">@Model.Director</dd>
+</dl>

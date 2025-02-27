@@ -1,0 +1,12 @@
+﻿@model Empleado
+
+<h1>Detalles de Empleado</h1>
+<a asp-controller="Empleados" asp-action="Subordinados">
+    Volver a Subordinados
+</a>
+<dl>
+    <dt>Apellido: @Model.Apellido</dt>
+    <dt>Oficio: @Model.Oficio</dt>
+    <dt>Salario: @Model.Salario</dt>
+    <dt>Director: @Model.Director</dt>
+</dl>

@@ -52,6 +52,17 @@ if (app.Environment.IsDevelopment())
             }
         );
 }
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(
+            c =>
+            {
+                c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Api v1");
+                c.RoutePrefix = "";
+            }
+        );
+}
 
 app.UseHttpsRedirection();
 app.UseRouting();

@@ -14,7 +14,7 @@ namespace ClienteOAuthEmpleados.Repositories
 
         public RepositoryEmpleados()
         {
-            url = "";
+            url = "https://apiempleadoscoreoauth20250227013009-ctcbfkbrg9hrh2av.northeurope-01.azurewebsites.net/";
             header = new MediaTypeWithQualityHeaderValue("application/json");
         }
 
@@ -33,7 +33,7 @@ namespace ClienteOAuthEmpleados.Repositories
                 string json = JsonConvert.SerializeObject(login);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                string request = "Auth/Login";
+                string request = "api/Auth/Login";
                 HttpResponseMessage response = await client.PostAsync(request, content);
 
                 if (response.IsSuccessStatusCode) 
@@ -94,5 +94,27 @@ namespace ClienteOAuthEmpleados.Repositories
                 }
             }
         }
+
+        //Todos los metodos
+        //Sin Seguridad
+        public async Task<Empleado> BuscarEmpleado(int empno)
+        {
+            Empleado emp = await CallApi<Empleado>("api/empleados/" + empno);
+            return emp;
+        }
+
+        //Con seguridad
+        public async Task<Empleado> PerfilEmpleado(string token)
+        {
+            Empleado emp = await CallApi<Empleado>("api/empleados/perfilempleado", token);
+            return emp;
+        }
+
+        public async Task<List<Empleado>> GetSubordinados(string token)
+        {
+            List<Empleado> empleados = await CallApi<List<Empleado>>("api/empleados/subordinados", token);
+            return empleados;
+        }
+
     }
 }
