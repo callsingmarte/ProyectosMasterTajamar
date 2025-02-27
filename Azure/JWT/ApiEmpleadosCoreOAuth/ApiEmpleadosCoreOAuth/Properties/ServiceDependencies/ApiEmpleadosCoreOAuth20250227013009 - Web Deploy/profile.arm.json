@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "ApiEmpleadosCoreOAuth20250226202840",
+      "defaultValue": "ApiEmpleadosCoreOAuth20250227013009",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
