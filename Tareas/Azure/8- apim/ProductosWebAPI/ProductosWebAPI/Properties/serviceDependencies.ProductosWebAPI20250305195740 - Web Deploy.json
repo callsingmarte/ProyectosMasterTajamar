@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/apimanagmenttajamar02/apis/ProductosWebAPI",
+      "type": "apis.azure"
+    },
+    "mssql2": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/tajamarsqlserver02/databases/Product_Store",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Conexion",
+      "dynamicId": null
+    }
+  }
+}
