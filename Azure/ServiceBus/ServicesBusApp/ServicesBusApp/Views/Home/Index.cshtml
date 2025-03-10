@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Azure Service Bus";
+}
+
+<form method="post" asp-action="SendMessageToQueue">
+    <label>Mensaje a la cola:</label>
+    <input type="text" name="message" required/>
+    <button type="submit"> Enviar a la Cola </button>
+</form>
+
+<form method="post" asp-action="SendMessageToTopic">
+    <label>Mensaje al Tema:</label>
+    <input type="text" name="message" required/>
+    <button type="submit"> Enviar al Tema </button>
+</form>
+
+<hr />
+<button id="receiveQueueMessages">Recibir Mensajes de la Cola</button>
+<button id="receiveSubscriptionMessages">Recibir Mensajes de la Subscription</button>
+<hr />
+
+<h3>Mensajes de la cola</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Mensaje</th>
+        </tr>
+    </thead>
+    <tbody id="queueMessages">
+        <tr>
+            <td>No hay mensajes aun</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Mensajes de la subscription</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Mensaje</th>
+        </tr>
+    </thead>
+    <tbody id="subscriptionMessages">
+        <tr>
+            <td>No hay mensajes aun</td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    document.getElementById("receiveQueueMessages").addEventListener("click", function(){
+        fetch("/Home/ReceiveMessageFromQueue")
+        .then(response => response.text())
+        .then(data => {
+            let tbody = document.getElementById("queueMessages");
+            let newRow = `<tr><td>${data}</td></tr>`;
+            tbody.innerHTML += newRow;
+        });
+    });
+
+    document.getElementById("receiveSubscriptionMessages").addEventListener("click", function(){
+        fetch("/Home/ReceiveMessageFromSubscription")
+        .then(response => response.text())
+        .then(data => {
+            let tbody = document.getElementById("subscriptionMessages");
+            let newRow = `<tr><td>${data}</td></tr>`;
+            tbody.innerHTML += newRow;
+        });
+    });
+</script>

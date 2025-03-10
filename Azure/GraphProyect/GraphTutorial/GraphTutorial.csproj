@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>942ea06f-dd6f-41b9-b320-af864e1dd30f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Identity.web" Version="3.8.0" />
+    <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="3.8.0" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.8.0" />
+    <PackageReference Include="TimeZoneConverter" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>
