@@ -29,7 +29,7 @@ function CategoryEditor() {
         }
 
         if (data.description) {
-            formData.append("category.category.Picture", data.picture!);
+            formData.append("category.Picture", data.picture!);
         }
 
         if (picture) {
