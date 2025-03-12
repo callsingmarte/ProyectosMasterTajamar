@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ConsoleAzureIoT01": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "IotConnectionString": "HostName=iot-tajamarpruebas02.azure-devices.net;SharedAccessKeyName=service;SharedAccessKey=pvDcSDV+o4ksxnNYkOoXRx1hyRhmpt/vSAIoTHm9m/4="
+      }
+    }
+  }
+}
