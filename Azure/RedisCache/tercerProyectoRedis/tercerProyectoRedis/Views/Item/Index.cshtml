@@ -1,0 +1,25 @@
+﻿@using tercerProyectoRedis.Models;
+@model IEnumerable<Item>
+
+<h1>Items List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+         @foreach(var item in Model){
+             <tr>
+                 <td>@item.Name</td>
+                 <td>@item.Description</td>
+                 <td>
+                     <a href="@Url.Action("Details", "Item", new{id = item.Id})" class="btn btn-info">Details</a>
+                 </td>
+             </tr>
+         }
+    </tbody>
+</table>
