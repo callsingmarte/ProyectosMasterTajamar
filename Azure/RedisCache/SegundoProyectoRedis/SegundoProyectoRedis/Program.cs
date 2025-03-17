@@ -1,11 +1,12 @@
 using Azure.Identity;
 using StackExchange.Redis;
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
 
-var keyVaultEndpoint = new Uri(builder.Configuration["AzureKeyVault: VaultUri"]! ?? Environment.GetEnvironmentVariable("VaultUri")!);
+var keyVaultEndpoint = new Uri( string.IsNullOrEmpty(builder.Configuration["AzureKeyVault:VaultUri"]) ? Environment.GetEnvironmentVariable("VaultUri") : builder.Configuration["AzureKeyVault:VaultUri"]);
 builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
-var redisConnectionString = builder.Configuration["ConexionRedis"];
+var redisConnectionString = builder.Configuration["CacheConnection"];
 
 if (string.IsNullOrEmpty(redisConnectionString))
 {
@@ -14,8 +15,10 @@ if (string.IsNullOrEmpty(redisConnectionString))
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(provider =>
 {
-    return ConnectionMultiplexer.Connect(redisConnectionString);
+    var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("RedisCache:CacheConnection"));
+    return ConnectionMultiplexer.Connect(configuration);
 });
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

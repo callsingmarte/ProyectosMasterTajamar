@@ -13,7 +13,7 @@ public class HomeController : Controller
         //traemos la cadena de conexión desde el almacen de secretos
         //para inicializas la conexión a Redis
         _configuration = configuration;
-        _redisConnectionFactory = RedisConnection.InitializeAsync(connectionString: _configuration["ConexionRedis"]);
+        _redisConnectionFactory = RedisConnection.InitializeAsync(connectionString: _configuration["CacheConnection"]);
     }
     public ActionResult Index()
     {
