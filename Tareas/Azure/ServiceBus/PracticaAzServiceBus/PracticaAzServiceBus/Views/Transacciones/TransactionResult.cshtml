@@ -1,0 +1,15 @@
+﻿<div class="card text-center bg-success opacity-75">
+    <div class="card-header">
+        Estado de la transaccion
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Transaccion completada con Exito</h5>
+        <p class="card-text">Se ha completado la transaccion con exito</p>
+        <a asp-action="Index" class="btn btn-outline-dark">Ver transacciones</a>
+    </div>
+    <div class="card-footer text-body-secondary">
+        @{
+            new DateTime().ToString("yyyy-MM-dd HH:mm"); 
+        }
+    </div>
+</div>
