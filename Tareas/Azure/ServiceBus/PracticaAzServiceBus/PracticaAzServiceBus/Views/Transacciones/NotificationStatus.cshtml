@@ -1,0 +1,33 @@
+﻿@model string
+@{
+    string cardClass = Model == "Enviada" ? "bg-success" : "bg-danger";
+}
+<div class="card text-center @cardClass opacity-75">
+    <div class="card-header">
+        Estado de la transaccion
+    </div>
+    <div class="card-body">
+        @if (Model == "Enviada")
+        {
+            <h5 class="card-title">Notificacion enviada con Exito</h5>
+            <p class="card-text">
+                Se ha enviado la notificacion con exito
+            </p>
+        }
+        @if (Model == "Fallida")
+        {
+            <h5 class="card-title">Fallo al enviar notificacion</h5>
+            <p class="card-text">
+                La notificacion ha fallado al enviarse
+            </p>
+        }
+        <div class="row">
+            <div class="col">
+                <a asp-action="Auditoria" class="btn btn-outline-dark">Monitorizar transacciones</a>
+            </div>
+        </div>
+        <div class="card-footer text-body-secondary">
+            @(new DateTime().ToString("yyyy-MM-dd HH:mm"))
+        </div>
+    </div>
+</div>

@@ -10,8 +10,8 @@ namespace PracticaAzServiceBus.Data
 
         }
 
-        DbSet<Transaccion> Transacciones { get; set; }
-        DbSet<EventoTransaccion> EventosTransacciones { get; set;}
-        DbSet<Notificacion> Notificaciones { get; set; }
+        public DbSet<Transaccion> Transacciones { get; set; }
+        public DbSet<EventoTransaccion> EventosTransacciones { get; set;}
+        public DbSet<Notificacion> Notificaciones { get; set; }
     }
 }

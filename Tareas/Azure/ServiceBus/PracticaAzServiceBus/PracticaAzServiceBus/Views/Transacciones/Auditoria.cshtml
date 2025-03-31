@@ -1,0 +1,149 @@
+﻿@using PracticaAzServiceBus.ViewModels;
+@model AuditoriaNotificacionesViewModel;
+
+@{
+    ViewData["Title"] = "Auditoria";
+}
+
+<h1>Auditoria</h1>
+@if(Model.Transacciones.Count > 0)
+{
+    <form asp-action="deleteMessagesFromSubscription">
+        <input type="hidden" name="subscription" value="Auditoria" />
+        <button type="submit" class="btn btn-danger">
+            Borrar mensajes
+        </button>
+    </form>
+}
+<table class="table table-bordered">
+    <thead class="table-primary"> 
+        <tr>
+            <th>
+                Monto
+            </th>
+            <th>
+                TipoTransaccion
+            </th>
+            <th>
+                CuentaDestino
+            </th>
+            <th>
+                DetallesAdicionales
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                FechaCreacion
+            </th>
+            <th>
+                FechaProcesamiento
+            </th>
+            <th>
+                FechaNotificacion
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Transacciones) {
+            <tr>
+                <td>
+                    @item.Monto
+                </td>
+                <td>
+                    @item.TipoTransaccion
+                </td>
+                <td>
+                    @item.CuentaDestino
+                </td>
+                <td>
+                    @item.DetallesAdicionales
+                </td>
+                <td>
+                    @item.Estado
+                </td>
+                <td>
+                    @item.FechaCreacion
+                </td>
+                <td>
+                    @item.FechaProcesamiento
+                </td>
+                <td>
+                    @item.FechaNotificacion
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h4>Notificaciones al Cliente</h4>
+@if (Model.TransaccionesPorNotificar.Count > 0)
+{
+    <form asp-action="deleteMessagesFromSubscription">
+        <input type="hidden" name="subscription" value="Notificaciones" />
+        <button type="submit" class="btn btn-danger">
+            Borrar mensajes
+        </button>
+    </form>
+}
+<table class="table table-bordered">
+    <thead class="table-primary"> 
+        <tr>
+            <th>
+               Monto
+            </th>
+            <th>
+                TipoTransaccion
+            </th>
+            <th>
+                CuentaDestino
+            </th>
+            <th>
+                DetallesAdicionales
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                FechaCreacion
+            </th>
+            <th>
+                FechaProcesamiento
+            </th>
+            <th>
+                FechaNotificacion
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TransaccionesPorNotificar) {
+        <tr>
+            <td>
+                @item.Monto
+            </td>
+            <td>
+                @item.TipoTransaccion
+            </td>
+            <td>
+                @item.CuentaDestino
+            </td>
+            <td>
+                @item.DetallesAdicionales
+            </td>
+            <td>
+                @item.Estado
+            </td>
+            <td>
+                @item.FechaCreacion
+            </td>
+            <td>
+                @item.FechaProcesamiento
+            </td>
+            <td>
+                @item.FechaNotificacion
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a asp-action="Auditoria"  class="btn btn-dark">Actualizar</a>
+<a asp-action="Index" class="btn btn-info">Volver</a>

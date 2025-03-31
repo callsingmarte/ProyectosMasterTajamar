@@ -5,17 +5,31 @@
     </div>
 </div>
 
+<pre>
+   Procesando transferecia a la cuenta: @Model.CuentaDestino
+   por la cantidad de @Model.Monto
+</pre>
+
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(function{
+        setTimeout(() => {
             fetch("/Transacciones/AddTransaction",
             {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(@Model)
+                body: JSON.stringify(@Html.Raw(Json.Serialize(Model)))
             })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                }
+            })
+            .catch(error => console.error("Error en la transacción:", error));
         }, 5000)
     });
 </script>

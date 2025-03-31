@@ -1,15 +1,46 @@
-﻿<div class="card text-center bg-success opacity-75">
+﻿@model Transaccion
+
+<div class="card text-center bg-success opacity-75">
     <div class="card-header">
         Estado de la transaccion
     </div>
     <div class="card-body">
         <h5 class="card-title">Transaccion completada con Exito</h5>
-        <p class="card-text">Se ha completado la transaccion con exito</p>
-        <a asp-action="Index" class="btn btn-outline-dark">Ver transacciones</a>
+        <p class="card-text">Se ha completado la transaccion por valor de @Model.Monto
+            a la cuenta @Model.CuentaDestino con exito</p>
+        <div class="row">
+            <div class="col">
+                <a asp-action="Auditoria" class="btn btn-outline-dark">Monitorizar transacciones</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Notificar
+                </button>
+            </div>
+        </div>
     </div>
     <div class="card-footer text-body-secondary">
-        @{
-            new DateTime().ToString("yyyy-MM-dd HH:mm"); 
-        }
+        @(new DateTime().ToString("yyyy-MM-dd HH:mm"))
     </div>
 </div>
+
+<!-- Modal -->
+<form asp-action="sendNotification" method="post">
+    <input type="hidden" name="transaccionId" value="@Model.TransaccionId" />
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Enviar notificacion</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label>Email cliente</label>
+                    <input type="email" name="emailCliente" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Enviar notificacion</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
