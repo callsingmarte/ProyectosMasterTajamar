@@ -1,0 +1,16 @@
+﻿@model string 
+
+@if(Model.Contains("exito")){
+    <div class="card bg-success opacity-75" >
+        <div class="card-body">
+            <p>@Model</p>
+        </div>
+    </div>
+}
+@if(Model.Contains("error")){
+    <div class="card bg-danger opacity-75" >
+        <div class="card-body">
+            <p>@Model</p>
+        </div>
+    </div>
+}
