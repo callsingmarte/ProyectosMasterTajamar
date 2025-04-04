@@ -1,16 +1,17 @@
 ﻿@model IEnumerable<string>
 
-<a asp-action="Create" class="btn btn-primary">Crear bucket</a>
+<a asp-action="Create" class="btn btn-primary mb-3">Crear bucket</a>
 @if (Model.Count() > 0){  
     @foreach(string bucket in Model){
-        <div class="card bg-primary opacity-75">
+        <div class="card bg-light opacity-75" style="width: 15em">
             <div class="card-body">
-                <p class="text-white">
+                <a asp-controller="Files" asp-action="Index" asp-route-bucketName="@bucket">
                     @bucket
-                </p>
+                </a>
             </div>
             <div class="card-footer">
-                <form asp-action="Delete">
+                <form asp-action="Delete" method="post" >
+                    <input type="hidden" name="bucketName" value="@bucket"/>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
             </div>

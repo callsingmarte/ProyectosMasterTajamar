@@ -23,10 +23,16 @@ namespace PracticaS3Bucket.Services
         {
             try
             {
-                var contenido = new StringContent(bucketName, Encoding.UTF8, "application/json");
-                var respuesta = await _httpClient.PostAsync("buckets/create", contenido);
+                var url = $"buckets/create?bucketName={Uri.EscapeDataString(bucketName)}";
+                var response = await _httpClient.PostAsync(url, null);
 
-                return respuesta.IsSuccessStatusCode;
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    _logger.LogError($"Error en la petición HTTP: {response.StatusCode} - {error}");
+                }
+
+                return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
             {
@@ -40,6 +46,13 @@ namespace PracticaS3Bucket.Services
             try
             {
                 var response = await _httpClient.DeleteAsync($"buckets/delete?bucketName={bucketName}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    _logger.LogError($"Error en la petición HTTP: {response.StatusCode} - {error}");
+                }
+
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -96,15 +109,16 @@ namespace PracticaS3Bucket.Services
                 {
                     url += $"&prefix={prefix}";
                 }
-                var respuesta = await _httpClient.GetAsync(url);
+                var response = await _httpClient.GetAsync(url);
 
-                if (respuesta.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogError($"Error en la peticion HTTP: {respuesta.StatusCode}");
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    _logger.LogError($"Error en la peticion HTTP: {response.StatusCode} - {errorMessage }");
                     return [];
                 }
 
-                var contenido = await respuesta.Content.ReadAsStringAsync();
+                var contenido = await response.Content.ReadAsStringAsync();
                 var lista = JsonSerializer.Deserialize<IEnumerable<S3ObjectDto>>(contenido, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 return lista ?? [];
@@ -130,22 +144,23 @@ namespace PracticaS3Bucket.Services
 
         public async Task<string> UploadFileAsync(IFormFile file, string bucketName, string? prefix="")
         {
-            if (file == null || file.Length == 0)
-            {
-                throw new ArgumentException("El archivo no puede estar vacío.");
-            }
-
             using var formData = new MultipartFormDataContent();
             using var streamContent = new StreamContent(file.OpenReadStream());
 
             streamContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
             formData.Add(streamContent, "file", file.FileName);
-            formData.Add(new StringContent(bucketName), "bucketName");
-            formData.Add(new StringContent(prefix ?? ""), "prefix");
+            formData.Add(new StringContent(bucketName, Encoding.UTF8, "text/plain"), "bucketName");
+            formData.Add(new StringContent(prefix ?? "", Encoding.UTF8, "text/plain"), "prefix");
 
-            var respuesta = await _httpClient.PostAsync("files/upload", formData);
+            var response = await _httpClient.PostAsync("files/upload", formData);
 
-            return await respuesta.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                _logger.LogError($"Error en la peticion HTTP: {response.StatusCode} - { errorMessage }");
+            }
+
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

@@ -7,10 +7,19 @@
         </div>
     </div>
 }
+
 @if(Model.Contains("error")){
     <div class="card bg-danger opacity-75" >
         <div class="card-body">
             <p>@Model</p>
+        </div>
+    </div>
+}
+@if(Model.Contains("Advertencia"))
+{
+    <div class="card bg-warning bg-opacity-50">
+        <div class="card-body">
+            <p>⚠️ @Model</p>
         </div>
     </div>
 }

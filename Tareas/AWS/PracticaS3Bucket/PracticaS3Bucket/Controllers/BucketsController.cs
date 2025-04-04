@@ -29,23 +29,26 @@ namespace PracticaS3Bucket.Controllers
         {
             var response = await _awsS3Service.CreateBucketAsync(bucketName);
 
-            string viewContent = "Se ha producido un error en la operacion";
-            if (response)
+            string viewContent = $"Se ha creado el bucket {bucketName} con exito";
+
+            if (!response)
             {
-                viewContent = "La operacion se ha completado con exito";
+                viewContent = $"Se ha producido un error al crear el bucket {bucketName}";
             }
+
             return View("OperationStatus", viewContent);
         }
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> Delete(string bucketName) 
         {
             var response = await _awsS3Service.DeleteBucketAsync(bucketName);
 
-            string viewContent = "Se ha producido un error en la operacion";
-            if (response)
+            string viewContent = $"El bucket {bucketName} se ha eliminado con exito!";
+
+            if (!response)
             {
-                viewContent = "La operacion se ha completado con exito";
+                viewContent = $"Se ha producido un error al eliminar el bucket {bucketName}";
             }
 
             return View("OperationStatus", viewContent);

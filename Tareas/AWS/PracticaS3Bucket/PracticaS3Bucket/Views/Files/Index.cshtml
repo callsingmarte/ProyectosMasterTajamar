@@ -1,0 +1,62 @@
+﻿@model IEnumerable<S3ObjectDto>
+
+<h4>Archivos del Bucket @ViewBag.bucketName</h4>
+<a asp-action="Upload" asp-route-bucketName="@ViewBag.bucketName" class="btn btn-primary">Subir un archivo</a>
+@if(Model.Count() > 0)
+{
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>PresignedUrl</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @if (item.PresignedUrl.Contains(".jpg") || item.PresignedUrl.Contains(".png")
+                       || item.PresignedUrl.Contains(".tiff") || item.PresignedUrl.Contains(".webp")
+                       )
+                        {
+                            <img src="@item.PresignedUrl" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <a href="@item.PresignedUrl">
+                                @item.PresignedUrl
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <form asp-action="Download" method="post" >
+                            <input type="hidden" name="bucketName" value="@ViewBag.bucketName" />
+                            <input type="hidden" name="key" value="@item.Name" />
+                            <button type="submit" class="btn btn-secondary">Descargar</button>
+                        </form>
+                        <form asp-action="Delete" method="post">
+                            <input type="hidden" name="bucketName" value="@ViewBag.bucketName" />
+                            <input type="hidden" name="key" value="@item.Name" />
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="card bg-warning bg-opacity-75">
+        <div class="text-center card-body">
+            <p>No se han subido archivos a este bucket</p>
+        </div>
+    </div>
+}
+
+<a asp-controller="Buckets" asp-action="Index" class="btn btn-dark">Listado de Buckets</a>

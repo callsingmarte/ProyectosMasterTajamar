@@ -4,6 +4,7 @@ using Amazon.S3.Util;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using S3DemoApi.Models;
+using S3DemoApi.ViewModels;
 
 namespace S3DemoApi.Controllers
 {
@@ -19,8 +20,12 @@ namespace S3DemoApi.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFileAsync(IFormFile file, string bucketName, string? prefix)
+        public async Task<IActionResult> UploadFileAsync([FromForm]UploadFileRequest fileRequest)
         {
+            IFormFile file = fileRequest.file;
+            string bucketName = fileRequest.bucketName;
+            string prefix = fileRequest.prefix;
+
             var bucketExists = await AmazonS3Util.DoesS3BucketExistV2Async(_s3Client, bucketName);
             if (!bucketExists) return BadRequest($"bucket {bucketName} does not exists.");
 
@@ -38,7 +43,7 @@ namespace S3DemoApi.Controllers
         }
 
         [HttpGet("get-all")]
-        public async Task<IActionResult> GetAllFilesAsync(string bucketName, string prefix)
+        public async Task<IActionResult> GetAllFilesAsync(string bucketName, string? prefix = "")
         {
             var bucketExists = await AmazonS3Util.DoesS3BucketExistV2Async(_s3Client, bucketName);
             if (!bucketExists) return BadRequest($"bucket {bucketName} does not exists.");
