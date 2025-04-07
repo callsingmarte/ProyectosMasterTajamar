@@ -1,0 +1,11 @@
+﻿@model List<(Guid Id, string DecryptedText)>
+
+<h2>Mensajes Desencriptados</h2>
+<ul>
+    @foreach(var msg in Model)
+    {
+        <li><strong>@msg.Id</strong> : @msg.DecryptedText</li>
+    }
+</ul>
+
+<a class="btn btn-primary" href="/Message/Create">Nuevo Mensaje</a>
