@@ -1,0 +1,37 @@
+﻿@model List<Amazon.SQS.Model.Message>
+
+@{
+    ViewData["Title"] = "Mensajes en SQS";
+}
+
+<p><strong>Total de Mensajes Disponibles: @ViewData["TotalMensajes"]</strong></p>
+<a asp-action="SendMessage" class="btn btn-primary mt-2">Crear Mensaje</a>
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Mensaje</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var mensaje in Model)
+            {
+                <tr>
+                    <td>@mensaje.MessageId</td>
+                    <td>@mensaje.Body</td>
+                    <td>
+                        <a asp-action="Delete" 
+                        asp-route-receiptHandle="@mensaje.ReceiptHandle" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay mensajes en la cola</p>
+}
