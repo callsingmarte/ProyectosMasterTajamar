@@ -1,16 +1,18 @@
+using Amazon.KeyManagementService;
 using Microsoft.EntityFrameworkCore;
 using MvcAppAws_MartinSanchez.Data;
 using MvcAppAws_MartinSanchez.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<SecretManagerService>();
+//builder.Services.AddSingleton<SecretManagerService>();
 
 var config = builder.Configuration;
-var secretService = new SecretManagerService(config);
-string secretName = "";
+IAmazonKeyManagementService kmsClient = new AmazonKeyManagementServiceClient();
+var secretService = new SecretManagerService(config, kmsClient);
+string secretName = "PracticaRdsSecreto";
 string connectionString = await secretService.GetSecretValueAsync(secretName);
-
+//string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.

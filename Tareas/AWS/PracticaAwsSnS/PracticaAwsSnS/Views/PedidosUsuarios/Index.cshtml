@@ -1,0 +1,33 @@
+﻿@model List<Pedido>
+
+@{
+    ViewData["Title"] = "Pedidos Usuarios";
+}
+
+@if(Model.Count() == 0)
+{
+    <div class="card bg-warning bg-opacity-25">
+        <div class="card-body">
+            <p>No hay productos en la tienda</p>
+        </div>
+    </div>
+}
+<div class="row row-cols-5 g-4">
+    @foreach(Pedido pedido in Model)
+    {
+        <div class="col">
+            <div class="card bg-light bg-opacity-50 shadow h-100">
+                <div class="card-header">
+                    <h4>@pedido.Nombre</h4>
+                </div>
+                <div class="card-body">
+                    <p> @pedido.Precio € / por unidad </p>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="Compra" asp-route-pedidoId="@pedido.Id" class="btn btn-warning">Comprar</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

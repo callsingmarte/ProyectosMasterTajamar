@@ -1,0 +1,18 @@
+﻿@model Usuario
+
+@{
+    ViewData["Title"] = "Registro Completado";
+}
+
+<div class="card bg-success bg-opacity-50">
+    <div class="card-header">
+        <h1 class="card-title">Registro completado con exito</h1>
+    </div>
+    <div class="card-body">
+        <p>Se ha registrado con exito a @Model.Nombre </p>
+        <p>Se le ha enviado una notificación al correo @Model.Email </p>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Login" class="btn btn-dark">Iniciar sesion</a>
+    </div>
+</div>

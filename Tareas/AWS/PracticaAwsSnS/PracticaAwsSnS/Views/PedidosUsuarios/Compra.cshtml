@@ -1,0 +1,46 @@
+﻿@model PedidoUsuario
+
+@{
+    ViewData["Title"] = "Comprar pedido";
+}
+
+<div class="card bg-light shadow">
+    <div class="card-header">
+        <h4 class="card-title"> Comprar @Model.Pedido.Nombre </h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Compra" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="IdPedido" type="hidden" class="form-control" value="@Model.IdPedido" />
+            <div class="form-group">
+                <label asp-for="Cantidad" class="control-label"></label>
+                <input id="Cantidad" asp-for="Cantidad" class="form-control" min="1" />
+                <span asp-validation-for="Cantidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecioTotal" class="control-label"></label>
+                <input id="PrecioTotal" asp-for="PrecioTotal" class="form-control" readonly/>
+                <span asp-validation-for="PrecioTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Comprar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+    document.getElementById("Cantidad").addEventListener("change", () => {
+        console.log("Precio pedido", parseFloat(@Model.Pedido.Precio.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+        const cantidad = parseFloat(document.getElementById("Cantidad").value);
+        const precio = parseFloat(@Model.Pedido.Precio.ToString(System.Globalization.CultureInfo.InvariantCulture))
+        const total = cantidad * precio;
+        document.getElementById("PrecioTotal").value = total.toFixed(2);
+    })
+</script>

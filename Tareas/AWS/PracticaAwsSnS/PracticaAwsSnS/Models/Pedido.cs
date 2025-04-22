@@ -7,9 +7,6 @@ namespace PracticaAwsSnS.Models
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Usuario")]
-        public int IdUsuario { get; set; }
-        public virtual Usuario? Usuario { get; set; }
         [Required]
         public string? Nombre { get; set; }
         public int Cantidad { get; set; } = 1;

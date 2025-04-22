@@ -1,0 +1,18 @@
+﻿@model PedidoUsuario
+
+@{
+    ViewData["Title"] = "Pedido Completado";
+}
+
+<div class="card bg-success bg-opacity-50">
+    <div class="card-header">
+        <h1 class="card-title">Pedido completado con exito</h1>
+    </div>
+    <div class="card-body">
+        <p>Se ha completado el pedido @Model.Pedido.Nombre con exito </p>
+        <p>Se le ha enviado una notificación al correo @Model.Usuario.Email </p>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Index" class="btn btn-dark">Ver productos</a>
+    </div>
+</div>
