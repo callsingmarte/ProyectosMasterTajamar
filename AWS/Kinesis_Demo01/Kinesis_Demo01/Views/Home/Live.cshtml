@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Live Kinesis Viewer";
+}
+
+<h2>Mensajes en tiempo real desde Kinesis</h2>
+
+<!-- Formulario para enviar un mensaje -->
+<form id="sendMessageForm">
+    <input type="text" name="message" id="message" placeholder="Escribe tu mensaje..." required />
+    <button type="submit">Enviar Mensaje</button>
+</form>
+
+<ul id="messagesList"></ul>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Función para obtener los mensajes de Kinesis
+        function fetchMessages() {
+            $.get("/Home/GetKinesisMessages", function (data) {
+                const list = $("#messagesList");
+                list.empty();
+                data.forEach(function (msg) {
+                    list.append(`<li><strong>Mensaje #${msg.index}:</strong> ${msg.message}</li>`);
+                });
+            });
+        }
+
+        // Llama a fetchMessages cada 3 segundos
+        setInterval(fetchMessages, 3000);
+
+        // Llama inmediatamente al cargar para obtener mensajes
+        fetchMessages();
+
+        // Maneja el envío del formulario
+        $("#sendMessageForm").submit(function (e) {
+            e.preventDefault(); // Previene el comportamiento por defecto del formulario (recargar la página)
+
+            var message = $("#message").val(); // Obtiene el valor del mensaje
+
+            // Enviar el mensaje a Kinesis a través de AJAX
+                    $.post("/Home/SendMessage", { message: message }, function (data) {
+            console.log("[Debug] Mensajes recibidos tras envío:", data); // 👈 añade esto
+
+            const list = $("#messagesList");
+            list.empty();
+            data.forEach(function (msg) {
+                list.append(`<li><strong>Mensaje #${msg.index}:</strong> ${msg.message}</li>`);
+            });
+
+            $("#message").val('');
+        });
+        });
+    </script>
+}
