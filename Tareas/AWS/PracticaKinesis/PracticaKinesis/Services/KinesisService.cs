@@ -3,6 +3,7 @@ using Amazon.Kinesis;
 using System.Text;
 using Amazon;
 using PracticaKinesis.Models;
+using System.Text.Json;
 
 namespace PracticaKinesis.Services
 {
@@ -24,19 +25,30 @@ namespace PracticaKinesis.Services
         }
 
         //Metodo para enviar mensajes a kinesis
-        public async Task SendMessageAsync(string message)
+        public async Task<bool> SendMessageAsync(SensorEvent data)
         {
+            var json = JsonSerializer.Serialize(data);
+
             var request = new PutRecordRequest
             {
                 StreamName = _streamName,
-                PartitionKey = Guid.NewGuid().ToString(),
-                Data = new MemoryStream(Encoding.UTF8.GetBytes(message))
+                PartitionKey = data.DeviceId,
+                Data = new MemoryStream(Encoding.UTF8.GetBytes(json))
             };
 
-            await _kinesisClient!.PutRecordAsync(request);
+            try
+            {
+                await _kinesisClient!.PutRecordAsync(request);
+            }
+            catch (Exception ex) 
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        public async Task<List<SensorEvent>> ReadMessagesAsync(int count = 10)
+        public async Task<List<SensorEvent>> ReadMessagesAsync(int count = 20)
         {
             var messages = new List<SensorEvent>();
 

@@ -1,5 +1,6 @@
 using Amazon.Kinesis;
 using Amazon.S3;
+using PracticaKinesis;
 using PracticaKinesis.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,13 @@ builder.Services.AddSingleton<SensorEventParser>();
 builder.Services.AddAWSService<IAmazonKinesis>();
 builder.Services.AddSingleton<KinesisService>();
 builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddSingleton<BucketService>();
+builder.Services.AddHostedService<SensorSimulationProcess>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+});
 
 var app = builder.Build();
 

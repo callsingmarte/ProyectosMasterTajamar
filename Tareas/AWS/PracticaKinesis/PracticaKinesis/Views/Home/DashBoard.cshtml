@@ -1,0 +1,407 @@
+﻿@model IEnumerable<PracticaKinesis.Models.SensorEvent>
+
+@{
+    ViewData["Title"] = "DashBoard";
+}
+<div id="log" class="mt-5">
+
+</div>
+<h1 class="text-center">DashBoard</h1>
+<div class="row">
+    <div class="col-4">
+        <div class="card shadow h-100 bg-dark">
+            <div class="card-body position-relative">
+                <div id="spinnerTemp" class="position-absolute start-50 justify-content-center align-items-center" style="display: none; height: 100%;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <canvas id="sensorTempChart" width="300" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card shadow h-100 bg-dark">
+            <div class="card-body position-relative">
+                <div id="spinnerHumidity" class="position-absolute start-50 justify-content-center align-items-center" style="display: none; height: 100%;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <canvas id="sensorHumidityChart" width="300" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card shadow h-100 bg-dark">
+            <div class="card-body position-relative">
+                <div id="spinnerBattery" class="position-absolute start-50 justify-content-center align-items-center" style="display: none; height: 100%;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <canvas id="sensorBatteryChart" width="300" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card shadow bg-dark p-4 mt-5">
+    <div class="card-title">
+        <h1>Tabla de datos</h1>
+    </div>
+    <div class="card-body">
+        <form id="formBucket" method="post" class="mb-3">
+            <button type="submit" class="btn btn-primary">
+                <div id="btnSpinner" style="display: none">
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span class="visually-hidden" role="status">Loading...</span>
+                </div>
+                Subir datos
+            </button>
+        </form>
+        <table class="table table-primary table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DeviceId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Temperature)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Humidity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Location)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Timestamp)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BatteryLevel)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="sensorTableBody">
+                @foreach (var item in Model)
+                {
+                    <tr class=displaySensorColor(@item.Status)>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeviceId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Temperature)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Humidity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Timestamp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BatteryLevel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let tempChart;
+    let humidityChart;
+    let batteryChart;
+
+    function displaySensorColor(status){
+        switch(status){
+            case "OK": 
+               return "table-success" 
+            case "Warning":
+                return "table-warning"
+            case "Danger":
+                return "table-danger"
+            default: 
+                 return ""        
+        }
+    }
+
+    function applyColorsToTableRows() {
+        const rows = document.querySelectorAll("#sensorTableBody tr");
+        rows.forEach(row => {
+            const statusCell = row.cells[6];
+            const status = statusCell.textContent.trim();
+            const colorClass = displaySensorColor(status);
+            row.classList.add(colorClass);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        applyColorsToTableRows();
+    });
+
+    async function fetchSensorData(){
+        try{
+            toggleSpinner("spinnerTemp", true);
+            toggleSpinner("spinnerHumidity", true);
+            toggleSpinner("spinnerBattery", true);
+
+           const response = await fetch("/Home/GetSensorDataList")
+            const data = await response.json();
+
+            const tbody = document.getElementById("sensorTableBody");
+            tbody.innerHTML = ""; // Limpiamos la tabla
+            data.forEach(item => {
+                const rowClass = displaySensorColor(item.status);
+                const row = `
+                    <tr class="${rowClass}">
+                        <td>${item.deviceId}</td>
+                        <td>${item.temperature}</td>
+                        <td>${item.humidity}</td>
+                        <td>${item.location}</td>
+                        <td>${new Date(item.timestamp).toLocaleString()}</td>
+                        <td>${item.batteryLevel}</td>
+                        <td>${item.status}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });        
+            
+            DisplayTemperaturesChart(data)
+            DisplayHumidityChart(data)
+            DisplayBatteryChart(data)
+        } catch(e){
+            console.warn(e);
+            document.getElementById("log").innerHTML = `
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Se ha producido un error al recuperar los datos
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>            
+            `;
+        }
+    }
+    function toggleSpinner(spinnerId, show) {
+        const spinner = document.getElementById(spinnerId);
+        spinner.style.display = show ? "flex" : "none";
+    }
+
+    function DisplayTemperaturesChart(data){
+
+        const labels = data.map(d => new Date(d.timestamp).toLocaleTimeString());
+        const temperatures = data.map(d => d.temperature);
+        const ctx = document.getElementById("sensorTempChart").getContext("2d");
+
+        if (tempChart) {
+            tempChart.destroy();
+        }
+
+        tempChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Temperatures (°C)",
+                    data: temperatures,
+                    fill: false,
+                    borderColor: "rgb(80, 0, 0)",
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Temperature (°C)'
+                        }
+                    }
+                },
+                animation: {
+                    onComplete: () => {
+                        toggleSpinner("spinnerTemp", false);
+                    }
+                }
+            }
+        });
+    }
+
+    function DisplayHumidityChart(data){
+
+        const labels = data.map(d => new Date(d.timestamp).toLocaleTimeString());
+        const humidities = data.map(d => d.humidity);
+        const ctx = document.getElementById("sensorHumidityChart").getContext("2d");
+
+        if (humidityChart) {
+            humidityChart.destroy();
+        }
+
+        humidityChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Humidity (%)",
+                    data: humidities,
+                    fill: false,
+                    borderColor: "rgb(51, 153, 255)",
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Humidity (%)'
+                        }
+                    }
+                },
+                animation: {
+                    onComplete: () => {
+                        toggleSpinner("spinnerHumidity", false);
+                    }
+                }
+            }
+        });
+
+    }
+
+    function DisplayBatteryChart(data){
+
+        const labels = data.map(d => new Date(d.timestamp).toLocaleTimeString());
+        const batteryLevels = data.map(d => d.batteryLevel);
+        const ctx = document.getElementById("sensorBatteryChart").getContext("2d");
+
+        if (batteryChart) {
+            batteryChart.destroy();
+        }
+
+        batteryChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Battery (%)",
+                    data: batteryLevels,
+                    fill: false,
+                    borderColor: "rgb(255, 204, 102)",
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Battery (%)'
+                        }
+                    }
+                },
+                animation: {
+                    onComplete: () => {
+                        toggleSpinner("spinnerBattery", false);
+                    }
+                }
+            }
+        });
+    }
+
+    setInterval(fetchSensorData, 30000);
+
+    document.getElementById("formBucket").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        toggleSpinner("btnSpinner", true);
+        
+        const rows = document.querySelectorAll("#sensorTableBody tr");
+        const data = [];
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll("td");
+            const rawDate = cells[4].textContent;
+            const [datePart, timePart] = rawDate.split(", ");
+            const [day, month, year] = datePart.split("/").map(Number);
+            const isoString = new Date(year, month - 1, day, ...timePart.split(":").map(Number)).toISOString();
+
+            data.push({
+                DeviceId: cells[0].textContent,
+                Temperature: parseFloat(cells[1].textContent),
+                Humidity: parseFloat(cells[2].textContent),
+                Location: cells[3].textContent,
+                Timestamp: isoString,
+                BatteryLevel: parseFloat(cells[5].textContent),
+                Status: cells[6].textContent
+            });
+        });
+
+        console.log("data: ", data)
+
+        try {
+            const response = await fetch("/Home/SendMessagesToBucket", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result === true) {
+                document.getElementById("log").innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>Se han subido correctamente los datos
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            } else {
+                document.getElementById("log").innerHTML = `
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <strong>Se ha producido un error al subir los datos
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error("Error al hacer POST:", error);
+            document.getElementById("log").innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Se ha producido un error inesperado
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+        }finally{
+            toggleSpinner("btnSpinner", false);
+        }
+    });
+</script>

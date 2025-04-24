@@ -3,47 +3,136 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PracticaKinesis</title>
+    <title>Dashboard - SensorVision</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PracticaKinesis.styles.css" asp-append-version="true" />
+    <style>
+        /* Fondo degradado accesible */
+        body {
+            background: linear-gradient(to bottom right, #4e73df, #1e3a8a); /* Azul más suave */
+            min-height: 100vh;
+            color: #f8f9fa; /* Blanco para el texto */
+        }
+
+        /* Header fijo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1050;
+            background: #333; /* Gris oscuro */
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+            header h2 {
+                color: #fff;
+                text-align: center;
+            }
+
+        /* Barra de navegación fija */
+        .sidebar {
+            position: fixed;
+            top: 50px; /* Justo debajo del header */
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background-color: #343a40; /* Gris oscuro */
+            padding-top: 20px;
+            z-index: 1;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+            .sidebar .nav-link {
+                color: #f8f9fa;
+                transition: color 0.3s ease, background-color 0.3s ease;
+            }
+
+                .sidebar .nav-link:hover {
+                    color: #ff5733; /* Naranja para el hover */
+                    background-color: #495057; /* Gris más claro para el fondo */
+                }
+
+                .sidebar .nav-link i {
+                    margin-right: 8px;
+                }
+
+        /* Asegura que el contenido principal no se oculte bajo el header y sidebar */
+        .main-content {
+            margin-left: 250px; /* Ancho de la barra lateral */
+            padding-top: 100px; /* Espacio para el header */
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+            footer a {
+                color: #ff5733; /* Naranja para el enlace */
+                text-decoration: none;
+            }
+
+                footer a:hover {
+                    text-decoration: underline;
+                }
+    </style>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PracticaKinesis</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Header -->
+    <header class="mb-5">
+        <div class="container-fluid">
+            <h2 class="m-0">SensorVision</h2>
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <!-- Main layout -->
+    <div class="container-fluid d-flex flex-column flex-grow-1">
+        <div class="row flex-grow-1">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Home" asp-action="Index">
+                            <i class="bi bi-house-door"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Home" asp-action="Privacy">
+                            <i class="bi bi-shield-lock"></i> Privacy
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Home" asp-action="Dashboard">
+                            <i class="bi bi-house-door-fill"></i> Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main content -->
+            <main class="main-content col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 overflow-auto" style="z-index: 2">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <!-- Footer -->
+    <footer style="z-index: 2">
         <div class="container">
-            &copy; 2025 - PracticaKinesis - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - SensorVision - <a href="/Home/Privacy">Privacy</a>
         </div>
     </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script> <!-- Iconos -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

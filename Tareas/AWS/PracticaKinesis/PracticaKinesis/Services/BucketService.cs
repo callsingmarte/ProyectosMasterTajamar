@@ -1,6 +1,9 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using PracticaKinesis.Models;
 using System.Text;
+using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PracticaKinesis.Services
 {
@@ -16,12 +19,13 @@ namespace PracticaKinesis.Services
         }
 
         // Método seguro y asíncrono para guardar un mensaje en Amazon S3
-        public async Task SaveMessageToS3(string message)
+        public async Task<bool> SaveMessageToS3(SensorEvent data)
         {
             try
             {
-                var key = $"events-{DateTime.Now:yyyyMMdd-HHmmss}.json";
-                var messageBytes = Encoding.UTF8.GetBytes(message);
+                var json = JsonSerializer.Serialize(data);
+                var key = $"events-{DateTime.Now:yyyyMMdd-HHmmssff}.json";
+                var messageBytes = Encoding.UTF8.GetBytes(json);
                 var stream = new MemoryStream(messageBytes);
 
                 var putRequest = new PutObjectRequest
@@ -36,9 +40,30 @@ namespace PracticaKinesis.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[S3 Error] No se pudo guardar el mensaje en S3: {ex.Message}");
-                // Aquí puedes usar un logger si prefieres
+                return false;
             }
+
+            return true;
+        }
+
+        public async Task<bool> SaveMessageListToS3(List<SensorEvent> data)
+        {
+            foreach (var sensorEvent in data) {
+                try
+                {
+                    bool response = await SaveMessageToS3(sensorEvent);
+                    if (!response) {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+
         }
     }
 }

@@ -2,7 +2,46 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center mb-4">
+            <h1 class="display-4">Bienvenido al Panel de Monitoreo de Sensores</h1>
+            <p class="lead">Supervisa en tiempo real la temperatura, humedad y batería de tus dispositivos IoT desde un solo lugar.</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center text-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm bg-dark border-0 mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">📊 Dashboard</h5>
+                    <p class="card-text">Visualiza los datos de tus sensores en tiempo real a través de gráficas interactivas.</p>
+                    <a asp-controller="Home" asp-action="Dashboard" class="btn btn-primary">Ir al Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 mb-4 bg-dark">
+                <div class="card-body">
+                    <h5 class="card-title">🔐 Privacidad</h5>
+                    <p class="card-text">Consulta nuestra política de privacidad y el tratamiento de los datos de tus dispositivos.</p>
+                    <a asp-controller="Home" asp-action="Privacy" class="btn btn-outline-secondary">Ver Política</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>🔧 ¿Pensando en escalar?</h3>
+            <p class="text-white">
+                Próximamente podrás agregar múltiples dispositivos, configurar alertas por temperatura y recibir notificaciones en tiempo real.
+                Nuestro sistema está diseñado para crecer contigo.
+            </p>
+            <a class="btn btn-success disabled" aria-disabled="true">Agregar nuevo dispositivo (Próximamente)</a>
+        </div>
+    </div>
 </div>
