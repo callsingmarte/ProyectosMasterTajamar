@@ -49,7 +49,7 @@ namespace PracticaKinesis
                     _logger.LogWarning($"Se ha producido un error al subir los datos del sensor {sensorEvent.DeviceId}");
                 }
 
-                await Task.Delay(1500, cancellationToken);
+                await Task.Delay(500, cancellationToken);
             }
         }
 
