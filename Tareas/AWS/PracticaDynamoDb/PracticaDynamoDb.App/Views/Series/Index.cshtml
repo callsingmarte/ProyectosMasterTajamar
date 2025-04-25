@@ -1,0 +1,38 @@
+﻿@model PracticaDynamoDb.Models.SerieViewModel
+
+@{
+    ViewData["Title"] = "Series Page";
+}
+
+<a asp-action="Create" class="btn btn-primary">Añadir Pelicula</a>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form class="form" method="get" asp-action="Index">
+                <div class="input-group mb-3">
+                    <input type="text" name="Title" class="form-control" placeholder="Title" aria-label="Title" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (PracticaDynamoDb.Models.Serie serie in Model.Series)
+        {
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">@serie.Titulo</h2>
+                        <h4 class="card-subtitle">@serie.DisponibleEn</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>@serie.Temporadas Temporadas</p>
+                    </div>
+                </div>
+            </div>            
+        }
+    </div>
+</div>
