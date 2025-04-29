@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PracticaDynamoDb.Models;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace PracticaDynamoDb.App.Controllers
 
             if (!string.IsNullOrEmpty(titulo)) 
             {
-                var series = await _repository!.Find(new SerieInputModel { Titulo = titulo });
+                var series = await _repository!.Find(new SearchRequest { Titulo = titulo });
 
                 return View(new SerieViewModel
                 {
@@ -39,6 +40,14 @@ namespace PracticaDynamoDb.App.Controllers
         [Route("Create")]
         public IActionResult Create()
         {
+            var disponibleEnSelect = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = DisponibleEn.PrimeVideo, Value = DisponibleEn.PrimeVideo},
+                new SelectListItem(){Text = DisponibleEn.Netflix, Value = DisponibleEn.Netflix},
+                new SelectListItem(){Text = DisponibleEn.HBO, Value = DisponibleEn.HBO},
+                new SelectListItem(){Text = DisponibleEn.Crunchyroll, Value = DisponibleEn.Crunchyroll}
+            };
+            @ViewBag.DisponibleEn = disponibleEnSelect;
             return View("CreateOrUpdate");
         }
 
@@ -46,6 +55,16 @@ namespace PracticaDynamoDb.App.Controllers
         [Route("Create")]
         public async Task<IActionResult> Create(SerieInputModel model)
         {
+            var disponibleEnSelect = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = DisponibleEn.PrimeVideo, Value = DisponibleEn.PrimeVideo},
+                new SelectListItem(){Text = DisponibleEn.Netflix, Value = DisponibleEn.Netflix},
+                new SelectListItem(){Text = DisponibleEn.HBO, Value = DisponibleEn.HBO},
+                new SelectListItem(){Text = DisponibleEn.Crunchyroll, Value = DisponibleEn.Crunchyroll}
+            };
+
+            @ViewBag.DisponibleEn = disponibleEnSelect;
+
             try
             {
                 if (!ModelState.IsValid) 
@@ -63,11 +82,22 @@ namespace PracticaDynamoDb.App.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Edit/{serieId}")]
         public async Task<IActionResult> Edit(string serieId)
         {
             var serie = await _repository!.Single(serieId);
 
             ViewBag.SerieId = serieId;
+
+            var disponibleEnSelect = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = DisponibleEn.PrimeVideo, Value = DisponibleEn.PrimeVideo},
+                new SelectListItem(){Text = DisponibleEn.Netflix, Value = DisponibleEn.Netflix},
+                new SelectListItem(){Text = DisponibleEn.HBO, Value = DisponibleEn.HBO},
+                new SelectListItem(){Text = DisponibleEn.Crunchyroll, Value = DisponibleEn.Crunchyroll}
+            };
+            @ViewBag.DisponibleEn = disponibleEnSelect;
 
             return View("CreateOrUpdate", new SerieInputModel
             {
@@ -83,6 +113,15 @@ namespace PracticaDynamoDb.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string serieId, SerieInputModel model)
         {
+            var disponibleEnSelect = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = DisponibleEn.PrimeVideo, Value = DisponibleEn.PrimeVideo},
+                new SelectListItem(){Text = DisponibleEn.Netflix, Value = DisponibleEn.Netflix},
+                new SelectListItem(){Text = DisponibleEn.HBO, Value = DisponibleEn.HBO},
+                new SelectListItem(){Text = DisponibleEn.Crunchyroll, Value = DisponibleEn.Crunchyroll}
+            };
+            @ViewBag.DisponibleEn = disponibleEnSelect;
+
             try
             {
                 if (!ModelState.IsValid)
@@ -101,7 +140,7 @@ namespace PracticaDynamoDb.App.Controllers
         }
 
         [HttpPost]
-        [Route("Delete/{serieId}")]
+        [Route("Delete")]
         public async Task<IActionResult> Delete(string serieId)
         {
             await _repository.Remove(serieId);

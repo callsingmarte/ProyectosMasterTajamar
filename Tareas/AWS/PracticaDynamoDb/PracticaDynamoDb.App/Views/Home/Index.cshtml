@@ -1,8 +1,76 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-white">
+    <section class="bg-dark text-center py-5" style="
+    background-image: url('https://i5.walmartimages.com/seo/Star-Wars-A-New-Hope-Horizontal-Banner-Wall-Poster-14-725-x-22-375-Framed_02842f15-9ef2-45fb-9cc3-a4f0ebceb7c8.f45cb4d8f574add1fc6ef91b7a7c04c2.jpeg'); 
+    background-size: cover; background-position: center;">
+        <div class="bg-black bg-opacity-75 p-5">
+            <h1 class="display-4 fw-bold">Disfruta las mejores series en un solo lugar</h1>
+            <p class="lead">Suscríbete ahora y accede a contenido exclusivo, sin límites y en cualquier dispositivo.</p>
+            <a href="#planes" class="btn btn-danger btn-lg mt-3">Ver Planes</a>
+        </div>
+    </section>
+
+    <section class="container text-center my-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h3><i class="bi bi-tv-fill"></i> Series Exclusivas</h3>
+                <p>Acceso a contenido original y estrenos antes que nadie.</p>
+            </div>
+            <div class="col-md-4">
+                <h3><i class="bi bi-phone-fill"></i> Disponible en todos los dispositivos</h3>
+                <p>Mira en tu TV, celular, tablet o computadora.</p>
+            </div>
+            <div class="col-md-4">
+                <h3><i class="bi bi-cloud-arrow-down-fill"></i> Descargas Offline</h3>
+                <p>Disfruta tus series favoritas sin conexión.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="planes" class="bg-black py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Planes de Suscripción</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card text-white bg-secondary h-100">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">Básico</h4>
+                            <h2>$4.99/mes</h2>
+                            <p class="card-text">Calidad SD, 1 dispositivo, sin descargas.</p>
+                            <a href="#" class="btn btn-outline-light">Elegir</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-danger h-100 border border-light border-2">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">Estándar</h4>
+                            <h2>$8.99/mes</h2>
+                            <p class="card-text">Calidad HD, hasta 2 dispositivos, descarga disponible.</p>
+                            <a href="#" class="btn btn-light">Más Popular</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-dark h-100">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">Premium</h4>
+                            <h2>$12.99/mes</h2>
+                            <p class="card-text">Ultra HD, hasta 4 dispositivos, descargas ilimitadas.</p>
+                            <a href="#" class="btn btn-outline-light">Elegir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center py-5 bg-danger text-white">
+        <h2 class="fw-bold mb-3">Empieza tu prueba gratis hoy mismo</h2>
+        <p>No necesitas tarjeta de crédito. Cancela en cualquier momento.</p>
+        <a href="#" class="btn btn-light btn-lg">Registrarse</a>
+    </section>
 </div>

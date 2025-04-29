@@ -58,7 +58,7 @@ namespace PracticaDynamoDb.Core
             };
         }
 
-        public async Task<IEnumerable<Serie>> Find(SerieInputModel searchReq)
+        public async Task<IEnumerable<Serie>> Find(SearchRequest searchReq)
         {
             var scanConditions = new List<ScanCondition>();
 
@@ -74,7 +74,7 @@ namespace PracticaDynamoDb.Core
             {
                 scanConditions.Add(new ScanCondition("Temporadas", ScanOperator.Equal, searchReq.Temporadas));
             }
-            if (searchReq.DisponibleEn > 0)
+            if (!string.IsNullOrEmpty(searchReq.DisponibleEn))
             {
                 scanConditions.Add(new ScanCondition("DisponibleEn", ScanOperator.Equal, searchReq.DisponibleEn));
             }

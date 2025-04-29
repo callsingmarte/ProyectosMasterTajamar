@@ -1,5 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PracticaDynamoDb.Models.SerieInputModel
+
 @{
+    string serieId = ViewBag.SerieId?.ToString() ?? "";
+    string action = (Model != null && Model.InputType == PracticaDynamoDb.Models.InputType.Update) ? "Edit" : "Create";
+}
+
+<div class="container text-white py-5">
+    <h2 class="mb-4">@((action == "Create") ? "Añadir Nueva Serie" : "Editar Serie")</h2>
+
+    <form method="post" asp-route-serieId="@serieId" asp-action="@action" class="bg-dark p-4 rounded shadow border border-secondary">
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label">Título</label>
+            <input class="form-control bg-black text-white border-secondary" asp-for="Titulo" type="text" />
+            <span class="text-danger" asp-validation-for="Titulo"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Genero" class="form-label">Género</label>
+            <input class="form-control bg-black text-white border-secondary" asp-for="Genero" type="text" />
+            <span class="text-danger" asp-validation-for="Genero"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Temporadas" class="form-label">Temporadas</label>
+            <input class="form-control bg-black text-white border-secondary" asp-for="Temporadas" type="number" />
+            <span class="text-danger" asp-validation-for="Temporadas"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="DisponibleEn" class="form-label">Disponible En</label>
+            <select class="form-select bg-black text-white border-secondary" asp-for="DisponibleEn" asp-items="@ViewBag.DisponibleEn">
+                <option disabled selected value="">-- Selecciona una plataforma --</option>
+            </select>
+            <span class="text-danger" asp-validation-for="DisponibleEn"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-outline-light">Cancelar</a>
+            <button class="btn btn-danger" type="submit">Guardar</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

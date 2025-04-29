@@ -8,6 +8,12 @@
         public static string Crunchyroll = "Crunchyroll" ;
     };
 
+    public enum InputType
+    {
+        Create,
+        Update
+    }
+
     public enum ResultsType
     {
         List, 

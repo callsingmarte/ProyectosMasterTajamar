@@ -1,38 +1,51 @@
 ﻿@model PracticaDynamoDb.Models.SerieViewModel
 
 @{
-    ViewData["Title"] = "Series Page";
+    ViewData["Title"] = "Series";
 }
 
-<a asp-action="Create" class="btn btn-primary">Añadir Pelicula</a>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <form class="form" method="get" asp-action="Index">
-                <div class="input-group mb-3">
-                    <input type="text" name="Title" class="form-control" placeholder="Title" aria-label="Title" aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+<div class="container text-white py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Explora nuestras Series</h2>
+        <a asp-action="Create" class="btn btn-danger">+ Añadir Serie</a>
     </div>
-    <div class="row">
-        @foreach (PracticaDynamoDb.Models.Serie serie in Model.Series)
+
+    <form class="input-group mb-5" method="get" asp-action="Index">
+        <input type="text" name="titulo" class="form-control bg-dark text-white border-secondary" placeholder="Buscar por título..." aria-label="title">
+        <button class="btn btn-outline-light" type="submit">Buscar</button>
+        @if (Model.ResultsType == PracticaDynamoDb.Models.ResultsType.Search)
+        {
+            <a class="btn btn-outline-secondary ms-2" asp-action="Index">Limpiar</a>
+        }
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var serie in Model.Series)
         {
             <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">@serie.Titulo</h2>
-                        <h4 class="card-subtitle">@serie.DisponibleEn</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>@serie.Temporadas Temporadas</p>
+                <div class="card bg-dark text-white h-100 border border-secondary">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">@serie.Titulo</h5>
+                        <h6 class="card-subtitle text-muted mb-2">Disponible en: @serie.DisponibleEn</h6>
+                        <p class="mb-1">Género: @serie.Genero</p>
+                        <p class="mb-3">Temporadas: @serie.Temporadas</p>
+                        <div class="mt-auto d-flex justify-content-between">
+                            <a asp-action="Edit" asp-route-serieId="@serie.SerieId" class="btn btn-outline-warning btn-sm">Editar</a>
+                            <form asp-action="Delete" method="post" class="d-inline">
+                                <input type="hidden" name="serieId" value="@serie.SerieId" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>            
+            </div>
+        }
+
+        @if (Model == null || !Model.Series.Any())
+        {
+            <div class="col text-center">
+                <p class="text-muted">No se encontraron series registradas.</p>
+            </div>
         }
     </div>
 </div>

@@ -10,7 +10,7 @@ namespace PracticaDynamoDb.Models
     {
         Task<Serie> Single(string serieId);
         Task<SerieViewModel> All(string paginationToken = "");
-        Task<IEnumerable<Serie>> Find(SerieInputModel searchReq);
+        Task<IEnumerable<Serie>> Find(SearchRequest searchReq);
         Task Add(SerieInputModel entity);
         Task Remove(string serieId);
         Task Update(string serieId, SerieInputModel entity);
