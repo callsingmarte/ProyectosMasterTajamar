@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Subir archivo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<form asp-action="UploadFile" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Selecciona un archivo</label>
+        <input type="file" class="form-control" name="file" id="file" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Subir</button>
+</form>
