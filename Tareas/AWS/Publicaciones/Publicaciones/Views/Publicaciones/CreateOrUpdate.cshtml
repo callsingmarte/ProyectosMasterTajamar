@@ -1,0 +1,40 @@
+﻿@model PublicacionInputModel
+
+@{
+    string publicacionId = "";
+
+    if(ViewBag.PublicacionId != null)
+    {
+        publicacionId = ViewBag.PublicacionId.ToString();
+    }
+
+    string action = "";
+
+    if(Model != null && Model.InputType == Publicaciones.Models.InputType.Update)
+    {
+        action = "Edit";
+    }
+    else
+    {
+        action = "Create";
+    }
+    var submitBtnText = string.IsNullOrEmpty(publicacionId) ? "Crear" : "Guardar";
+}
+
+<form method="post" asp-action="@action" asp-route-publicacionId="@publicacionId">
+    <div class="form-group">
+        <label asp-for="Titulo"></label>
+        <input class="form-control" asp-for="Titulo"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Contenido"></label>
+        <textarea class="form-control" asp-for="Contenido"></textarea>
+    </div>
+
+    <button class="btn btn-primary" type="submit">@submitBtnText</button>
+</form>
+
+<a asp-action="Index" class="btn btn-outline-secondary">Volver al listado</a>
+
+
+

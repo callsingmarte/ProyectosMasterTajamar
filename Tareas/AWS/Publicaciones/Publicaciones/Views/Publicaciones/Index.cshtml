@@ -1,0 +1,55 @@
+﻿@using Publicaciones.ViewModels
+@model PublicacionViewModel
+
+@{
+    ViewData["Title"] = "Publicaciones";
+}
+
+<a asp-controller="Publicaciones" asp-action="Create" class="btn btn-primary mb-4">Crear publicacion</a>
+
+<div class="row">
+    <form class="form" method="get" asp-action="Index">
+        <div class="input-group mb-3">
+            <input type="text" asp-for="SearchRequest.Titulo" name="titulo" class="form-control" placeholder="Titulo" aria-label="titulo" aria-describedby="button-addon2" />
+            <input type="date" asp-for="SearchRequest.FechaCreacion" name="fechaCreacion" class="form-control" placeholder="fechaCreacion" aria-label="fechaCreacion" aria-describedby="button-addon2" />
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            @if (Model.ResultsType == ResultsType.Search)
+            {
+                <td class="py-md-3">
+                    <a class="btn btn-outline-dark" asp-action="Index" >Clear</a>
+                </td>
+            }
+        </div>
+        <div class="col">
+        </div>
+    </form>
+</div>
+<div class="row">
+    @foreach (Publicacion publicacion in Model.Publicaciones)
+    {
+        <div class="col">
+            <div class="card" style="width: 18rem">
+                <div class="card-header">
+                    <h4 class="card-title">@publicacion.Titulo</h4>
+                    <h6 class="card-subtitle">@publicacion.FechaCreacion.ToShortDateString()</h6>
+                </div>
+                <div class="card-body">
+                    <pre class="card-text">@publicacion.Contenido</pre>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col">
+                            <a asp-action="Edit" asp-route-publicacionId="@publicacion.PublicacionId" class="btn btn-warning">Editar</a>
+                        </div>
+                        <div class="col">
+                            <form asp-action="Delete" method="post">
+                                <input type="hidden" name="publicacionId" value="@publicacion.PublicacionId" />
+                                <button class="btn btn-danger" type="submit">Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    }
+</div>
