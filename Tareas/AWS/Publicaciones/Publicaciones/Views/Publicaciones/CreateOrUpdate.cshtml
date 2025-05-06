@@ -1,40 +1,36 @@
 ﻿@model PublicacionInputModel
 
 @{
-    string publicacionId = "";
-
-    if(ViewBag.PublicacionId != null)
-    {
-        publicacionId = ViewBag.PublicacionId.ToString();
-    }
-
-    string action = "";
-
-    if(Model != null && Model.InputType == Publicaciones.Models.InputType.Update)
-    {
-        action = "Edit";
-    }
-    else
-    {
-        action = "Create";
-    }
-    var submitBtnText = string.IsNullOrEmpty(publicacionId) ? "Crear" : "Guardar";
+    string publicacionId = ViewBag.PublicacionId?.ToString() ?? "";
+    string action = Model?.InputType == Publicaciones.Models.InputType.Update ? "Edit" : "Create";
+    string submitBtnText = string.IsNullOrEmpty(publicacionId) ? "Crear" : "Guardar";
+    string titleActionText = action == "Edit" ? "Editar" : "Crear";
+    ViewData["Title"] = titleActionText + " Publicación";
 }
 
-<form method="post" asp-action="@action" asp-route-publicacionId="@publicacionId">
-    <div class="form-group">
-        <label asp-for="Titulo"></label>
-        <input class="form-control" asp-for="Titulo"/>
-    </div>
-    <div class="form-group">
-        <label asp-for="Contenido"></label>
-        <textarea class="form-control" asp-for="Contenido"></textarea>
-    </div>
+<div class="container my-5">
+    <h2 class="text-primary fw-bold mb-4">@ViewData["Title"]</h2>
 
-    <button class="btn btn-primary" type="submit">@submitBtnText</button>
-</form>
+    <form method="post" asp-action="@action" asp-route-publicacionId="@publicacionId">
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label fw-semibold">Título</label>
+            <input class="form-control" asp-for="Titulo" placeholder="Escribe el título de tu publicación..." />
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+        </div>
 
-<a asp-action="Index" class="btn btn-outline-secondary">Volver al listado</a>
+        <div class="mb-4">
+            <label asp-for="Contenido" class="form-label fw-semibold">Contenido</label>
+            <textarea class="form-control" asp-for="Contenido" rows="8" placeholder="Escribe el contenido aquí..."></textarea>
+            <span asp-validation-for="Contenido" class="text-danger"></span>
+        </div>
 
-
-
+        <div class="d-flex gap-3">
+            <button class="btn btn-primary px-4" type="submit">
+                <i class="fa fa-save me-1"></i> @submitBtnText
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="fa fa-arrow-left me-1"></i> Volver al listado
+            </a>
+        </div>
+    </form>
+</div>

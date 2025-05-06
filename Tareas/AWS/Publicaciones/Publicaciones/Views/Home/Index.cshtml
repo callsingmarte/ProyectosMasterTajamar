@@ -1,8 +1,55 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center my-5">
+    <h1 class="display-4 fw-bold text-primary">Bienvenido a SecurePost Inc</h1>
+    <p class="lead">Publica de forma segura, privada y solo para ti.</p>
+</div>
+
+<div class="row text-center justify-content-center mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <i class="fa fa-lock fa-3x text-primary mb-3"></i>
+                <h5 class="card-title fw-bold">Privacidad Total</h5>
+                <p class="card-text">Cada publicación es accesible únicamente por su autor. Nadie más puede verla.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <i class="fa fa-user-shield fa-3x text-primary mb-3"></i>
+                <h5 class="card-title fw-bold">Seguridad Garantizada</h5>
+                <p class="card-text">Tus datos están protegidos con cifrado de nivel empresarial y autenticación segura.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <i class="fa fa-edit fa-3x text-primary mb-3"></i>
+                <h5 class="card-title fw-bold">Publicaciones Simples</h5>
+                <p class="card-text">Redacta, organiza y accede a tus notas de forma sencilla desde cualquier dispositivo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="Publicaciones" asp-action="Index" class="btn btn-primary btn-lg px-4">
+            Ir a Mis Publicaciones
+        </a>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary btn-lg px-4">
+            Crear una Cuenta
+        </a>
+        <span class="mx-2">o</span>
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary">Iniciar Sesión</a>
+    }
 </div>

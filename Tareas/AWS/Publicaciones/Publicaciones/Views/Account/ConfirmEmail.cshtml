@@ -1,27 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Confirm Email";
+    ViewData["Title"] = "Confirmar Correo";
 }
 
-<h2>Confirm Email</h2>
+<div class="container my-5" style="max-width: 500px;">
+    <h2 class="text-primary fw-bold mb-4">@ViewData["Title"]</h2>
 
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success">@TempData["Message"]</div>
-}
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            <i class="fa fa-check-circle me-1"></i> @TempData["Message"]
+        </div>
+    }
 
-<form asp-action="ConfirmEmail" method="post">
-    <div class="form-group">
-        <label>Email</label>
-        <input name="email" class="form-control" type="email" required />
-    </div>
-    <div class="form-group">
-        <label>Confirmation Code</label>
-        <input name="code" class="form-control" type="text" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Confirm</button>
-</form>
+    <form asp-action="ConfirmEmail" method="post" novalidate>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input name="email" id="email" type="email" class="form-control" placeholder="tucorreo@ejemplo.com" required />
+        </div>
 
-@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-{
-    <div class="text-danger">@error.ErrorMessage</div>
-}
+        <div class="mb-4">
+            <label for="code" class="form-label">Código de Confirmación</label>
+            <input name="code" id="code" type="text" class="form-control" placeholder="Ej: 123456" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fa fa-check me-1"></i> Confirmar
+        </button>
+    </form>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="mt-4">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div class="text-danger small">
+                    <i class="fa fa-exclamation-circle me-1"></i> @error.ErrorMessage
+                </div>
+            }
+        </div>
+    }
+</div>
