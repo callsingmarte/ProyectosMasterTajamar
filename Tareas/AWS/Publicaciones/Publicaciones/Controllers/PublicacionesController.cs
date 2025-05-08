@@ -24,7 +24,11 @@ namespace Publicaciones.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (searchRequest != null) 
+            if (searchRequest != null && (
+                !string.IsNullOrWhiteSpace(searchRequest.Titulo) ||
+                !string.IsNullOrWhiteSpace(searchRequest.Contenido) ||
+                searchRequest.FechaCreacion.HasValue)
+            ) 
             {
                 var publicaciones = await _repository!.Find(searchRequest, userId);
 
@@ -72,9 +76,9 @@ namespace Publicaciones.Controllers
 
         [HttpGet]
         [Route("Edit/{publicacionId}")]
-        public async Task<IActionResult> Edit(Guid publicacionId)
+        public async Task<IActionResult> Edit(string publicacionId)
         {
-            Publicacion publicacion = await _repository!.Single(publicacionId);
+            Publicacion publicacion = await _repository!.Single(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, publicacionId);
 
             ViewBag.PublicacionId = publicacionId;
 
@@ -89,7 +93,7 @@ namespace Publicaciones.Controllers
         [HttpPost]
         [Route("Edit/{publicacionId}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid publicacionId, PublicacionInputModel model)
+        public async Task<IActionResult> Edit(string publicacionId, PublicacionInputModel model)
         {
             try
             {
@@ -98,7 +102,7 @@ namespace Publicaciones.Controllers
                     return View("CreateOrUpdate", model);
                 }
 
-                await _repository.Update(publicacionId, model);
+                await _repository.Update(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, publicacionId, model);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -109,10 +113,10 @@ namespace Publicaciones.Controllers
         }
 
         [HttpPost]
-        [Route("Delete/{publicacionId}")]
-        public async Task<IActionResult> Delete(Guid publicacionId)
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(string publicacionId)
         {
-            await _repository.Remove(publicacionId);
+            await _repository.Remove(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, publicacionId);
             return RedirectToAction(nameof(Index));
         }
     }

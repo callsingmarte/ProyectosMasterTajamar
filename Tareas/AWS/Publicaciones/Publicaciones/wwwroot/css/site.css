@@ -18,5 +18,24 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.gradient-bg {
+    background: linear-gradient(to bottom, #0055FF 0%, #FFFFFF 100%);
+    min-height: 100vh;
+}
+
+/* Opcional para mejorar lectura de texto sobre degradado */
+main {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ícono del logo en color */
+.navbar-brand i {
+    color: #0055FF;
 }

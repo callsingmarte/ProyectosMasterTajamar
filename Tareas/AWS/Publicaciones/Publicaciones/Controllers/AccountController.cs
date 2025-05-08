@@ -16,7 +16,7 @@ namespace Publicaciones.Controllers
         public AccountController(ICognitoService cognitoService, IConfiguration configuration)
         {
             _cognitoService = cognitoService;
-            _clientId = configuration["CognitoClientId"];
+            _clientId = configuration["AWS:CognitoClientId"];
         }
 
         public IActionResult Index()
@@ -157,15 +157,14 @@ namespace Publicaciones.Controllers
         }
 
 
-        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            var redirectUri = "https://localhost:7260/Home/";
+            var redirectUri = "https://localhost:7062/Home/";
             var logoutUrl = $"https://us-east-1qvveonnii.auth.us-east-1.amazoncognito.com/logout?client_id={_clientId}&logout_uri={Uri.EscapeDataString(redirectUri)}";
 
-            return RedirectToAction(logoutUrl);
+            return Redirect(logoutUrl);
 
             /*
              * Cierre de sesion sin OpenId

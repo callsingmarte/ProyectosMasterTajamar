@@ -5,11 +5,11 @@ namespace Publicaciones.Interfaces
 {
     public interface IpublicacionesRepository
     {
-        Task<Publicacion> Single(Guid publicacionId);
+        Task<Publicacion> Single(string userId, string publicacionId);
         Task<PublicacionViewModel> UserPublicaciones(string userId);
         Task<IEnumerable<Publicacion>> Find(SearchRequest searchReq, string userId);
         Task Add(PublicacionInputModel entity, string userId);
-        Task Remove(Guid publicacionId);
-        Task Update(Guid publicacionId, PublicacionInputModel entity);
+        Task Remove(string userId, string publicacionId);
+        Task Update(string userId, string publicacionId, PublicacionInputModel entity);
     }
 }

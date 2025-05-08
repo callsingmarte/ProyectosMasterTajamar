@@ -26,7 +26,7 @@ namespace Publicaciones.Services
                 PublicacionId = Guid.NewGuid(),
                 Titulo = entity.Titulo,
                 Contenido = entity.Contenido,
-                FechaCreacion = entity.FechaCreacion,
+                FechaCreacion = DateTime.Now,
             };
 
             await _context.SaveAsync(publicacion);           
@@ -36,34 +36,36 @@ namespace Publicaciones.Services
         {
             var scanConditions = new List<ScanCondition>();
 
+            scanConditions.Add(new ScanCondition("UserId", ScanOperator.Equal, userId));
+
             if (!string.IsNullOrEmpty(searchReq.Titulo)) 
             {
                 scanConditions.Add(new ScanCondition("Titulo", ScanOperator.Equal, searchReq.Titulo));
             }
 
-            if (!string.IsNullOrEmpty(searchReq.FechaCreacion.ToString())) 
+            if (searchReq.FechaCreacion.HasValue) 
             {
-                scanConditions.Add(new ScanCondition("FechaCreacion", ScanOperator.Equal, searchReq.FechaCreacion));
+                scanConditions.Add(new ScanCondition("FechaCreacion", ScanOperator.Between, searchReq.FechaCreacion.Value, DateTime.Now));
             }
-
-            scanConditions.Add(new ScanCondition("UserId", ScanOperator.Equal, userId));
 
             return await _context.ScanAsync<Publicacion>(scanConditions).GetRemainingAsync();
         }
 
-        public async Task Remove(Guid publicacionId)
+        public async Task Remove(string userId, string publicacionId)
         {
-            await _context.DeleteAsync<Publicacion>(publicacionId);
+            Guid publicacionIdGuid = new Guid(publicacionId);
+            await _context.DeleteAsync<Publicacion>(userId, publicacionIdGuid);
         }
 
-        public async Task<Publicacion> Single(Guid publicacionId)
+        public async Task<Publicacion> Single(string userId, string publicacionId)
         {
-            return await _context.LoadAsync<Publicacion>(publicacionId);
+            Guid publicacionIdGuid = new Guid(publicacionId);
+            return await _context.LoadAsync<Publicacion>(userId, publicacionIdGuid);
         }
 
-        public async Task Update(Guid publicacionId, PublicacionInputModel entity)
+        public async Task Update(string userId, string publicacionId, PublicacionInputModel entity)
         {
-            var publicacion = await Single(publicacionId);
+            var publicacion = await Single(userId, publicacionId);
 
             publicacion.Titulo = entity.Titulo;
             publicacion.Contenido = entity.Contenido;

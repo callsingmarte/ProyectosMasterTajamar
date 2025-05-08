@@ -2,54 +2,73 @@
 @model PublicacionViewModel
 
 @{
-    ViewData["Title"] = "Publicaciones";
+    ViewData["Title"] = "Mis Publicaciones";
 }
 
-<a asp-controller="Publicaciones" asp-action="Create" class="btn btn-primary mb-4">Crear publicacion</a>
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Mis Publicaciones</h2>
+        <a asp-controller="Publicaciones" asp-action="Create" class="btn btn-primary">
+            <i class="fa fa-plus me-1"></i> Nueva Publicación
+        </a>
+    </div>
 
-<div class="row">
-    <form class="form" method="get" asp-action="Index">
-        <div class="input-group mb-3">
-            <input type="text" asp-for="SearchRequest.Titulo" name="titulo" class="form-control" placeholder="Titulo" aria-label="titulo" aria-describedby="button-addon2" />
-            <input type="date" asp-for="SearchRequest.FechaCreacion" name="fechaCreacion" class="form-control" placeholder="fechaCreacion" aria-label="fechaCreacion" aria-describedby="button-addon2" />
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+    <form class="row g-3 mb-4" method="get" asp-action="Index">
+        <div class="col-md-5">
+            <input type="text" asp-for="SearchRequest.Titulo" name="titulo" class="form-control" placeholder="Buscar por título..." />
+        </div>
+        <div class="col-md-4">
+            <input type="date" asp-for="SearchRequest.FechaCreacion" name="fechaCreacion" class="form-control" />
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-outline-primary w-100">
+                <i class="fa fa-search me-1"></i> Buscar
+            </button>
             @if (Model.ResultsType == ResultsType.Search)
             {
-                <td class="py-md-3">
-                    <a class="btn btn-outline-dark" asp-action="Index" >Clear</a>
-                </td>
+                <a asp-action="Index" class="btn btn-outline-dark w-100">
+                    Limpiar
+                </a>
             }
         </div>
-        <div class="col">
-        </div>
     </form>
-</div>
-<div class="row">
-    @foreach (Publicacion publicacion in Model.Publicaciones)
+
+    @if (!Model.Publicaciones.Any())
     {
-        <div class="col">
-            <div class="card" style="width: 18rem">
-                <div class="card-header">
-                    <h4 class="card-title">@publicacion.Titulo</h4>
-                    <h6 class="card-subtitle">@publicacion.FechaCreacion.ToShortDateString()</h6>
-                </div>
-                <div class="card-body">
-                    <pre class="card-text">@publicacion.Contenido</pre>
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col">
-                            <a asp-action="Edit" asp-route-publicacionId="@publicacion.PublicacionId" class="btn btn-warning">Editar</a>
+        <div class="alert alert-info text-center">
+            No se encontraron publicaciones.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var publicacion in Model.Publicaciones)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">@publicacion.Titulo</h5>
+                            <small>@publicacion.FechaCreacion.ToShortDateString()</small>
                         </div>
-                        <div class="col">
-                            <form asp-action="Delete" method="post">
-                                <input type="hidden" name="publicacionId" value="@publicacion.PublicacionId" />
-                                <button class="btn btn-danger" type="submit">Eliminar</button>
-                            </form>
+                        <div class="card-body">
+                            <p class="card-text" style="white-space: pre-wrap;">@publicacion.Contenido</p>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Edit" asp-route-publicacionId="@publicacion.PublicacionId" class="btn btn-outline-warning">
+                                    <i class="fa fa-edit me-1"></i> Editar
+                                </a>
+                                <form asp-action="Delete" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta publicación?');">
+                                    <input type="hidden" name="publicacionId" value="@publicacion.PublicacionId" />
+                                    <button class="btn btn-outline-danger" type="submit">
+                                        <i class="fa fa-trash me-1"></i> Eliminar
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>        
+            }
+        </div>
     }
 </div>
