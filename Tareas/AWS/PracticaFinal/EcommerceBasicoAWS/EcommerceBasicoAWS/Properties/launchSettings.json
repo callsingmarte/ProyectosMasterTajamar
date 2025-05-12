@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DefaultConnection": "Data Source=DESKTOP-IBJ8VG1\\\\SQLEXPRESS;Initial Catalog=master;User ID=sa;Password=DEV2024;Encrypt=False"
+        "DefaultConnection": "Data Source=T06W02\\MSQLSERVER;Initial Catalog=EcommerceBasicoAws;Integrated Security=True;Encrypt=False"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7005;http://localhost:5263"

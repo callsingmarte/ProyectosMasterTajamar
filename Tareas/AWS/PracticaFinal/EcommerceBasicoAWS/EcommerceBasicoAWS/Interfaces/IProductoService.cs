@@ -1,13 +1,19 @@
-﻿using EcommerceBasicoAWS.Models;
+﻿using EcommerceBasicoAWS.Enums;
+using EcommerceBasicoAWS.Models;
+using EcommerceBasicoAWS.ViewModels;
 
 namespace EcommerceBasicoAWS.Interfaces
 {
     public interface IProductoService
     {
-        public List<Producto> GetProductos();
-        public Producto GetProducto(int id);
-        public bool AddProducto(Producto producto);
-        public bool UpdateProducto(Producto producto);
-        public bool DeleteProducto(int id);
+        public Task<ProductosViewModel> GetProductos(
+            SearchTypes searchType = SearchTypes.List,
+            ProductosFilters? filters = null,
+            int page = 1,
+            int resultsPerPage = 5);
+        public Task<Producto?> GetProducto(Guid id);
+        public Task<bool> AddProducto(Producto producto);
+        public Task<bool> UpdateProducto(Guid id, Producto producto);
+        public Task<bool> DeleteProducto(Guid id);
     }
 }
