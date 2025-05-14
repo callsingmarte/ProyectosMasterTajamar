@@ -8,18 +8,23 @@ namespace EcommerceBasicoAWS.Services
 {
     public class ProductoService : IProductoService
     {
-        private readonly ProductosRepository _productoRepository;
+        private readonly IProductosRepository _productoRepository;
 
-        public ProductoService(ProductosRepository productoRepository)
+        public ProductoService(IProductosRepository productoRepository)
         {
             _productoRepository = productoRepository;
         }
 
-        public async Task<bool> AddProducto(Producto producto)
+        public async Task<bool> AddProducto(Producto producto, List<IFormFile> files)
         {
-            bool response = await _productoRepository.AddProducto(producto);
+            Producto? productoCreado = await _productoRepository.AddProducto(producto);
 
-            return response;
+            bool areFilesUpload = false;
+            if (productoCreado != null) {
+                 areFilesUpload = await _productoRepository.AddMultimediasProducto(productoCreado.IdProducto, files);
+            }
+
+            return areFilesUpload;
         }
 
         public async Task<bool> DeleteProducto(Guid id)
@@ -47,7 +52,7 @@ namespace EcommerceBasicoAWS.Services
             return productosVm;
         }
 
-        public async Task<bool> UpdateProducto(Guid id, Producto producto)
+        public async Task<bool> UpdateProducto(Guid id, Producto producto, List<MultimediaProducto> multimediasProducto)
         {
 
             if (producto.IdProducto != id) {

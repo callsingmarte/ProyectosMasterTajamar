@@ -1,12 +1,15 @@
+using Amazon.S3;
 using EcommerceBasicoAWS.Data;
+using EcommerceBasicoAWS.Interfaces;
+using EcommerceBasicoAWS.Repositories;
+using EcommerceBasicoAWS.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-string dbConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-var connectionString =  string.IsNullOrEmpty(dbConnection) ? Environment.GetEnvironmentVariable("DefaultConnection") : dbConnection;
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString)) throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -14,7 +17,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddSingleton<IAwsS3Service, AwsS3Service>();
+builder.Services.AddScoped<IProductosRepository, ProductosRepository>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

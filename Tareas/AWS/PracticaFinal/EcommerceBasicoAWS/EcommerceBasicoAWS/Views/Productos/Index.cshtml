@@ -1,0 +1,59 @@
+﻿@using EcommerceBasicoAWS.ViewModels
+@model ProductosViewModel
+
+<h1>Listado de Productos</h1>
+
+<a asp-action="AddProducto" class="btn btn-primary">Crear Producto</a>
+@if (Model.Productos!.Count() > 0)
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+        @foreach (Producto producto in Model.Productos!)
+        {
+            MultimediaProducto multimediaProducto = Model.ProductosMainImages.SingleOrDefault(i => i.IdProducto == producto.IdProducto);
+
+            <div class="col">
+                <div class="card h-100">
+                    @if (multimediaProducto != null)
+                    {
+                        <div class="card-img-top">
+                            <img src="@multimediaProducto.Url" alt="@multimediaProducto.NombreArchivo" class="img-fluid object-fit-cover" style="height: 200px;">
+                        </div>
+                    }
+                    <div class="card-header">
+                        <h5 class="card-title">@producto.Nombre</h5>
+                        <p class="text-end">@producto.Precio €</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Stock: @producto.Stock</p>
+                        <p class="card-text"><small class="text-muted">Fecha Creacion: @producto.FechaCreacion.ToShortDateString()</small></p>
+                        <p class="card-text"><small class="text-muted">Fecha Actualizacion: @producto.FechaActualizacion.ToShortDateString()</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div>
+        <p>Total resultados = @Model.TotalResults</p>
+        <p>Pagina actual = @Model.CurrentPage</p>
+        <p>Resultados por pagina = @Model.ResultsPerPage</p>
+    </div>
+    @if(Model.TotalResults > 0){
+        int totalPages = (int)Math.Ceiling((double)Model.TotalResults / Model.ResultsPerPage);
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(Model.CurrentPage == 0 ? "disabled" : "" )">
+                    <a asp-action="Index" asp-route-CurrentPage="@(Model.CurrentPage - 1)" class="page-link">Previous</a>
+                </li>
+                @for (int pageNumber = 0; pageNumber < totalPages; pageNumber++)
+                {
+                    <li class="page-item @(Model.CurrentPage == pageNumber + 1 ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-CurrentPage="@(pageNumber + 1)" aria-current="page">@(pageNumber + 1)</a>
+                    </li>
+                }
+                <li class="page-item @(Model.CurrentPage == totalPages ? "disabled" : "" )">
+                    <a class="page-link" asp-action="Index" asp-route-CurrentPage="@(Model.CurrentPage + 1)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }
+}

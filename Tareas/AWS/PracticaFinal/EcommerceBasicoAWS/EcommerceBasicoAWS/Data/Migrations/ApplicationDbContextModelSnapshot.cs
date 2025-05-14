@@ -61,52 +61,52 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            IdCategoria = new Guid("96264c54-f2e2-4ba2-8c36-4e9e5da36bd2"),
+                            IdCategoria = new Guid("bece266a-6d03-45c9-ba1b-a7c74d042b95"),
                             Nombre = "Ropa"
                         },
                         new
                         {
-                            IdCategoria = new Guid("0bd88478-b979-4d0f-81b7-508f1891a0c2"),
+                            IdCategoria = new Guid("2a695474-3627-46a4-bf7d-976f2c2bb4c8"),
                             Nombre = "Calzado"
                         },
                         new
                         {
-                            IdCategoria = new Guid("5e1ac5a7-a70e-4f9c-9536-e0cd06cb3636"),
+                            IdCategoria = new Guid("184aa515-ed4a-4d3b-b198-b77fab6db1d7"),
                             Nombre = "Accesorios"
                         },
                         new
                         {
-                            IdCategoria = new Guid("465e17d6-5ad5-4cb1-8000-cd6efa7f9c2e"),
+                            IdCategoria = new Guid("54c7b8bd-d646-4be4-bdcf-c5cf11f09083"),
                             Nombre = "Hogar"
                         },
                         new
                         {
-                            IdCategoria = new Guid("40903fb8-6674-4cfc-b49f-004ad814e15d"),
+                            IdCategoria = new Guid("10e95e20-903b-4cc7-b7ae-9298a86ab4e2"),
                             Nombre = "Libros"
                         },
                         new
                         {
-                            IdCategoria = new Guid("8a581e93-829f-43a0-a7aa-5d9614c3f8f3"),
+                            IdCategoria = new Guid("1bea9180-34ce-46c7-8f10-b48afe6b7609"),
                             Nombre = "Tecnología"
                         },
                         new
                         {
-                            IdCategoria = new Guid("f4fd199e-07e2-4b06-9857-5954cf71c500"),
+                            IdCategoria = new Guid("ae8a02ec-0ac1-452d-b248-86d332dedf45"),
                             Nombre = "Electrónica"
                         },
                         new
                         {
-                            IdCategoria = new Guid("72062e43-8b0d-46f6-948f-035bf253dd4b"),
+                            IdCategoria = new Guid("2551e083-97db-4592-a4bc-3b598150382b"),
                             Nombre = "Deportes"
                         },
                         new
                         {
-                            IdCategoria = new Guid("e3c641a7-1cee-41ed-9293-42fb5c13e707"),
+                            IdCategoria = new Guid("9fa9da00-6885-45c6-96d4-33804713041f"),
                             Nombre = "Belleza"
                         },
                         new
                         {
-                            IdCategoria = new Guid("6975d099-65c4-49cf-bea1-b013b19939f3"),
+                            IdCategoria = new Guid("36a0ab87-61c6-4eb8-b752-5c218fba1f3d"),
                             Nombre = "Joyería"
                         });
                 });
@@ -145,37 +145,37 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            IdDetalle = new Guid("91a4a992-75cb-49c0-bf6f-abd89e137298"),
+                            IdDetalle = new Guid("7591b16b-4484-4f88-99db-1b97a23ee275"),
                             Cantidad = 2,
-                            IdPedido = new Guid("93a087d2-59a4-45f4-9bf1-d5db36bbaf52"),
-                            IdProducto = new Guid("592d568d-34f8-4e95-90eb-f4b911b0cbaf"),
+                            IdPedido = new Guid("240558a7-66ab-49f0-ab30-fc1c69d47384"),
+                            IdProducto = new Guid("47c4b2ea-b3b8-4144-a9e5-cb1487d4ef9a"),
                             PrecioUnitario = 19.99m,
                             Subtotal = 39.98m
                         },
                         new
                         {
-                            IdDetalle = new Guid("9ab541d6-9d44-483d-9fd0-9c56fa72bb21"),
+                            IdDetalle = new Guid("145a96f0-7c56-4179-9bac-a68b8b3acd8a"),
                             Cantidad = 1,
-                            IdPedido = new Guid("93a087d2-59a4-45f4-9bf1-d5db36bbaf52"),
-                            IdProducto = new Guid("98c8c147-5e36-4909-bbfe-830e44cd06e7"),
+                            IdPedido = new Guid("240558a7-66ab-49f0-ab30-fc1c69d47384"),
+                            IdProducto = new Guid("882f3766-47d8-4970-9225-75033be52d8e"),
                             PrecioUnitario = 12.50m,
                             Subtotal = 12.50m
                         },
                         new
                         {
-                            IdDetalle = new Guid("3be9c885-4d5d-43cf-9079-28f5206771ae"),
+                            IdDetalle = new Guid("c424cadc-fb26-4eff-9e48-49d485f18500"),
                             Cantidad = 1,
-                            IdPedido = new Guid("245daa81-c409-4438-b7c0-7461116db2ed"),
-                            IdProducto = new Guid("86f45a21-2cd3-4bc2-ae90-a66ea2b82a32"),
+                            IdPedido = new Guid("974d6a14-4e82-407c-a3c2-bc0ed663dfcc"),
+                            IdProducto = new Guid("0fd457ad-407e-4cd0-9ea3-80b3b014eb4f"),
                             PrecioUnitario = 49.99m,
                             Subtotal = 49.99m
                         },
                         new
                         {
-                            IdDetalle = new Guid("abb9c7aa-165d-490c-aeae-7d5bcb658797"),
+                            IdDetalle = new Guid("49816620-f9e8-458e-8f8d-0c083882bce8"),
                             Cantidad = 1,
-                            IdPedido = new Guid("245daa81-c409-4438-b7c0-7461116db2ed"),
-                            IdProducto = new Guid("cad3270c-d626-402d-ab23-5ade37bbb438"),
+                            IdPedido = new Guid("974d6a14-4e82-407c-a3c2-bc0ed663dfcc"),
+                            IdProducto = new Guid("1cc7ad5f-1580-48d8-b88e-9f267e563b59"),
                             PrecioUnitario = 69.99m,
                             Subtotal = 69.99m
                         });
@@ -213,6 +213,30 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("Direcciones");
+
+                    b.HasData(
+                        new
+                        {
+                            IdDireccion = new Guid("a4811600-ad1b-4fe9-b0c4-7d3fab3a8ba9"),
+                            Ciudad = "Madrid",
+                            CodigoPostal = 28080,
+                            Domicilio = "Avenida Siempreviva 742",
+                            IdUsuario = "c2001ba6-7581-4a6c-94d3-80b348bca906",
+                            Pais = "España",
+                            Provincia = "Madrid",
+                            principal = true
+                        },
+                        new
+                        {
+                            IdDireccion = new Guid("d7137b33-ff9b-4c8f-a877-c5669fe865c8"),
+                            Ciudad = "Barcelona",
+                            CodigoPostal = 8001,
+                            Domicilio = "Calle de la Piruleta 15",
+                            IdUsuario = "c2001ba6-7581-4a6c-94d3-80b348bca906",
+                            Pais = "España",
+                            Provincia = "Barcelona",
+                            principal = false
+                        });
                 });
 
             modelBuilder.Entity("EcommerceBasicoAWS.Models.ItemCarrito", b =>
@@ -270,7 +294,7 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.Property<string>("NombreArchivo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Orden")
+                    b.Property<int>("Orden")
                         .HasColumnType("int");
 
                     b.Property<string>("Tipo")
@@ -322,21 +346,21 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            IdPedido = new Guid("93a087d2-59a4-45f4-9bf1-d5db36bbaf52"),
+                            IdPedido = new Guid("240558a7-66ab-49f0-ab30-fc1c69d47384"),
                             Estado = "Pendiente",
-                            FechaCreacion = new DateTime(2025, 5, 11, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(5294),
-                            IdDireccion = new Guid("2512f267-60f1-4605-8c3a-298f1365b06e"),
-                            IdUsuario = "65a989e1-716b-4a5a-8092-228aba53d27b",
+                            FechaCreacion = new DateTime(2025, 5, 13, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(9894),
+                            IdDireccion = new Guid("a4811600-ad1b-4fe9-b0c4-7d3fab3a8ba9"),
+                            IdUsuario = "c2001ba6-7581-4a6c-94d3-80b348bca906",
                             Numero = 1,
                             Total = 45.99m
                         },
                         new
                         {
-                            IdPedido = new Guid("245daa81-c409-4438-b7c0-7461116db2ed"),
+                            IdPedido = new Guid("974d6a14-4e82-407c-a3c2-bc0ed663dfcc"),
                             Estado = "Enviado",
-                            FechaCreacion = new DateTime(2025, 5, 7, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(5320),
-                            IdDireccion = new Guid("2512f267-60f1-4605-8c3a-298f1365b06e"),
-                            IdUsuario = "65a989e1-716b-4a5a-8092-228aba53d27b",
+                            FechaCreacion = new DateTime(2025, 5, 9, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(9917),
+                            IdDireccion = new Guid("a4811600-ad1b-4fe9-b0c4-7d3fab3a8ba9"),
+                            IdUsuario = "c2001ba6-7581-4a6c-94d3-80b348bca906",
                             Numero = 2,
                             Total = 89.50m
                         });
@@ -374,100 +398,100 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            IdProducto = new Guid("592d568d-34f8-4e95-90eb-f4b911b0cbaf"),
+                            IdProducto = new Guid("47c4b2ea-b3b8-4144-a9e5-cb1487d4ef9a"),
                             Descripcion = "Camiseta de manga corta, 100% algodón suave.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2225),
-                            FechaCreacion = new DateTime(2025, 4, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2169),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7590),
+                            FechaCreacion = new DateTime(2025, 4, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7528),
                             Nombre = "Camiseta Básica Algodón",
                             Precio = 19.99m,
                             Stock = 100
                         },
                         new
                         {
-                            IdProducto = new Guid("86f45a21-2cd3-4bc2-ae90-a66ea2b82a32"),
+                            IdProducto = new Guid("0fd457ad-407e-4cd0-9ea3-80b3b014eb4f"),
                             Descripcion = "Pantalón vaquero clásico de corte recto.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2233),
-                            FechaCreacion = new DateTime(2025, 3, 13, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2231),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7599),
+                            FechaCreacion = new DateTime(2025, 3, 15, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7597),
                             Nombre = "Pantalón Vaquero Recto",
                             Precio = 49.99m,
                             Stock = 50
                         },
                         new
                         {
-                            IdProducto = new Guid("0d0d1ec4-28f9-4602-9192-73857bacce94"),
+                            IdProducto = new Guid("3cc06c7c-4b28-48b5-aa7a-3bf78b8b9dea"),
                             Descripcion = "Zapatillas cómodas y con estilo para el día a día.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2278),
-                            FechaCreacion = new DateTime(2025, 3, 28, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2237),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7662),
+                            FechaCreacion = new DateTime(2025, 3, 30, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7603),
                             Nombre = "Zapatillas Deportivas Urbanas",
                             Precio = 79.99m,
                             Stock = 75
                         },
                         new
                         {
-                            IdProducto = new Guid("c948f261-7971-4a67-8016-048a39c93380"),
+                            IdProducto = new Guid("88c8aaf4-cd86-4781-92e0-af69dc028ea2"),
                             Descripcion = "Bolso de cuero genuino con múltiples compartimentos.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2312),
-                            FechaCreacion = new DateTime(2025, 2, 11, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2310),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7687),
+                            FechaCreacion = new DateTime(2025, 2, 13, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7685),
                             Nombre = "Bolso de Cuero Grande",
                             Precio = 129.99m,
                             Stock = 20
                         },
                         new
                         {
-                            IdProducto = new Guid("74312f93-a549-4781-9d51-f9af37904cd8"),
+                            IdProducto = new Guid("6643ce06-d7bc-46f2-bb73-88e70d1c98dd"),
                             Descripcion = "Gafas de sol con lentes polarizadas para una visión clara.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2317),
-                            FechaCreacion = new DateTime(2025, 4, 22, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2315),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7693),
+                            FechaCreacion = new DateTime(2025, 4, 24, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7691),
                             Nombre = "Gafas de Sol Polarizadas",
                             Precio = 59.99m,
                             Stock = 60
                         },
                         new
                         {
-                            IdProducto = new Guid("98c8c147-5e36-4909-bbfe-830e44cd06e7"),
+                            IdProducto = new Guid("882f3766-47d8-4970-9225-75033be52d8e"),
                             Descripcion = "Una emocionante novela de fantasía y aventuras.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2360),
-                            FechaCreacion = new DateTime(2025, 4, 27, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2358),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7719),
+                            FechaCreacion = new DateTime(2025, 4, 29, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7714),
                             Nombre = "Libro 'Aventuras Épicas'",
                             Precio = 12.50m,
                             Stock = 150
                         },
                         new
                         {
-                            IdProducto = new Guid("8cb0babf-d0ee-4841-a669-03530bb11a99"),
+                            IdProducto = new Guid("f37fc157-c3a7-485a-b9c5-80622300627e"),
                             Descripcion = "Taza de cerámica de alta calidad con diseño único.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2370),
-                            FechaCreacion = new DateTime(2025, 5, 5, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2368),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7732),
+                            FechaCreacion = new DateTime(2025, 5, 7, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7730),
                             Nombre = "Taza de Cerámica Decorada",
                             Precio = 8.99m,
                             Stock = 200
                         },
                         new
                         {
-                            IdProducto = new Guid("60cd904c-9858-45e7-9ce8-b1a6838628dd"),
+                            IdProducto = new Guid("89e32137-8e16-4ecd-9d59-fb92e6efa3e9"),
                             Descripcion = "Funda resistente para proteger tu teléfono de golpes y arañazos.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2398),
-                            FechaCreacion = new DateTime(2025, 4, 7, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2374),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7758),
+                            FechaCreacion = new DateTime(2025, 4, 9, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7737),
                             Nombre = "Funda Protectora para Smartphone",
                             Precio = 24.99m,
                             Stock = 120
                         },
                         new
                         {
-                            IdProducto = new Guid("1311034f-68d5-400f-bf2b-f0821531f556"),
+                            IdProducto = new Guid("466c5dcf-1cfc-4ee8-ab47-cd3ecefe81c0"),
                             Descripcion = "Reloj elegante con correa de cuero y movimiento de cuarzo.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2407),
-                            FechaCreacion = new DateTime(2025, 3, 23, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2405),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7763),
+                            FechaCreacion = new DateTime(2025, 3, 25, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7761),
                             Nombre = "Reloj de Pulsera Clásico",
                             Precio = 99.99m,
                             Stock = 30
                         },
                         new
                         {
-                            IdProducto = new Guid("cad3270c-d626-402d-ab23-5ade37bbb438"),
+                            IdProducto = new Guid("1cc7ad5f-1580-48d8-b88e-9f267e563b59"),
                             Descripcion = "Auriculares con conexión Bluetooth y sonido de alta fidelidad.",
-                            FechaActualizacion = new DateTime(2025, 5, 12, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2414),
-                            FechaCreacion = new DateTime(2025, 4, 17, 3, 32, 35, 271, DateTimeKind.Local).AddTicks(2412),
+                            FechaActualizacion = new DateTime(2025, 5, 14, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7770),
+                            FechaCreacion = new DateTime(2025, 4, 19, 4, 43, 8, 282, DateTimeKind.Local).AddTicks(7768),
                             Nombre = "Auriculares Inalámbricos Bluetooth",
                             Precio = 69.99m,
                             Stock = 80
@@ -497,93 +521,93 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            IdProductoCategoria = new Guid("3ebf3fa3-c209-4b14-b8d9-2f199a8a3355"),
-                            IdCategoria = new Guid("96264c54-f2e2-4ba2-8c36-4e9e5da36bd2"),
-                            IdProducto = new Guid("592d568d-34f8-4e95-90eb-f4b911b0cbaf")
+                            IdProductoCategoria = new Guid("c2602fdf-1c21-45ca-9736-cf81dc872f3d"),
+                            IdCategoria = new Guid("bece266a-6d03-45c9-ba1b-a7c74d042b95"),
+                            IdProducto = new Guid("47c4b2ea-b3b8-4144-a9e5-cb1487d4ef9a")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("aad50a98-acf1-4e41-a38e-8aec76c8c8d6"),
-                            IdCategoria = new Guid("96264c54-f2e2-4ba2-8c36-4e9e5da36bd2"),
-                            IdProducto = new Guid("86f45a21-2cd3-4bc2-ae90-a66ea2b82a32")
+                            IdProductoCategoria = new Guid("dd84b4d7-a157-4946-960a-bca0a0cfee4a"),
+                            IdCategoria = new Guid("bece266a-6d03-45c9-ba1b-a7c74d042b95"),
+                            IdProducto = new Guid("0fd457ad-407e-4cd0-9ea3-80b3b014eb4f")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("1846649b-2a50-4d82-85dd-04b1e21bea90"),
-                            IdCategoria = new Guid("0bd88478-b979-4d0f-81b7-508f1891a0c2"),
-                            IdProducto = new Guid("0d0d1ec4-28f9-4602-9192-73857bacce94")
+                            IdProductoCategoria = new Guid("a9f72674-f07d-4a18-9a47-61ec0dbe2a5e"),
+                            IdCategoria = new Guid("2a695474-3627-46a4-bf7d-976f2c2bb4c8"),
+                            IdProducto = new Guid("3cc06c7c-4b28-48b5-aa7a-3bf78b8b9dea")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("e6ee808b-6b52-4afe-943f-55be3cdaf7ca"),
-                            IdCategoria = new Guid("72062e43-8b0d-46f6-948f-035bf253dd4b"),
-                            IdProducto = new Guid("0d0d1ec4-28f9-4602-9192-73857bacce94")
+                            IdProductoCategoria = new Guid("0ba21c19-63f4-43c2-b3e6-e717ebdd4ce0"),
+                            IdCategoria = new Guid("2551e083-97db-4592-a4bc-3b598150382b"),
+                            IdProducto = new Guid("3cc06c7c-4b28-48b5-aa7a-3bf78b8b9dea")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("ae17281d-29fd-4b69-8c2a-c50ed88182f6"),
-                            IdCategoria = new Guid("5e1ac5a7-a70e-4f9c-9536-e0cd06cb3636"),
-                            IdProducto = new Guid("c948f261-7971-4a67-8016-048a39c93380")
+                            IdProductoCategoria = new Guid("7508aee8-2ad3-48c4-9236-5f47ab130653"),
+                            IdCategoria = new Guid("184aa515-ed4a-4d3b-b198-b77fab6db1d7"),
+                            IdProducto = new Guid("88c8aaf4-cd86-4781-92e0-af69dc028ea2")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("4f88fb33-f1fa-4ca4-8bc1-a965b68083f7"),
-                            IdCategoria = new Guid("e3c641a7-1cee-41ed-9293-42fb5c13e707"),
-                            IdProducto = new Guid("c948f261-7971-4a67-8016-048a39c93380")
+                            IdProductoCategoria = new Guid("9fad02c5-a763-4b6f-8b29-f56ccdee07b5"),
+                            IdCategoria = new Guid("9fa9da00-6885-45c6-96d4-33804713041f"),
+                            IdProducto = new Guid("88c8aaf4-cd86-4781-92e0-af69dc028ea2")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("4215d0eb-7390-4585-9dd8-976b79e5004f"),
-                            IdCategoria = new Guid("5e1ac5a7-a70e-4f9c-9536-e0cd06cb3636"),
-                            IdProducto = new Guid("74312f93-a549-4781-9d51-f9af37904cd8")
+                            IdProductoCategoria = new Guid("9da9811b-74c0-4e30-ab96-bd189b21eeb8"),
+                            IdCategoria = new Guid("184aa515-ed4a-4d3b-b198-b77fab6db1d7"),
+                            IdProducto = new Guid("6643ce06-d7bc-46f2-bb73-88e70d1c98dd")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("6a65eca3-c241-4dd9-8389-34c17bd0b6b0"),
-                            IdCategoria = new Guid("40903fb8-6674-4cfc-b49f-004ad814e15d"),
-                            IdProducto = new Guid("98c8c147-5e36-4909-bbfe-830e44cd06e7")
+                            IdProductoCategoria = new Guid("666f3c52-f4d6-4468-91bb-0b5c44137e26"),
+                            IdCategoria = new Guid("10e95e20-903b-4cc7-b7ae-9298a86ab4e2"),
+                            IdProducto = new Guid("882f3766-47d8-4970-9225-75033be52d8e")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("645e5546-f62d-4550-ad7b-484149b0c2f4"),
-                            IdCategoria = new Guid("465e17d6-5ad5-4cb1-8000-cd6efa7f9c2e"),
-                            IdProducto = new Guid("8cb0babf-d0ee-4841-a669-03530bb11a99")
+                            IdProductoCategoria = new Guid("5e76f0eb-82d7-4ee0-a331-1d01bd72b0b5"),
+                            IdCategoria = new Guid("54c7b8bd-d646-4be4-bdcf-c5cf11f09083"),
+                            IdProducto = new Guid("f37fc157-c3a7-485a-b9c5-80622300627e")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("01c21a67-581d-492a-a287-6bd74dc80bb2"),
-                            IdCategoria = new Guid("8a581e93-829f-43a0-a7aa-5d9614c3f8f3"),
-                            IdProducto = new Guid("60cd904c-9858-45e7-9ce8-b1a6838628dd")
+                            IdProductoCategoria = new Guid("4dbf7983-0e9a-4ac7-8624-fad724688299"),
+                            IdCategoria = new Guid("1bea9180-34ce-46c7-8f10-b48afe6b7609"),
+                            IdProducto = new Guid("89e32137-8e16-4ecd-9d59-fb92e6efa3e9")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("b2ead4e0-e6c1-44de-888b-dcf84c264ff7"),
-                            IdCategoria = new Guid("f4fd199e-07e2-4b06-9857-5954cf71c500"),
-                            IdProducto = new Guid("60cd904c-9858-45e7-9ce8-b1a6838628dd")
+                            IdProductoCategoria = new Guid("6668d564-1b12-4c1b-94f4-1425bfdb4c72"),
+                            IdCategoria = new Guid("ae8a02ec-0ac1-452d-b248-86d332dedf45"),
+                            IdProducto = new Guid("89e32137-8e16-4ecd-9d59-fb92e6efa3e9")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("b6f4c035-a3b1-42b2-a9ca-494a1d46d9a5"),
-                            IdCategoria = new Guid("5e1ac5a7-a70e-4f9c-9536-e0cd06cb3636"),
-                            IdProducto = new Guid("1311034f-68d5-400f-bf2b-f0821531f556")
+                            IdProductoCategoria = new Guid("18ebe6ce-373e-447e-af68-2f131446d7ae"),
+                            IdCategoria = new Guid("184aa515-ed4a-4d3b-b198-b77fab6db1d7"),
+                            IdProducto = new Guid("466c5dcf-1cfc-4ee8-ab47-cd3ecefe81c0")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("08cbbcc5-3577-4ece-aef2-19cdd0bdc61d"),
-                            IdCategoria = new Guid("6975d099-65c4-49cf-bea1-b013b19939f3"),
-                            IdProducto = new Guid("1311034f-68d5-400f-bf2b-f0821531f556")
+                            IdProductoCategoria = new Guid("5cb95c59-89bb-49da-b8c8-6237431ea5ce"),
+                            IdCategoria = new Guid("36a0ab87-61c6-4eb8-b752-5c218fba1f3d"),
+                            IdProducto = new Guid("466c5dcf-1cfc-4ee8-ab47-cd3ecefe81c0")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("dea84690-512e-435f-a173-f5138dd0c800"),
-                            IdCategoria = new Guid("8a581e93-829f-43a0-a7aa-5d9614c3f8f3"),
-                            IdProducto = new Guid("cad3270c-d626-402d-ab23-5ade37bbb438")
+                            IdProductoCategoria = new Guid("b9809c55-ff2e-4139-8e07-3ad16a4ac389"),
+                            IdCategoria = new Guid("1bea9180-34ce-46c7-8f10-b48afe6b7609"),
+                            IdProducto = new Guid("1cc7ad5f-1580-48d8-b88e-9f267e563b59")
                         },
                         new
                         {
-                            IdProductoCategoria = new Guid("7b3e6d10-e20c-48e0-be79-5ac1056ec8d6"),
-                            IdCategoria = new Guid("f4fd199e-07e2-4b06-9857-5954cf71c500"),
-                            IdProducto = new Guid("cad3270c-d626-402d-ab23-5ade37bbb438")
+                            IdProductoCategoria = new Guid("8970662d-45ee-4b9a-9ea9-12e0221105d4"),
+                            IdCategoria = new Guid("ae8a02ec-0ac1-452d-b248-86d332dedf45"),
+                            IdProducto = new Guid("1cc7ad5f-1580-48d8-b88e-9f267e563b59")
                         });
                 });
 
@@ -616,19 +640,19 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3721dd9a-2408-4778-91fa-1eb4c12be91f",
+                            Id = "db84f9c5-52cf-4086-90d3-b556212e7bc0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fe5a2f76-33e9-4660-b8fb-1300d7dcc963",
+                            Id = "9367df67-9205-460a-a177-3b2cd8ff4c2f",
                             Name = "Staff",
                             NormalizedName = "STAFF"
                         },
                         new
                         {
-                            Id = "40c93d90-21a0-4af2-8d73-3bc54473bb92",
+                            Id = "04f1b2d1-9af0-40f0-9037-1d0b7136abb0",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         });
@@ -726,52 +750,52 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d42ec11d-0ec2-424d-bee5-16ae6e05d209",
+                            Id = "9c59d061-220a-4cef-b44e-a46e777ab5b7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "359fa2ff-1c64-49aa-9d6a-d993487b397d",
+                            ConcurrencyStamp = "9995e88c-4472-425a-96f1-782b7ca3d80c",
                             Email = "admin@nexusshop.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@NEXUSSHOP.COM",
                             NormalizedUserName = "ADMIN.STAFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA1TbLL/+webcii5IungMOHFim5OFfuBBOcOAKIuVYnJWJ2sjVp6LkSgD2FtxetDhA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFdCOaV39i7WwM+hao3HKM6MiNMKNn7p40jaXoJS9COodfwN/6Pjx1XruJCpbl5hzQ==",
                             PhoneNumber = "653124875",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7b5b9c28-3d96-4dca-a09a-618280719ee9",
+                            SecurityStamp = "4c8d7aff-bb35-4b5e-9aec-932b53180051",
                             TwoFactorEnabled = false,
                             UserName = "admin.staff"
                         },
                         new
                         {
-                            Id = "9c000a59-685e-455f-af53-28490b148cea",
+                            Id = "6b02a11d-e35d-4ba1-8481-a3b83db341dd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a07a6e10-a4b6-4c5b-9cf2-3f02779e7db4",
+                            ConcurrencyStamp = "c0c9c656-7b99-4aa5-8c5c-1680533dba18",
                             Email = "lucia.sanchiz@nexusshop.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "LUCIA.SANCHIZ@NEXUSSHOP.COM",
                             NormalizedUserName = "LUCIA.SANCHIZ.STAFF",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBx4RTDf3AwL+z+rXuLWjB9LlujCFbEqbPRew4KeXY73cv7ZAU9CyK0vUpTbHDdivA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHxwIHkFkiKyNhLKrq71DLXGAvd0q/uCYdo9tAdRGYeNrWIZIOT6DhqXin1vhKuKig==",
                             PhoneNumber = "685214739",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "63d1a0dc-863f-47d9-b736-7e2234542b77",
+                            SecurityStamp = "914cc1d2-e91a-499c-a341-c84bada1cef8",
                             TwoFactorEnabled = false,
                             UserName = "lucia.sanchiz.staff"
                         },
                         new
                         {
-                            Id = "65a989e1-716b-4a5a-8092-228aba53d27b",
+                            Id = "c2001ba6-7581-4a6c-94d3-80b348bca906",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2517a2dc-d5bd-40d3-b1d5-5233cce420fb",
+                            ConcurrencyStamp = "39129409-b360-4a77-be71-73533f57d78d",
                             Email = "paco.montoro@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PACO.MONTORO@GMAIL.COM",
                             NormalizedUserName = "PACO.MONTORO@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP8LVAUgKwfEkeJ9r8l4iFciEa0J6NOUbUx0kbhxLtpLOglRv+nnGWLq3frjXwlriA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJVGjCGe3NXRH6E65SUd80ERtwx43BNr+vq0bypDh93Mj9qyLQKzonDvb+BtNNYbPg==",
                             PhoneNumber = "632514785",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b685be8d-bac6-44f3-bf8a-cc0c1792116a",
+                            SecurityStamp = "7c70ec01-7a01-499d-a067-063a1bd9a94f",
                             TwoFactorEnabled = false,
                             UserName = "paco.montoro"
                         });
@@ -843,18 +867,18 @@ namespace EcommerceBasicoAWS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "d42ec11d-0ec2-424d-bee5-16ae6e05d209",
-                            RoleId = "3721dd9a-2408-4778-91fa-1eb4c12be91f"
+                            UserId = "9c59d061-220a-4cef-b44e-a46e777ab5b7",
+                            RoleId = "db84f9c5-52cf-4086-90d3-b556212e7bc0"
                         },
                         new
                         {
-                            UserId = "9c000a59-685e-455f-af53-28490b148cea",
-                            RoleId = "fe5a2f76-33e9-4660-b8fb-1300d7dcc963"
+                            UserId = "6b02a11d-e35d-4ba1-8481-a3b83db341dd",
+                            RoleId = "9367df67-9205-460a-a177-3b2cd8ff4c2f"
                         },
                         new
                         {
-                            UserId = "65a989e1-716b-4a5a-8092-228aba53d27b",
-                            RoleId = "40c93d90-21a0-4af2-8d73-3bc54473bb92"
+                            UserId = "c2001ba6-7581-4a6c-94d3-80b348bca906",
+                            RoleId = "04f1b2d1-9af0-40f0-9037-1d0b7136abb0"
                         });
                 });
 

@@ -38,28 +38,28 @@ namespace EcommerceBasicoAWS.Data
             {
                     //Admin
                     new IdentityUser {
-                        UserName="admin.staff", NormalizedUserName= "ADMIN.STAFF",
+                        UserName="admin@nexusshop.com", NormalizedUserName= "ADMIN@NEXUSSHOP.COM",
                         Email = "admin@nexusshop.com", NormalizedEmail="ADMIN@NEXUSSHOP.COM",
                         PhoneNumber="653124875", EmailConfirmed = true
                     },
                     //Staff
                     new IdentityUser {
-                        UserName="lucia.sanchiz.staff", NormalizedUserName= "LUCIA.SANCHIZ.STAFF",
+                        UserName="lucia.sanchiz@nexusshop.com", NormalizedUserName= "LUCIA.SANCHIZ@NEXUSSHOP.COM",
                         Email = "lucia.sanchiz@nexusshop.com", NormalizedEmail="LUCIA.SANCHIZ@NEXUSSHOP.COM",
                         PhoneNumber="685214739", EmailConfirmed = true
                     },
                     //Cliente
                     new IdentityUser {
-                        UserName="paco.montoro", NormalizedUserName= "PACO.MONTORO@GMAIL.COM",
+                        UserName="paco.montoro@gmail.com", NormalizedUserName= "PACO.MONTORO@GMAIL.COM",
                         Email = "paco.montoro@gmail.com", NormalizedEmail="PACO.MONTORO@GMAIL.COM",
                         PhoneNumber="632514785", EmailConfirmed = true
                     }
             };
 
             var passwordHasher = new PasswordHasher<IdentityUser>();
-            users[0].PasswordHash = passwordHasher.HashPassword(users[0], "Admin1234$");
-            users[1].PasswordHash = passwordHasher.HashPassword(users[1], "Lucia1234$");
-            users[2].PasswordHash = passwordHasher.HashPassword(users[2], "Paco1234$");
+            users[0].PasswordHash = passwordHasher.HashPassword(users[0], "Admin1234!");
+            users[1].PasswordHash = passwordHasher.HashPassword(users[1], "Lucia1234!");
+            users[2].PasswordHash = passwordHasher.HashPassword(users[2], "Paco1234!");
 
             builder.Entity<IdentityUser>().HasData(users);
 
@@ -273,7 +273,7 @@ namespace EcommerceBasicoAWS.Data
                 }
             );
 
-            var clientePacoId = users.Single(u => u.UserName == "paco.montoro").Id;
+            var clientePacoId = users.Single(u => u.Email == "paco.montoro@gmail.com").Id;
 
             List<Direccion> direcciones = new List<Direccion>()
             {
@@ -303,9 +303,7 @@ namespace EcommerceBasicoAWS.Data
 
             builder.Entity<Direccion>().HasData(direcciones);
 
-            Direccion direccionPaco = direcciones.OrderBy(o => o.principal).Single(d =>
-                d.IdUsuario == clientePacoId && d.principal == true
-            );
+            Guid direccionPaco = direcciones.Single(d => d.IdUsuario == clientePacoId && d.principal == true).IdDireccion;
 
             List<Pedido> pedidos = new List<Pedido>()
             {
@@ -314,7 +312,7 @@ namespace EcommerceBasicoAWS.Data
                     IdPedido = Guid.NewGuid(),
                     Numero = 1,
                     IdUsuario = clientePacoId,
-                    IdDireccion = direccionPaco.IdDireccion,
+                    IdDireccion = direccionPaco,
                     FechaCreacion = DateTime.Now.AddDays(-1),
                     Estado = IEstadosPedido.PENDIENTE,
                     Total = 45.99m
@@ -324,7 +322,7 @@ namespace EcommerceBasicoAWS.Data
                     IdPedido = Guid.NewGuid(),
                     Numero = 2,
                     IdUsuario = clientePacoId,
-                    IdDireccion = direccionPaco.IdDireccion,
+                    IdDireccion = direccionPaco,
                     FechaCreacion = DateTime.Now.AddDays(-5),
                     Estado = IEstadosPedido.ENVIADO,
                     Total = 89.50m

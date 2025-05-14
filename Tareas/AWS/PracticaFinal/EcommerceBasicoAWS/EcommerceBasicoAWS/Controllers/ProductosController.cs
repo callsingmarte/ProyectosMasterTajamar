@@ -1,4 +1,5 @@
-﻿using EcommerceBasicoAWS.Models;
+﻿using EcommerceBasicoAWS.Interfaces;
+using EcommerceBasicoAWS.Models;
 using EcommerceBasicoAWS.Services;
 using EcommerceBasicoAWS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +8,9 @@ namespace EcommerceBasicoAWS.Controllers
 {
     public class ProductosController : Controller
     {
-        private readonly ProductoService _productoService; 
+        private readonly IProductoService _productoService; 
 
-        public ProductosController(ProductoService productoService)
+        public ProductosController(IProductoService productoService)
         {
             _productoService = productoService;
         }
@@ -32,9 +33,9 @@ namespace EcommerceBasicoAWS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProducto(Producto producto)
+        public async Task<IActionResult> AddProducto(ProductoViewModel productoVm)
         {
-            bool response = await _productoService.AddProducto(producto);
+            bool response = await _productoService.AddProducto(productoVm.Producto, productoVm.Files);
 
             if (response)
             {
@@ -42,7 +43,7 @@ namespace EcommerceBasicoAWS.Controllers
             }
             else
             {
-                return View(producto);
+                return View("CreateOrUpdateProducto", productoVm);
             }
 
         }
@@ -56,9 +57,9 @@ namespace EcommerceBasicoAWS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProducto(Guid id, Producto producto)
+        public async Task<IActionResult> UpdateProducto(Guid id, ProductoViewModel productoVm)
         {
-            bool response = await _productoService.UpdateProducto(id, producto);
+            bool response = await _productoService.UpdateProducto(id, productoVm.Producto, productoVm.MultimediasProducto);
 
             if (response)
             {
@@ -72,7 +73,7 @@ namespace EcommerceBasicoAWS.Controllers
                 TempData["Mensaje"] = "Se ha producido un error al actualizar el producto.";
                 TempData["TipoMensaje"] = "error";
 
-                return View(producto);
+                return View("CreateOrUpdateProducto", productoVm);
             }
         }
 
