@@ -29,7 +29,9 @@ namespace EcommerceBasicoAWS.Controllers
         [HttpGet]
         public IActionResult AddProducto()
         {
-            return View();
+            ProductoViewModel productoVm = new ProductoViewModel();
+
+            return View("CreateOrUpdateProducto", productoVm);
         }
 
         [HttpPost]
@@ -53,7 +55,7 @@ namespace EcommerceBasicoAWS.Controllers
         {
             Producto? producto = await _productoService.GetProducto(id);
 
-            return View(producto);
+            return View("CreateOrUpdateProducto", producto);
         }
 
         [HttpPost]

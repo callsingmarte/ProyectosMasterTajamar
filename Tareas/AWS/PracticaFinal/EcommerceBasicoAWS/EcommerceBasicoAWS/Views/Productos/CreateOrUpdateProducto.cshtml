@@ -1,0 +1,52 @@
+﻿@using EcommerceBasicoAWS.ViewModels
+@using EcommerceBasicoAWS.Enums
+@model ProductoViewModel
+
+@{
+    string action = Model.Action == ActionTypes.Update ? "Editar" : "Crear";
+    string actionRequest = Model.Action == ActionTypes.Update ? "UpdateProducto" : "AddProducto";
+}
+
+<form asp-action="@actionRequest" class="card" enctype="multipart/form-data">
+    @if (Model.Action == ActionTypes.Update)
+    {
+        <input type="hidden" value="@Model.Producto.IdProducto" />
+    }
+    <div class="card-header">
+        <h1 class="card-title">@action Producto</h1>
+    </div>
+    <div class="card-body">
+        <div id="addMultimedia" class="card">
+            <img class="card-img-top" src="" alt="" />
+            <div class="card-body">
+                <div class="input-group">
+                    <label asp-for="@Model.Files">Subir archivos: </label>
+                    <input type="file" asp-for="@Model.Files" name="files" class="form-control" multiple />
+                </div>
+            </div>
+        </div>
+        <div class="input-group">
+            <label asp-for="@Model.Producto.Nombre" class="form-label"></label>
+            <input asp-for="@Model.Producto.Nombre" class="form-control" />
+        </div>
+        <div class="input-group">
+            <label asp-for="@Model.Producto.Descripcion" class="form-label"></label>
+            <textarea asp-for="@Model.Producto.Descripcion" class="form-control"></textarea>
+        </div>
+        <div class="input-group">
+            <label asp-for="@Model.Producto.Precio" class="form-label"></label>
+            <input asp-for="@Model.Producto.Precio" class="form-control" />
+        </div>
+        <div class="input-group">
+            <label asp-for="@Model.Producto.Stock" class="form-label"></label>
+            <input asp-for="@Model.Producto.Stock" class="form-control" />
+        </div>
+        <div class="input-group">
+            <label asp-for="@Model.Categorias" class="form-label"></label>
+            <select asp-for="@Model.Categorias" class="form-control"></select>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">@(Model.Action == ActionTypes.Update ? "Guardar" : "Crear")</button>
+    </div>
+</form>

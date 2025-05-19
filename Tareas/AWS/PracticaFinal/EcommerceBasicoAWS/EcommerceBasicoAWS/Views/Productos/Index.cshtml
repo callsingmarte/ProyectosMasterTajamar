@@ -1,9 +1,54 @@
 ﻿@using EcommerceBasicoAWS.ViewModels
+@using EcommerceBasicoAWS.Enums;
 @model ProductosViewModel
 
 <h1>Listado de Productos</h1>
 
-<a asp-action="AddProducto" class="btn btn-primary">Crear Producto</a>
+<a asp-action="AddProducto" class="btn btn-primary mb-2">Crear Producto</a>
+<form asp-action="Index" id="filtroForm" class="card p-4 mb-4">
+    <input type="hidden" asp-for="@Model.SearchTypes" id="searchType" />
+    <div class="row mb-2">
+        <div class="col input-group">
+            <label asp-for="@Model.Filters.Nombre"></label>
+            <input asp-for="@Model.Filters.Nombre" class="form-control filtro-input" />
+        </div>
+        <div class="col input-group">
+            <label asp-for="@Model.Filters.Stock"></label>
+            <input asp-for="@Model.Filters.Stock" class="form-control filtro-input" />
+        </div>
+        <div class="col input-group">
+            <label asp-for="@Model.Filters.Precio"></label>
+            <input asp-for="@Model.Filters.Precio" class="form-control filtro-input" />
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col input-group">
+            <label asp-for="@Model.Filters.FechaActualizacion"></label>
+            <input asp-for="@Model.Filters.FechaActualizacion" class="form-control filtro-input" />
+        </div>
+        <div class="col input-group">
+            <label asp-for="@Model.Filters.FechaCreacion"></label>
+            <input asp-for="@Model.Filters.FechaCreacion" class="form-control filtro-input" />
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-6 input-group">
+            <label asp-for="@Model.ResultsPerPage" class="form-label">Resultados por Pagina</label>
+            <select asp-for="@Model.ResultsPerPage" class="form-control">
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
+    <div class="input-group">
+        <button type="button" class="btn btn-info" onclick="searchQuery()">Buscar</button>
+        @if (Model.SearchTypes == SearchTypes.Search)
+        {
+            <button type="button" class="btn btn-secondary" onclick="limpiarFiltros()">Limpiar</button>
+        }
+    </div>
+</form>
 @if (Model.Productos!.Count() > 0)
 {
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
@@ -32,11 +77,7 @@
             </div>
         }
     </div>
-    <div>
-        <p>Total resultados = @Model.TotalResults</p>
-        <p>Pagina actual = @Model.CurrentPage</p>
-        <p>Resultados por pagina = @Model.ResultsPerPage</p>
-    </div>
+
     @if(Model.TotalResults > 0){
         int totalPages = (int)Math.Ceiling((double)Model.TotalResults / Model.ResultsPerPage);
         <nav>
@@ -57,3 +98,17 @@
         </nav>
     }
 }
+
+<script>
+    function searchQuery() {
+        document.getElementById('searchType').value = @((int)SearchTypes.Search)
+        document.getElementById('filtroForm').submit();
+    }
+
+    function limpiarFiltros() {
+        const inputs = document.querySelectorAll('.filtro-input');
+        inputs.forEach(input => input.value = '');
+        document.getElementById('searchType').value = @((int)SearchTypes.List)
+        document.getElementById('filtroForm').submit();
+    }
+</script>                  
