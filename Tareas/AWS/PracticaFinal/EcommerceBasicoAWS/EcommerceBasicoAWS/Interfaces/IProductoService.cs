@@ -11,9 +11,9 @@ namespace EcommerceBasicoAWS.Interfaces
             ProductosFilters? filters = null,
             int page = 1,
             int resultsPerPage = 5);
-        public Task<Producto?> GetProducto(Guid id);
-        public Task<bool> AddProducto(Producto producto, List<IFormFile> files);
-        public Task<bool> UpdateProducto(Guid id, Producto producto, List<MultimediaProducto> multimediasProducto);
-        public Task<bool> DeleteProducto(Guid id);
+        public Task<Producto?> GetProducto(Guid idProducto);
+        public Task<Producto> AddProducto(Producto producto, List<IFormFile> files, List<string> categoriasIds);
+        public Task<bool> UpdateProducto(Guid idProducto, Producto producto, List<IFormFile> files, List<string> categoriasIds);
+        public Task<bool> DeleteProducto(Guid idProducto);
     }
 }

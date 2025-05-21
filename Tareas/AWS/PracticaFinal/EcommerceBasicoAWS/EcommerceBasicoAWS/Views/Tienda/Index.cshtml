@@ -4,7 +4,6 @@
 
 <h1>Listado de Productos</h1>
 
-<a asp-action="AddProducto" class="btn btn-primary mb-2">Crear Producto</a>
 <form asp-action="Index" id="filtroForm" class="card p-4 shadow">
     <input type="hidden" asp-for="@Model.SearchTypes" id="searchType" />
     <div class="row mb-2">
@@ -19,16 +18,6 @@
         <div class="col input-group">
             <label asp-for="@Model.Filters.Precio"></label>
             <input asp-for="@Model.Filters.Precio" class="form-control filtro-input" />
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col input-group">
-            <label asp-for="@Model.Filters.FechaActualizacion"></label>
-            <input asp-for="@Model.Filters.FechaActualizacion" class="form-control filtro-input" />
-        </div>
-        <div class="col input-group">
-            <label asp-for="@Model.Filters.FechaCreacion"></label>
-            <input asp-for="@Model.Filters.FechaCreacion" class="form-control filtro-input" />
         </div>
     </div>
     <div class="row mb-2">
@@ -76,13 +65,12 @@
                                 <p class="card-text text-end badge bg-warning">@productoCategorias.Producto.Precio €</p>
                             </div>
                         </div>
-                        <p class="card-text"><small class="text-muted">Fecha Creacion: @productoCategorias.Producto.FechaCreacion.ToShortDateString()</small></p>
-                        <p class="card-text"><small class="text-muted">Fecha Actualizacion: @productoCategorias.Producto.FechaActualizacion.ToShortDateString()</small></p>
                     </div>
                     <div class="card-footer">
-                        <a asp-action="UpdateProducto" asp-route-idProducto="@productoCategorias.Producto.IdProducto" class="btn btn-warning">Editar</a>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-producto-id="@productoCategorias.Producto.IdProducto">
-                            Eliminar Producto
+                        <a asp-action="DetallesProducto" asp-route-idProducto="@productoCategorias.Producto.IdProducto" class="btn btn-info">Detalles</a>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#confirmAddToCart" 
+                            data-producto='@Json.Serialize(productoCategorias.Producto)' data-producto-main-image-url="@productoCategorias.MainImageUrl" >
+                           Añadir al carrito
                         </button>
                     </div>
                 </div>
@@ -90,7 +78,8 @@
         }
     </div>
 
-    @if(Model.TotalResults > 0){
+    @if (Model.TotalResults > 0)
+    {
         int totalPages = (int)Math.Ceiling((double)Model.TotalResults / Model.ResultsPerPage);
         <nav class="mt-4">
             <ul class="pagination">
@@ -111,27 +100,36 @@
     }
 }
 
-<!-- Modal -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmAddToCart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form asp-action="DeleteProducto">
-                <input type="hidden" id="IdProductoToDelete" name="idProducto" />
+            <form asp-action="AddCarritoItem">
+                <input type="hidden" id="IdProductoToAdd" name="idProducto" />
+                <input type="hidden" id="ProductoMainImageUrl" name="productoMainImageUrl" />
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Añadir Al carrito</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Seguro que quieres eliminar el producto?</p>
+                    <p>¿Seguro que quieres añadir al carrito esto?</p>
+                    <div id="productoDetalles">
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="cantidad">Cantidad</label>
+                            <input id="cantidad" name="cantidad" type="number" min="1"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" class="btn btn-warning">Añadir al carrito</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <script>
     function searchQuery() {
         document.getElementById('searchType').value = @((int)SearchTypes.Search)
@@ -144,13 +142,36 @@
         document.getElementById('searchType').value = @((int)SearchTypes.List)
         document.getElementById('filtroForm').submit();
     }
-
-    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
-    confirmDeleteModal.addEventListener('show.bs.modal', event => {
+    
+    const confirmAddToCartModal = document.getElementById('confirmAddToCart');
+    confirmAddToCartModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget;
-        const productoId = button.getAttribute('data-producto-id');
-        const idProductoInput = confirmDeleteModal.querySelector('#IdProductoToDelete');
-        idProductoInput.value = productoId;
+        const producto = JSON.parse(button.getAttribute('data-producto'));
+        const productoMainImageUrl = button.getAttribute('data-producto-main-image-url');
+        const productoDetallesDiv = confirmAddToCartModal.querySelector('#productoDetalles');
+        productoDetallesDiv.innerHTML = ''
+        console.log("Producto", producto);
+        const idProductoInput = confirmAddToCartModal.querySelector('#IdProductoToAdd');
+        idProductoInput.value = producto.idProducto;
+        const productoMainImageUrlInput = confirmAddToCartModal.querySelector('#ProductoMainImageUrl');
+        productoMainImageUrlInput.value = productoMainImageUrl;
+
+        confirmAddToCartModal.querySelector("#productoDetalles").innerHTML = `
+            <div class="row">
+                <div class="col-10">
+                    <p>Nombre: ${producto.nombre}</p>
+                </div>
+                <div class="col-2">
+                    <span class="badge bg-warning text-end">${producto.precio} €</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p>Descripcion: </p>
+                    <pre>${producto.descripcion}</pre>
+                </div>
+            </div>
+        `;
     });
 
 </script>                  

@@ -9,27 +9,49 @@ namespace EcommerceBasicoAWS.Services
     public class ProductoService : IProductoService
     {
         private readonly IProductosRepository _productoRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
 
-        public ProductoService(IProductosRepository productoRepository)
+        public ProductoService(IProductosRepository productoRepository, ICategoriaRepository categoriaRepository)
         {
             _productoRepository = productoRepository;
+            _categoriaRepository = categoriaRepository;
         }
 
-        public async Task<bool> AddProducto(Producto producto, List<IFormFile> files)
+        public async Task<Producto> AddProducto(Producto producto, List<IFormFile> files, List<string> categoriasIds)
         {
             Producto? productoCreado = await _productoRepository.AddProducto(producto);
 
             bool areFilesUpload = false;
             if (productoCreado != null) {
-                 areFilesUpload = await _productoRepository.AddMultimediasProducto(productoCreado.IdProducto, files);
+                if (files != null && files.Count() > 0)
+                {
+                    areFilesUpload = await _productoRepository.AddMultimediasProducto(productoCreado.IdProducto, files);
+                }
             }
 
-            return areFilesUpload;
+            if(categoriasIds != null)
+            {
+                foreach (string categoriaId in categoriasIds)
+                {
+                    await _categoriaRepository.AssignOrRemoveCategoriaProducto(productoCreado.IdProducto, new Guid(categoriaId), true);
+                }
+            }
+
+            return productoCreado;
         }
 
-        public async Task<bool> DeleteProducto(Guid id)
+        public async Task<bool> DeleteProducto(Guid idProducto)
         {
-            bool response = await _productoRepository.DeleteProducto(id);
+            List<Categoria> categorias = await _categoriaRepository.GetCategoriasByProducto(idProducto);
+            if(categorias != null && categorias.Count() > 0)
+            {
+                foreach (Categoria categoria in categorias)
+                {
+                    await _categoriaRepository.AssignOrRemoveCategoriaProducto(idProducto, categoria.IdCategoria, false);
+                }
+            }
+
+            bool response = await _productoRepository.DeleteProducto(idProducto);
 
             return response;
         }
@@ -52,19 +74,30 @@ namespace EcommerceBasicoAWS.Services
             return productosVm;
         }
 
-        public async Task<bool> UpdateProducto(Guid id, Producto producto, List<MultimediaProducto> multimediasProducto)
+        public async Task<bool> UpdateProducto(Guid idProducto, Producto producto, List<IFormFile> files, List<string> categoriaIds)
         {
 
-            if (producto.IdProducto != id) {
+            if (producto.IdProducto != idProducto) {
                 return false;
             }
 
             bool response = false;
 
-            Producto? productoEncontrado = await _productoRepository.GetProducto(id);
+            Producto? productoEncontrado = await _productoRepository.GetProducto(idProducto);
 
             if (productoEncontrado != null && producto.IdProducto == productoEncontrado.IdProducto) {
-                response = _productoRepository.UpdateProducto(producto);
+                productoEncontrado.Nombre = producto.Nombre;
+                productoEncontrado.Precio = producto.Precio;
+                productoEncontrado.Descripcion = producto.Descripcion;
+                productoEncontrado.FechaActualizacion = DateTime.Now;
+                productoEncontrado.Stock = producto.Stock;
+
+                response = _productoRepository.UpdateProducto(productoEncontrado);
+                if(files != null && files.Count() > 0)
+                {
+                    bool areFilesUpload = await _productoRepository.AddMultimediasProducto(productoEncontrado.IdProducto, files);
+                }
+                bool updatedCategories = await _categoriaRepository.UpdateCategoriasProducto(productoEncontrado.IdProducto, categoriaIds);
             }
 
             return response;

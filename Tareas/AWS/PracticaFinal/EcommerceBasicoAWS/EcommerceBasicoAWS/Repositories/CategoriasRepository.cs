@@ -29,22 +29,24 @@ namespace EcommerceBasicoAWS.Repositories
                 return false;
             }
 
-            ProductoCategoria productoCategoria = new ProductoCategoria
-            {
-                IdProducto = IdProducto,
-                IdCategoria = IdCategoria,
-            };
-
             bool status = false;
-
             try
             {
                 if (assign) {
+                    ProductoCategoria productoCategoria = new ProductoCategoria
+                    {
+                        IdProducto = IdProducto,
+                        IdCategoria = IdCategoria,
+                    };
                     _context.ProductosCategorias.Add(productoCategoria);
                 }
                 else
                 {
-                    _context.ProductosCategorias.Remove(productoCategoria);
+                    ProductoCategoria? productoCategoria = _context.ProductosCategorias.SingleOrDefault(pc => pc.IdProducto == IdProducto && pc.IdCategoria == IdCategoria);
+                    if(productoCategoria != null)
+                    {
+                        _context.ProductosCategorias.Remove(productoCategoria);
+                    }
                 }
 
                 _context.SaveChanges();
@@ -71,12 +73,11 @@ namespace EcommerceBasicoAWS.Repositories
             bool deletionSuccess = false;
             Categoria categoria = await GetCategoria(IdCategoria);
 
-            if (categoria == null) {
+            if (categoria != null) {
                 _context.Categorias.Remove(categoria);
+                _context.SaveChanges();
                 deletionSuccess = true;
-            }
- 
-            _context.SaveChanges();
+            } 
 
             return deletionSuccess;
         }
@@ -117,12 +118,40 @@ namespace EcommerceBasicoAWS.Repositories
             Categoria categoriaActualizar = await GetCategoria(IdCategoria);
 
             if (categoriaActualizar != null) {
-                _context.Categorias.Update(categoria);
+                categoriaActualizar.Nombre = categoria.Nombre;
+
                 _context.SaveChanges();
                 updateStatus = true;
             }
 
             return updateStatus;
+        }
+
+        public async Task<bool> UpdateCategoriasProducto(Guid IdProducto, List<string> categoriaIds)
+        {
+
+            foreach (string categoriaId in categoriaIds) 
+            {
+                Guid categoriaIdGuid = new Guid(categoriaId);
+                ProductoCategoria? productoCategoria = await _context.ProductosCategorias.FirstOrDefaultAsync(c => c.IdProducto == IdProducto && c.IdCategoria == categoriaIdGuid);
+                if(productoCategoria == null)
+                {
+                    await AssignOrRemoveCategoriaProducto(IdProducto, categoriaIdGuid, true);
+                }
+            }
+
+            List<Categoria> categoriasProducto = await GetCategoriasByProducto(IdProducto);
+
+            foreach(Categoria categoria in categoriasProducto)
+            {
+                string? categoriaIdString = categoriaIds.FirstOrDefault(c => c == categoria.IdCategoria.ToString());                
+                if(categoriaIdString == null)
+                {
+                    await AssignOrRemoveCategoriaProducto(IdProducto, categoria.IdCategoria, false);
+                }
+            }
+
+            return true;
         }
     }
 }

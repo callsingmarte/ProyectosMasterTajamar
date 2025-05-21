@@ -26,6 +26,11 @@ namespace EcommerceBasicoAWS.Repositories
         public async Task<bool> AddMultimediasProducto(Guid idProducto, List<IFormFile> files)
         {
             bool respuesta = false;
+            if(files == null || files.Count() > 0)
+            {
+                return respuesta;
+            }
+
             try
             {
                 foreach (IFormFile file in files)
@@ -84,6 +89,8 @@ namespace EcommerceBasicoAWS.Repositories
         {
             try
             {
+                producto.FechaCreacion = DateTime.Now;
+                producto.FechaActualizacion = DateTime.Now;
                 await _context.Productos.AddAsync(producto);
                 await _context.SaveChangesAsync();
 
@@ -212,19 +219,34 @@ namespace EcommerceBasicoAWS.Repositories
 
             List<Producto> productos = await query.ToListAsync();
 
-            List<MultimediaProducto> productosMainImages = new List<MultimediaProducto>();
-            foreach(Producto producto in productos)
+            List<ProductoCategoriasViewModel> productosCategoriasVm = new List<ProductoCategoriasViewModel>();
+
+            foreach (Producto producto in productos)
             {
-                MultimediaProducto mainImage = await GetProductoMainImage(producto.IdProducto);
-                if (mainImage != null) {
-                    productosMainImages.Add(mainImage);
-                }
+                List<Categoria> categorias = _context.ProductosCategorias
+                    .Where(c => c.IdProducto == producto.IdProducto)
+                    .Select(categoria => new Categoria()
+                    {
+                        IdCategoria = categoria.IdCategoria,
+                        Nombre = categoria.Categoria.Nombre
+                    }).ToList();
+
+                MultimediaProducto mainImageMultimedia = await GetProductoMainImage(producto.IdProducto);
+
+                ProductoCategoriasViewModel productoCategoriasVm = new ProductoCategoriasViewModel()
+                {
+                    Producto = producto,
+                    Categorias = categorias,
+                    MainImageUrl = mainImageMultimedia != null ? mainImageMultimedia.Url : "",
+                };
+
+                productosCategoriasVm.Add(productoCategoriasVm);
             }
+
 
             return new ProductosViewModel {
                 SearchTypes = searchType,
-                Productos = productos,
-                ProductosMainImages = productosMainImages,
+                Productos = productosCategoriasVm,
                 Filters = filters,
                 CurrentPage = page,
                 ResultsPerPage = resultsPerPage,

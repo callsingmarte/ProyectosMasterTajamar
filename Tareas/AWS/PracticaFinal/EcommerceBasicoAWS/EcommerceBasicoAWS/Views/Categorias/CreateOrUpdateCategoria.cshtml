@@ -1,0 +1,25 @@
+﻿@using EcommerceBasicoAWS.ViewModels
+@using EcommerceBasicoAWS.Enums
+@model CategoriaViewModel
+
+@{
+    string action = Model.Action == ActionTypes.Update ? "Editar" : "Crear";
+    string actionCall = Model.Action == ActionTypes.Update ? "EditCategoria" : "AddCategoria";
+    string actionBtnText = Model.Action == ActionTypes.Update ? "Guardar" : "Crear";
+}
+
+<h1>@action Categoria</h1>
+<form asp-action="@actionCall" asp-route-idCategoria="@Model.Categoria.IdCategoria">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @if (Model.Action == ActionTypes.Update)
+    {
+        <input type="hidden" asp-for="@Model.Categoria.IdCategoria" value="@Model.Categoria.IdCategoria" />
+    }
+    <div class="input-group">
+        <label asp-for="@Model.Categoria.Nombre" class="form-label">Nombre Categoria</label>
+        <input asp-for="@Model.Categoria.Nombre" class="form-control"/>
+        <span asp-validation-for="@Model.Categoria.Nombre" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn @(Model.Action == ActionTypes.Update ? "btn-warning" : "btn-primary")">@actionBtnText</button>
+</form>
+<a asp-action="Index" class="btn btn-dark">Volver al listado</a>

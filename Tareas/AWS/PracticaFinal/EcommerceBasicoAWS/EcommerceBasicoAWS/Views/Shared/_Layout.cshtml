@@ -32,6 +32,18 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Index">Gestion de Productos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Gestion de Categorias</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole(IUserRoles.CLIENTE))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tienda" asp-action="Index">Tienda</a>
+                            </li>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#shoppingCartModal" id="viewCartBtn">
+                                Carrito
+                            </button>
                         }
                     </ul>
                     <partial name="_LoginPartial" />
@@ -50,9 +62,58 @@
             &copy; 2025 - EcommerceBasicoAWS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <div class="modal fade" id="shoppingCartModal" tabindex="-1" aria-labelledby="shoppingCartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shoppingCartModalLabel">Tu Carrito de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="shoppingCartModalBody">
+                    <div class="text-center p-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando carrito...</span>
+                        </div>
+                        <p class="mt-2">Cargando carrito...</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(function(){
+            $('#shoppingCartModal').on('show.bs.modal', function (event) {
+                const modalBody = $('#shoppingCartModalBody');
+                modalBody.html(`
+                    <div class="text-center p-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando carrito...</span>
+                        </div>
+                        <p class="mt-2">Cargando carrito...</p>
+                    </div>
+                `);
+                $.ajax({
+                    url: '@Url.Action("GetCarrito", "Tienda")',
+                    type: 'GET',
+                    success: function (data) {
+                        modalBody.html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        modalBody.html('<p class="text-danger">No se pudo cargar el carrito. Inténtalo de nuevo más tarde.</p>');
+                        console.error("Error loading cart:", status, error);
+                    }
+                });
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

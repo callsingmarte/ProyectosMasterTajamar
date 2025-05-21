@@ -7,20 +7,27 @@
     string actionRequest = Model.Action == ActionTypes.Update ? "UpdateProducto" : "AddProducto";
 }
 
-<form asp-action="@actionRequest" class="card" enctype="multipart/form-data">
+<form asp-action="@actionRequest" asp-route-idProducto="@Model.Producto.IdProducto" class="card" enctype="multipart/form-data">
     @if (Model.Action == ActionTypes.Update)
     {
-        <input type="hidden" value="@Model.Producto.IdProducto" />
+        <input type="hidden" asp-for="@Model.Producto.IdProducto" value="@Model.Producto.IdProducto" />
     }
     <div class="card-header">
         <h1 class="card-title">@action Producto</h1>
+        @if(Model.Categorias != null)
+        {
+            @foreach (Categoria categoria in Model.Categorias)
+            {
+                <span class="badge bg-secondary">@categoria.Nombre</span>
+            }
+        }
     </div>
-    <div class="card-body">
+    <div class="card-body p-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div id="addMultimedia" class="card">
-            <img class="card-img-top" src="" alt="" />
             <div class="card-body">
                 <div class="input-group">
-                    <label asp-for="@Model.Files">Subir archivos: </label>
+                    <label asp-for="@Model.Files" class="form-label">Subir archivos: </label>
                     <input type="file" asp-for="@Model.Files" name="files" class="form-control" multiple />
                 </div>
             </div>
@@ -28,25 +35,30 @@
         <div class="input-group">
             <label asp-for="@Model.Producto.Nombre" class="form-label"></label>
             <input asp-for="@Model.Producto.Nombre" class="form-control" />
+            <span asp-validation-for="@Model.Producto.Nombre" class="text-danger"></span>
         </div>
         <div class="input-group">
             <label asp-for="@Model.Producto.Descripcion" class="form-label"></label>
             <textarea asp-for="@Model.Producto.Descripcion" class="form-control"></textarea>
+            <span asp-validation-for="@Model.Producto.Descripcion" class="text-danger"></span>
         </div>
         <div class="input-group">
             <label asp-for="@Model.Producto.Precio" class="form-label"></label>
             <input asp-for="@Model.Producto.Precio" class="form-control" />
+            <span asp-validation-for="@Model.Producto.Precio" class="text-danger"></span>
         </div>
         <div class="input-group">
             <label asp-for="@Model.Producto.Stock" class="form-label"></label>
             <input asp-for="@Model.Producto.Stock" class="form-control" />
+            <span asp-validation-for="@Model.Producto.Stock" class="text-danger"></span>
         </div>
         <div class="input-group">
-            <label asp-for="@Model.Categorias" class="form-label"></label>
-            <select asp-for="@Model.Categorias" class="form-control"></select>
+            <label asp-for="@Model.CategoriasIds" class="form-label"></label>
+            <select asp-for="@Model.CategoriasIds" asp-items="@ViewBag.CategoriasList" class="form-control" multiple></select>
         </div>
     </div>
     <div class="card-footer">
-        <button type="submit" class="btn btn-primary">@(Model.Action == ActionTypes.Update ? "Guardar" : "Crear")</button>
+        <button type="submit" class="btn @(Model.Action == ActionTypes.Update ? "btn-warning" : "btn-primary")">@(Model.Action == ActionTypes.Update ? "Guardar" : "Crear")</button>
     </div>
 </form>
+<a asp-action="Index" class="btn btn-dark">Volver al listado</a>

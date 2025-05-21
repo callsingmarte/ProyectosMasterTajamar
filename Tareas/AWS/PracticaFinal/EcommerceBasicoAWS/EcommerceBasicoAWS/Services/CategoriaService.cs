@@ -27,11 +27,16 @@ namespace EcommerceBasicoAWS.Services
             }
         }
 
-        public Task<bool> AssignCategoriaProducto(Guid IdProducto, Categoria categoria)
+        public async Task<bool> AssignCategoriaProducto(Guid IdProducto, Categoria categoria)
         {
-           Task<bool> response = _categoriaRepository.AssignOrRemoveCategoriaProducto(IdProducto, categoria.IdCategoria, true);
+           bool response = await _categoriaRepository.AssignOrRemoveCategoriaProducto(IdProducto, categoria.IdCategoria, true);
 
             return response;
+        }
+
+        public async Task<Categoria?> GetCategoria(Guid idCategoria)
+        {
+            return await _categoriaRepository.GetCategoria(idCategoria);
         }
 
         public async Task<List<Categoria>> GetCategorias()
@@ -44,23 +49,23 @@ namespace EcommerceBasicoAWS.Services
             return await _categoriaRepository.GetCategoriasByProducto(IdProducto);
         }
 
-        public Task<bool> RemoveCategoria(Guid IdCategoria)
+        public async Task<bool> RemoveCategoria(Guid IdCategoria)
         {
-            Task<bool> response = _categoriaRepository.DeleteCategoria(IdCategoria);
+            bool response = await _categoriaRepository.DeleteCategoria(IdCategoria);
 
             return response;
         }
 
-        public Task<bool> RemoveCategoriaProducto(Guid IdProducto, Categoria categoria)
+        public async Task<bool> RemoveCategoriaProducto(Guid IdProducto, Categoria categoria)
         {
-            Task<bool> response = _categoriaRepository.AssignOrRemoveCategoriaProducto(IdProducto, categoria.IdCategoria, false);
+            bool response = await _categoriaRepository.AssignOrRemoveCategoriaProducto(IdProducto, categoria.IdCategoria, false);
 
             return response;
         }
 
-        public Task<bool> UpdateCategoria(Guid IdCategoria, Categoria categoria)
+        public async Task<bool> UpdateCategoria(Guid IdCategoria, Categoria categoria)
         {
-            Task<bool> response = _categoriaRepository.UpdateCategoria(IdCategoria, categoria);
+            bool response = await _categoriaRepository.UpdateCategoria(IdCategoria, categoria);
 
             return response;
         }

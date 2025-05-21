@@ -5,8 +5,7 @@ namespace EcommerceBasicoAWS.ViewModels
 {
     public class ProductosViewModel
     {
-        public List<Producto>? Productos { get; set; }
-        public List<MultimediaProducto>? ProductosMainImages { get; set; }
+        public List<ProductoCategoriasViewModel>? Productos { get; set; }
         public ProductosFilters? Filters { get; set; }
         public SearchTypes SearchTypes { get; set; } = SearchTypes.List;
         public int CurrentPage { get; set; } = 1;

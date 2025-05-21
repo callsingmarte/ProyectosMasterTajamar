@@ -3,16 +3,19 @@ using EcommerceBasicoAWS.Models;
 using EcommerceBasicoAWS.Services;
 using EcommerceBasicoAWS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EcommerceBasicoAWS.Controllers
 {
     public class ProductosController : Controller
     {
-        private readonly IProductoService _productoService; 
+        private readonly IProductoService _productoService;
+        private readonly ICategoriaService _categoriaService;
 
-        public ProductosController(IProductoService productoService)
+        public ProductosController(IProductoService productoService, ICategoriaService categoriaService)
         {
             _productoService = productoService;
+            _categoriaService = categoriaService;
         }
 
         public async Task<IActionResult> Index(ProductosViewModel productosVm)
@@ -27,9 +30,15 @@ namespace EcommerceBasicoAWS.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddProducto()
+        public async Task<IActionResult> AddProducto()
         {
-            ProductoViewModel productoVm = new ProductoViewModel();
+            ProductoViewModel productoVm = new ProductoViewModel()
+            {
+                Producto = new Producto(),
+                Action = Enums.ActionTypes.Create
+            };
+
+            ViewBag.CategoriasList = await GetCategoriasSelectList();
 
             return View("CreateOrUpdateProducto", productoVm);
         }
@@ -37,31 +46,50 @@ namespace EcommerceBasicoAWS.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProducto(ProductoViewModel productoVm)
         {
-            bool response = await _productoService.AddProducto(productoVm.Producto, productoVm.Files);
+            Producto producto = new Producto();
+            producto = await _productoService.AddProducto(productoVm.Producto, productoVm.Files, productoVm.CategoriasIds);
 
-            if (response)
+            ViewBag.CategoriasList = await GetCategoriasSelectList();
+
+            if (producto.IdProducto != Guid.Empty)
             {
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                return View("CreateOrUpdateProducto", productoVm);
+                return View("CreateOrUpdateProducto", new ProductoViewModel()
+                {
+                    Producto = productoVm.Producto,
+                    CategoriasIds = productoVm.CategoriasIds,
+                    Action = Enums.ActionTypes.Create
+                });
             }
 
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateProducto(Guid id)
+        public async Task<IActionResult> UpdateProducto(Guid idProducto)
         {
-            Producto? producto = await _productoService.GetProducto(id);
+            ViewBag.CategoriasList = await GetCategoriasSelectList();
+            Producto? producto = await _productoService.GetProducto(idProducto);
+            List<Categoria> categorias = await _categoriaService.GetProductoCategorias(idProducto);
 
-            return View("CreateOrUpdateProducto", producto);
+            return View("CreateOrUpdateProducto", new ProductoViewModel()
+            {
+                Producto = producto,
+                Categorias = categorias,
+                CategoriasIds = categorias.Select(c => c.IdCategoria.ToString()).ToList(),
+                Action = Enums.ActionTypes.Update,                
+            });
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProducto(Guid id, ProductoViewModel productoVm)
+        public async Task<IActionResult> UpdateProducto(Guid idProducto, ProductoViewModel productoVm)
         {
-            bool response = await _productoService.UpdateProducto(id, productoVm.Producto, productoVm.MultimediasProducto);
+            bool response = await _productoService.UpdateProducto(idProducto, productoVm.Producto, productoVm.Files, productoVm.CategoriasIds);
+            ViewBag.CategoriasList = await GetCategoriasSelectList();
+            Producto? producto = await _productoService.GetProducto(idProducto);
+            List<Categoria> categorias = await _categoriaService.GetProductoCategorias(idProducto);
 
             if (response)
             {
@@ -75,14 +103,20 @@ namespace EcommerceBasicoAWS.Controllers
                 TempData["Mensaje"] = "Se ha producido un error al actualizar el producto.";
                 TempData["TipoMensaje"] = "error";
 
-                return View("CreateOrUpdateProducto", productoVm);
+                return View("CreateOrUpdateProducto", new ProductoViewModel()
+                {
+                    Producto = producto,
+                    Categorias = categorias,
+                    CategoriasIds = categorias.Select(c => c.IdCategoria.ToString()).ToList(),
+                    Action = Enums.ActionTypes.Update,
+                });
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteProducto(Guid id)
+        public async Task<IActionResult> DeleteProducto(Guid idProducto)
         {
-            bool response = await _productoService.DeleteProducto(id);
+            bool response = await _productoService.DeleteProducto(idProducto);
 
             if (response)
             {
@@ -96,6 +130,20 @@ namespace EcommerceBasicoAWS.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<SelectList> GetCategoriasSelectList()
+        {
+            List<Categoria> categorias = await _categoriaService.GetCategorias();
+
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            foreach (Categoria categoria in categorias)
+            {
+                items.Add(new SelectListItem() { Text = categoria.Nombre, Value = categoria.IdCategoria.ToString() });
+            }
+
+            return new SelectList(items, "Value", "Text");
         }
     }
 }

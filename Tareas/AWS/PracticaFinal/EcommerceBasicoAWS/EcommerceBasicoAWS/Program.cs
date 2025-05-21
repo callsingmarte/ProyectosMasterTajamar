@@ -22,8 +22,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddSingleton<IAwsS3Service, AwsS3Service>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriasRepository>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IProductosRepository, ProductosRepository>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ICarritoRepository, CarritoRepository>();
+builder.Services.AddScoped<ICarritoService, CarritoService>();
 
 builder.Services.AddControllersWithViews();
 

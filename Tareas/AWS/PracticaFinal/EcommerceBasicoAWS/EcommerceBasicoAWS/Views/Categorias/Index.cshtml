@@ -1,5 +1,72 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<Categoria>
+
+<h1>Listado de Categorias</h1>
+
+<a asp-action="AddCategoria" class="btn btn-primary">Crear Categoria</a>
+@if(Model.Count() > 1)
+{
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Id Categoria</th>
+                    <th>Nombre</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Categoria categoria in Model)
+                {
+                    <tr>
+                        <td>@categoria.IdCategoria</td>
+                        <td>@categoria.Nombre</td>
+                        <td>
+                            <a asp-action="EditCategoria" asp-route-idCategoria="@categoria.IdCategoria" class="btn btn-warning">Editar</a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-categoria-id="@categoria.IdCategoria">
+                                Eliminar categoria
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 }
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <p>No hay categorias</p>
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-action="DeleteCategoria">
+                <input type="hidden" id="IdCategoriaToDelete" name="idCategoria" />
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Seguro que quieres eliminar la categoria?</p>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar Categoria</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    confirmDeleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const categoriaId = button.getAttribute('data-categoria-id');
+        const idCategoriaInput = confirmDeleteModal.querySelector('#IdCategoriaToDelete');
+        idCategoriaInput.value = categoriaId;
+    });
+</script>

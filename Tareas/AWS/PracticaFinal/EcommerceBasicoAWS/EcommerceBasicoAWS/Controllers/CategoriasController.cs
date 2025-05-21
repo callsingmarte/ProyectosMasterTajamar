@@ -1,5 +1,6 @@
 ﻿using EcommerceBasicoAWS.Interfaces;
 using EcommerceBasicoAWS.Models;
+using EcommerceBasicoAWS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceBasicoAWS.Controllers
@@ -23,47 +24,76 @@ namespace EcommerceBasicoAWS.Controllers
         [HttpGet]
         public IActionResult AddCategoria()
         {
-            return View("CreateOrUpdateCategoria");
+            return View("CreateOrUpdateCategoria", new CategoriaViewModel()
+            {
+                Categoria = new Categoria(),
+                Action = Enums.ActionTypes.Create
+            }
+);
         }
 
         [HttpPost]
-        public IActionResult AddCategoria(Categoria categoria)
+        public async Task<IActionResult> AddCategoria(Categoria categoria)
         {
 
             if (ModelState.IsValid) 
             {
-                _categoriaService.AddCategoria(categoria);
+                await _categoriaService.AddCategoria(categoria);
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return View("CreateOrUpdateCategoria");
+            return View("CreateOrUpdateCategoria", new CategoriaViewModel()
+            {
+                Categoria = categoria,
+                Action = Enums.ActionTypes.Create
+            }
+);
         }
 
         [HttpGet]
-        public IActionResult EditCategoria()
+        public async Task<IActionResult> EditCategoria(Guid idCategoria)
         {
-            return View("CreateOrUpdateCategoria");
+            Categoria? categoria = await _categoriaService.GetCategoria(idCategoria);
+
+            return View("CreateOrUpdateCategoria", new CategoriaViewModel()
+            {
+                Categoria = categoria,
+                Action = Enums.ActionTypes.Update
+            });
         }
 
         [HttpPost]
-        public IActionResult EditCategoria(Guid idCategoria, Categoria categoria)
+        public async Task<IActionResult> EditCategoria(Guid idCategoria, Categoria categoria)
         {
 
             if (ModelState.IsValid)
             {
-                _categoriaService.UpdateCategoria(idCategoria, categoria);
+                bool response = await _categoriaService.UpdateCategoria(idCategoria, categoria);
+
+                if (!response)
+                {
+                    return View("CreateOrUpdateCategoria", new CategoriaViewModel()
+                    {
+                        Categoria = categoria,
+                        Action = Enums.ActionTypes.Update
+                    });
+                }
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return View("CreateOrUpdateCategoria");
+            return View("CreateOrUpdateCategoria", new CategoriaViewModel()
+            {
+                Categoria = categoria,
+                Action = Enums.ActionTypes.Update
+            });
         }
 
         [HttpPost]
-        public IActionResult DeleteCategoria(Guid idCategoria) 
+        public async Task<IActionResult> DeleteCategoria(Guid idCategoria) 
         {        
-            _categoriaService.RemoveCategoria(idCategoria);
+            await _categoriaService.RemoveCategoria(idCategoria);
 
             return RedirectToAction(nameof(Index));
         }
